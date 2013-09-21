@@ -405,8 +405,8 @@
                      (inc (max (.getHeight new-child)
                                (height (.getRight node))))
                      (if (.-val found?)
-                       (unchecked-inc-int (.getRank node))
-                       (.getRank node)))))
+                       (.getRank node)
+                       (unchecked-inc-int (.getRank node))))))
 
         :else
         (let [new-child (insert comp (.getRight node) k v found?)]
@@ -440,7 +440,7 @@
           (.setHeight node
                       (inc (max (.getHeight new-child)
                                 (height (.getRight node)))))
-          (if (.-val found?)
+          (if-not (.-val found?)
             (.setRank node (unchecked-inc-int (.getRank node))))
           (maybe-rebalance! edit node))
 
@@ -1251,4 +1251,6 @@
                         pad "H: " (.getHeight node) "\n"))
                   (step (.getLeft node)  "L:" (+ indent 2))
                   (step (.getRight node) "R:" (+ indent 2)))))]
-      (step (.-tree avl-map) nil 0))))
+      (step (.-tree avl-map) nil 0)))
+
+  )
