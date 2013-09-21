@@ -494,20 +494,18 @@
   (->AVLMapSeq nil (seq-push node nil ascending?) ascending? cnt nil))
 
 (defn ^:private avl-map-kv-reduce [node f init]
-  (let [init (if-not (nil? (.-left node))
-               (avl-map-kv-reduce (.-left node) f init)
-               init)]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-map-kv-reduce (.getLeft node) f init))]
     (if (reduced? init)
-      @init
-      (let [init (f init (.-key node) (.-val node))]
+      init
+      (let [init (f init (.getKey node) (.getVal node))]
         (if (reduced? init)
-          @init
-          (let [init (if-not (nil? (.-right node))
-                       (avl-map-kv-reduce (.-right node) f init)
-                       init)]
-            (if (reduced? init)
-              @init
-              init)))))))
+          init
+          (let [init (if (nil? (.getRight node))
+                       init
+                       (avl-map-kv-reduce (.getRight node) f init))]
+            init))))))
 
 (deftype AVLMapSeq [_meta stack ascending? cnt ^:mutable _hash]
   Object
@@ -608,7 +606,7 @@
 
   ICollection
   (-conj [this entry]
-    (if (vector? entry)                 ; TODO: actual map entries?
+    (if (vector? entry)
       (assoc this (-nth entry 0) (-nth entry 1))
       (reduce -conj this entry)))
 
@@ -622,9 +620,12 @@
 
   IKVReduce
   (-kv-reduce [this f init]
-    (if-not (nil? tree)
-      (avl-map-kv-reduce tree f init)
-      init))
+    (if (nil? tree)
+      init
+      (let [init (avl-map-kv-reduce tree f init)]
+        (if (reduced? init)
+          @init
+          init))))
 
   IFn
   (-invoke [this k]

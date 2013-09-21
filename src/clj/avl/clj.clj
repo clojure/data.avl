@@ -601,20 +601,18 @@
              (conj stack node)))))
 
 (defn ^:private avl-map-kv-reduce [^IAVLNode node f init]
-  (let [init (if-not (nil? (.getLeft node))
-               (avl-map-kv-reduce (.getLeft node) f init)
-               init)]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-map-kv-reduce (.getLeft node) f init))]
     (if (reduced? init)
-      @init
+      init
       (let [init (f init (.getKey node) (.getVal node))]
         (if (reduced? init)
-          @init
-          (let [init (if-not (nil? (.getRight node))
-                       (avl-map-kv-reduce (.getRight node) f init)
-                       init)]
-            (if (reduced? init)
-              @init
-              init)))))))
+          init
+          (let [init (if (nil? (.getRight node))
+                       init
+                       (avl-map-kv-reduce (.getRight node) f init))]
+            init))))))
 
 (deftype AVLMapSeq [^IPersistentMap _meta
                     ^IPersistentStack stack
@@ -796,12 +794,6 @@
   (equiv [this that]
     (equiv-map this that))
 
-  clojure.core.protocols/IKVReduce
-  (kv-reduce [this f init]
-    (if-not (nil? tree)
-      (avl-map-kv-reduce tree f init)
-      init))
-
   clojure.lang.IFn
   (invoke [this k]
     (.valAt this k))
@@ -913,9 +905,16 @@
   (kv-reduce [this f init]
     (if (nil? tree)
       init
-      (avl-map-kv-reduce tree f init)))
+      (let [init (avl-map-kv-reduce tree f init)]
+        (if (reduced? init)
+          @init
+          init))))
 
   java.io.Serializable
+
+  Iterable
+  (iterator [this]
+    (SeqIterator. (seq this)))
 
   java.util.Map
   (get [this k]

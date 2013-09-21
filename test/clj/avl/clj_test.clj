@@ -58,7 +58,25 @@
     (is (= (seq (apply avl/sorted-map-by > (interleave (range 32) (range 32))))
            (reverse (map (juxt identity identity) (range 32)))))
     (is (= (seq (apply avl/sorted-set-by > (range 32)))
-           (reverse (range 32))))))
+           (reverse (range 32)))))
+  (testing "reduce-kv short-circuits appropriately"
+    (is (= (reduce-kv (fn [acc k v] (reduced acc)) :foo avl-map) :foo))
+    (is (= (reduce-kv (fn [acc k v]
+                        (if (== 31000 k)
+                          (reduced k)
+                          acc))
+                      nil
+                      avl-map)
+           31000))
+    (is (= (let [counter (atom 0)]
+             (reduce-kv (fn [acc k v]
+                          (if (== 31000 k)
+                            (reduced k)
+                            (swap! counter inc)))
+                        nil
+                        avl-map)
+             @counter)
+           31000))))
 
 (deftest rank-queries
   (testing "map rank queries work as expected"
