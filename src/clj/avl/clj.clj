@@ -1226,7 +1226,7 @@
   [^Comparator comparator & keys]
   (persistent!
    (reduce conj!
-           (AVLTransientSet. (sorted-map-by comparator))
+           (AVLTransientSet. (transient (sorted-map-by comparator)))
            keys)))
 
 (comment

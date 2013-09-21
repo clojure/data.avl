@@ -30,7 +30,11 @@
   (testing "disj/disj! work as expected"
     (is (= (reduce disj rb-set ks') (reduce disj avl-set ks')))
     (is (= (reduce disj rb-set ks')
-           (persistent! (reduce disj! (transient avl-set) ks'))))))
+           (persistent! (reduce disj! (transient avl-set) ks')))))
+  (testing "*-by seqs look like they should"
+    (is (= (seq (apply avl/sorted-map-by > (interleave (range 32) (range 32))))
+           (reverse (map (juxt identity identity) (range 32)))))
+    (is (= (seq (apply avl/sorted-set-by > (range 32)))))))
 
 (deftest rank-queries
   (testing "map rank queries work as expected"
