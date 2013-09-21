@@ -922,7 +922,7 @@
   comparator."
   [comparator & keyvals]
   (loop [in  (seq keyvals)
-         out (AVLTransientMap. (js-obj) comparator nil 0)]
+         out (AVLTransientMap. (js-obj) (fn->comparator comparator) nil 0)]
     (if in
       (recur (nnext in) (assoc! out (first in) (second in)))
       (persistent! out))))
@@ -935,4 +935,8 @@
 (defn sorted-set-by
   "Returns a new sorted set with supplied keys, using the supplied comparator."
   [comparator & keys]
-  (persistent! (reduce conj! (transient empty-set) keys)))
+  (persistent!
+   (reduce conj!
+           (AVLTransientSet.
+            (-as-transient (sorted-map-by (fn->comparator comparator))))
+           keys)))
