@@ -907,6 +907,12 @@
     (->AVLTransientMap
      (AtomicReference. (Thread/currentThread)) comp tree cnt))
 
+  clojure.core.protocols/IKVReduce
+  (kv-reduce [this f init]
+    (if (nil? tree)
+      init
+      (avl-map-kv-reduce tree f init)))
+
   java.io.Serializable
 
   java.util.Map
@@ -1183,7 +1189,7 @@
   (count [this]
     (.count transient-avl-map)))
 
-(def ^:private empty-map (AVLMap. compare nil 0 nil 0 0))
+(def ^:private empty-map (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil 0 0))
 
 (def ^:private empty-set (AVLSet. nil empty-map 0 0))
 
