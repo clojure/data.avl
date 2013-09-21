@@ -2,7 +2,9 @@
 
   "An implementation of persistent sorted maps and sets based on AVL
   trees with API mimicking that of Clojure's sorted maps and
-  sets (based on Red-Black Trees)."
+  sets (based on Red-Black Trees). Additionally, the provided map and
+  set types support the transients API and logarithmic time rank
+  queries via clojure.core/nth."
 
   {:author "Michał Marczyk"}
 

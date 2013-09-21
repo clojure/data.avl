@@ -41,7 +41,7 @@ Clojure variants, with two differences:
 ## Releases and dependency information
 
 [avl.clj releases are available from Clojars.](https://clojars.org/avl.clj)
-Follow the link to discover the current release number.
+Please follow the link to discover the current release number.
 
 [Leiningen](http://leiningen.org/) dependency information:
 
