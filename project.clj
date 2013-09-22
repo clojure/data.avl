@@ -1,4 +1,4 @@
-(defproject avl.clj "0.0.5"
+(defproject avl.clj "0.0.6-SNAPSHOT"
   :description "Persistent sorted maps and sets with log-time rank queries"
   :url "https://github.com/michalmarczyk/avl.clj"
   :license {:name "Eclipse Public License"

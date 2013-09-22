@@ -9,8 +9,9 @@
   {:author "Michał Marczyk"}
 
   (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by])
-  (:import (clojure.lang RT Util APersistentMap Box MapEntry SeqIterator
-                         IPersistentMap IPersistentSet IPersistentStack)
+  (:import (clojure.lang RT Util APersistentMap APersistentSet
+                         IPersistentMap IPersistentSet IPersistentStack
+                         Box MapEntry SeqIterator)
            (java.util Comparator Collections ArrayList)
            (java.util.concurrent.atomic AtomicReference)))
 
@@ -1023,6 +1024,9 @@
 
   (hashCode [this]
     (caching-hash this hash-iset _hash))
+
+  (equals [this that]
+    (APersistentSet/setEquals this that))
 
   clojure.lang.IHashEq
   (hasheq [this]
