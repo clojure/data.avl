@@ -1267,22 +1267,4 @@
 (defn rank-of
   "Returns the rank of x in coll or -1 if not present."
   [coll x]
-  (rank (.comparator coll) (.getTree ^IAVLTree coll) x))
-
-(comment
-
-  (defn debug [avl-map]
-    (letfn [(step [node pre indent]
-              (let [pad (apply str (repeat indent " "))]
-                (when node
-                  (when pre
-                    (println (str pad "=== " pre)))
-                  (print
-                   (str pad "K: " (.getKey node)    "\n"
-                        pad "V: " (.getVal node)    "\n"
-                        pad "H: " (.getHeight node) "\n"))
-                  (step (.getLeft node)  "L:" (+ indent 2))
-                  (step (.getRight node) "R:" (+ indent 2)))))]
-      (step (.-tree avl-map) nil 0)))
-
-  )
+  (rank (.comparator ^clojure.lang.Sorted coll) (.getTree ^IAVLTree coll) x))
