@@ -4,7 +4,8 @@
   trees with API mimicking that of Clojure's sorted maps and
   sets (based on Red-Black Trees). Additionally, the provided map and
   set types support the transients API and logarithmic time rank
-  queries via clojure.core/nth."
+  queries via clojure.core/nth (select element by rank) and
+  avl.clj/rank-of (discover rank of element)."
 
   {:author "Michał Marczyk"}
 
@@ -177,7 +178,7 @@
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
 
-(defn ^:private rank-lookup [node rank]
+(defn ^:private select [node rank]
   (if (nil? node)
     (throw (ex-info "nth indexed out of bounds in AVL tree" {}))
     (let [node-rank (.getRank node)]
@@ -185,6 +186,15 @@
         (== node-rank rank) node
         (<  node-rank rank) (recur (.getRight node) (dec (- rank node-rank)))
         :else               (recur (.getLeft node)  rank)))))
+
+(defn ^:private rank [comp node k]
+  (if (nil? node)
+    -1
+    (let [c (comp k (.getKey node))]
+      (cond
+        (zero? c) (.getRank node)
+        (neg? c)  (recur comp (.getLeft node) k)
+        :else     (inc (+ (.getRank node) (rank comp (.getRight node) k)))))))
 
 (defn ^:private maybe-rebalance [node]
   (let [l  (.getLeft node)
@@ -579,6 +589,9 @@
   (toString [this]
     (pr-str* this))
 
+  (getTree [this]
+    tree)
+
   IHash
   (-hash [this]
     (caching-hash this hash-imap _hash))
@@ -600,7 +613,7 @@
     (-nth this i nil))
 
   (-nth [this i not-found]
-    (if-let [n (rank-lookup tree i)]
+    (if-let [n (select tree i)]
       [(.getKey n) (.getVal n)]
       not-found))
 
@@ -768,6 +781,9 @@
   (toString [this]
     (pr-str* this))
 
+  (getTree [this]
+    (.-tree avl-map))
+
   IHash
   (-hash [this]
     (caching-hash this hash-iset _hash))
@@ -789,7 +805,7 @@
     (-nth this i nil))
 
   (-nth [this i not-found]
-    (if-let [n (rank-lookup (.-tree avl-map) i)]
+    (if-let [n (select (.-tree avl-map) i)]
       (.getVal n)
       not-found))
 
@@ -943,3 +959,8 @@
            (AVLTransientSet.
             (-as-transient (sorted-map-by (fn->comparator comparator))))
            keys)))
+
+(defn rank-of
+  "Returns the rank of x in coll or -1 if not present."
+  [coll x]
+  (rank (-comparator coll) (.getTree coll) x))

@@ -82,7 +82,14 @@
   (testing "map rank queries work as expected"
     (is (every? true? (map = ks (map #(key (nth avl-map %)) ks))))
     (is (every? true?
-                (map = (reverse ks) (map #(key (nth avl-map-by-> %)) ks)))))
+                (map = (reverse ks) (map #(key (nth avl-map-by-> %)) ks))))
+    (is (->> (map #(nth avl-map-by-> (avl/rank-of avl-map-by-> %)) ks)
+             (map first)
+             (map = ks)
+             (every? true?))))
   (testing "set rank queries work as expected"
     (is (every? true? (map = ks (map #(nth avl-set %) ks))))
-    (is (every? true? (map = (reverse ks) (map #(nth avl-set-by-> %) ks))))))
+    (is (every? true? (map = (reverse ks) (map #(nth avl-set-by-> %) ks))))
+    (is (->> (map #(nth avl-set-by-> (avl/rank-of avl-set-by-> %)) ks)
+             (map = ks)
+             (every? true?)))))

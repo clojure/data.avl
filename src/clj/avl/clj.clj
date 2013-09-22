@@ -4,7 +4,8 @@
   trees with API mimicking that of Clojure's sorted maps and
   sets (based on Red-Black Trees). Additionally, the provided map and
   set types support the transients API and logarithmic time rank
-  queries via clojure.core/nth."
+  queries via clojure.core/nth (select element by rank) and
+  avl.clj/rank-of (discover rank of element)."
 
   {:author "Michał Marczyk"}
 
@@ -285,7 +286,7 @@
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
 
-(defn ^:private rank-lookup ^IAVLNode [^IAVLNode node rank]
+(defn ^:private select ^IAVLNode [^IAVLNode node rank]
   (if (nil? node)
     (throw
      (IndexOutOfBoundsException. "nth indexed out of bounds in AVL tree"))
@@ -294,6 +295,15 @@
         (== node-rank rank) node
         (<  node-rank rank) (recur (.getRight node) (dec (- rank node-rank)))
         :else               (recur (.getLeft node)  rank)))))
+
+(defn ^:private rank ^IAVLNode [^Comparator comp ^IAVLNode node k]
+  (if (nil? node)
+    -1
+    (let [c (.compare comp k (.getKey node))]
+      (cond
+        (zero? c) (.getRank node)
+        (neg? c)  (recur comp (.getLeft node) k)
+        :else     (inc (+ (.getRank node) (rank comp (.getRight node) k)))))))
 
 (defn ^:private maybe-rebalance ^IAVLNode [^IAVLNode node]
   (let [l  (.getLeft node)
@@ -740,6 +750,12 @@
 (defn ^:private create-seq [node ascending? cnt]
   (AVLMapSeq. nil (seq-push node nil ascending?) ascending? cnt -1 -1))
 
+(gen-interface
+ :name avl.clj.IAVLTree
+ :methods [[getTree [] avl.clj.IAVLNode]])
+
+(import avl.clj.IAVLTree)
+
 (declare ->AVLTransientMap)
 
 (deftype AVLMap [^Comparator comp
@@ -757,6 +773,10 @@
 
   (equals [this that]
     (APersistentMap/mapEquals this that))
+
+  IAVLTree
+  (getTree [this]
+    tree)
 
   clojure.lang.IHashEq
   (hasheq [this]
@@ -779,7 +799,7 @@
     (.nth this i nil))
 
   (nth [this i not-found]
-    (if-let [n (rank-lookup tree i)]
+    (if-let [n (select tree i)]
       (MapEntry. (.getKey ^IAVLNode n) (.getVal ^IAVLNode n))
       not-found))
 
@@ -1028,6 +1048,10 @@
   (equals [this that]
     (APersistentSet/setEquals this that))
 
+  IAVLTree
+  (getTree [this]
+    (.getTree avl-map))
+
   clojure.lang.IHashEq
   (hasheq [this]
     (caching-hash this hasheq-iset _hasheq))
@@ -1049,7 +1073,7 @@
     (.nth this i nil))
 
   (nth [this i not-found]
-    (if-let [n (rank-lookup (.-tree avl-map) i)]
+    (if-let [n (select (.-tree avl-map) i)]
       (.getVal ^IAVLNode n)
       not-found))
 
@@ -1239,6 +1263,11 @@
    (reduce conj!
            (AVLTransientSet. (transient (sorted-map-by comparator)))
            keys)))
+
+(defn rank-of
+  "Returns the rank of x in coll or -1 if not present."
+  [coll x]
+  (rank (.comparator coll) (.getTree ^IAVLTree coll) x))
 
 (comment
 

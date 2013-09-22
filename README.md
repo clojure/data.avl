@@ -1,13 +1,13 @@
 # avl.clj
 
 Persistent sorted maps and sets with support for transients and
-logarithmic time rank queries (via `clojure.core/nth`), using AVL
-trees as the underlying data structure.
+logarithmic time rank queries (via `clojure.core/nth` and
+`avl.clj/rank-of`), using AVL trees as the underlying data structure.
 
 ## Usage
 
 avl.clj supports Clojure and ClojureScript. It exports a single
-namespace with four public functions, all of which are drop-in
+namespace with five public functions, four of which are drop-in
 replacements for `clojure.core` / `cljs.core` functions of the same
 names:
 
@@ -17,6 +17,11 @@ names:
     (doc avl/sorted-map-by)
     (doc avl/sorted-set)
     (doc avl/sorted-set-by)
+
+The fifth function find the rank of the given element in an AVL map or
+set (-1 if not found):
+
+    (doc avl/rank-of)
 
 The maps and sets returned by these functions behave like the core
 Clojure variants, with two differences:
@@ -31,12 +36,18 @@ Clojure variants, with two differences:
         (apply avl/sorted-map (interleave (range 32) (range 32)))
         ;; ^- uses transients
 
-2. they support logarithmic time rank queries via `clojure.core/nth`:
+2. they support logarithmic time rank queries via `clojure.core/nth`
+   and `avl.clj/rank-of`:
 
         (nth (avl/sorted-map 0 0 1 1 2 2) 1)
         ;= [1 1]
         (nth (avl/sorted-set 0 1 2) 1)
         ;= 1
+        
+        (avl/rank-of (avl/sorted-map-by > 0 0 1 1 2 2) 0)
+        2
+        (avl/rank-of (avl/sorted-set-by > 0 1 2) 0)
+        2
 
 ## Releases and dependency information
 
