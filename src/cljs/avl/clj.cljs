@@ -695,7 +695,7 @@
     (if (pos? cnt)
       (create-seq tree ascending? cnt)))
 
-  (-sorted-seq-rom [this k ascending?]
+  (-sorted-seq-from [this k ascending?]
     (if (pos? cnt)
       (loop [stack nil t tree]
         (if-not (nil? t)
@@ -797,8 +797,8 @@
     (AVLSet. meta avl-map _hash))
 
   ICounted
-  (count [this]
-    (count avl-map))
+  (-count [this]
+    (-count avl-map))
 
   IIndexed
   (-nth [this i]
