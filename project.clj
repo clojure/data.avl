@@ -7,4 +7,11 @@
   :jvm-opts ^:replace []
   :source-paths ["src/clj" "src/cljs"]
   :test-paths ["test/clj"]
-  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-1889"]]}})
+  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-1889"]]
+                   :plugins [[lein-cljsbuild "0.3.3"]]
+                   :cljsbuild
+                   {:builds {:test
+                             {:source-paths ["src/cljs" "test/clj" "test/cljs"]
+                              :compiler {:output-to "out/test.js"
+                                         :optimizations :advanced
+                                         :pretty-print false}}}}}})
