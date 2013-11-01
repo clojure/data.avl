@@ -86,16 +86,24 @@
 (def ^:private never-equiv (Object.))
 
 (defn ^:private equiv-map
-  "Assumes y is a map. Returns true if x equals y, otherwise returns
+  "Assumes x is a map. Returns true if y equals x, otherwise returns
   false."
-  [x y]
-  (boolean
-    (when (map? y)
-      ; assume all maps are counted
-      (when (== (count x) (count y))
-        (every? identity
-                (map (fn [xkv] (= (get y (first xkv) never-equiv)
-                                  (second xkv)))
+  [^clojure.lang.IPersistentMap x y]
+  (if-not (instance? java.util.Map y)
+    false
+    (if (and (instance? clojure.lang.IPersistentMap y)
+             (not (instance? clojure.lang.MapEquivalence y)))
+      false
+      (let [m ^java.util.Map y]
+        (if-not (== (.size x) (.size m))
+          false
+          (reduce-kv (fn [t k v]
+                       (if-not (.containsKey m k)
+                         (reduced false)
+                         (if-not (Util/equiv v (.get m k))
+                           (reduced false)
+                           t)))
+                     true
                      x))))))
 
 (gen-interface
@@ -477,7 +485,8 @@
                 l
                 new-right
                 (inc (max (height l) (height new-right)))
-                (.getRank node)))))
+                (.getRank node)))
+    (.getLeft node)))
 
 (defn ^:private delete-rightmost! ^IAVLNode [edit ^IAVLNode node]
   (if-not (nil? node)
@@ -485,7 +494,8 @@
           r    ^IAVLNode (.getRight node)]
       (cond
         (nil? r)
-        nil
+        (if-let [l (.getLeft node)]
+          (ensure-editable edit l))
 
         (nil? (.getRight r))
         (do

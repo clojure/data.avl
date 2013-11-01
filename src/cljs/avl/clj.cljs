@@ -366,7 +366,8 @@
                 l
                 new-right
                 (inc (max (height l) (height new-right)))
-                (.getRank node)))))
+                (.getRank node)))
+    (.getLeft node)))
 
 (defn ^:private delete-rightmost! [edit node]
   (if-not (nil? node)
@@ -374,7 +375,8 @@
           r    (.getRight node)]
       (cond
         (nil? r)
-        nil
+        (if-let [l (.getLeft node)]
+          (ensure-editable edit l))
 
         (nil? (.getRight r))
         (do
