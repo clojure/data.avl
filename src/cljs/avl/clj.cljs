@@ -180,7 +180,7 @@
 
 (defn ^:private select [node rank]
   (if (nil? node)
-    (throw (ex-info "nth indexed out of bounds in AVL tree" {}))
+    nil
     (let [node-rank (.getRank node)]
       (cond
         (== node-rank rank) node
@@ -612,7 +612,9 @@
 
   IIndexed
   (-nth [this i]
-    (-nth this i nil))
+    (if-let [n (select tree i)]
+      [(.getKey n) (.getVal n)]
+      (throw (ex-info "nth index out of bounds in AVL tree" {}))))
 
   (-nth [this i not-found]
     (if-let [n (select tree i)]
@@ -804,7 +806,9 @@
 
   IIndexed
   (-nth [this i]
-    (-nth this i nil))
+    (if-let [n (select (.-tree avl-map) i)]
+      (.getVal n)
+      (throw (ex-info "nth index out of bounds in AVL tree" {}))))
 
   (-nth [this i not-found]
     (if-let [n (select (.-tree avl-map) i)]

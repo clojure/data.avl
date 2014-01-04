@@ -296,8 +296,7 @@
 
 (defn ^:private select ^IAVLNode [^IAVLNode node rank]
   (if (nil? node)
-    (throw
-     (IndexOutOfBoundsException. "nth indexed out of bounds in AVL tree"))
+    nil
     (let [node-rank (.getRank node)]
       (cond
         (== node-rank rank) node
@@ -806,7 +805,10 @@
 
   clojure.lang.Indexed
   (nth [this i]
-    (.nth this i nil))
+    (if-let [n (select tree i)]
+      (MapEntry. (.getKey ^IAVLNode n) (.getVal ^IAVLNode n))
+      (throw
+       (IndexOutOfBoundsException. "nth index out of bounds in AVL tree"))))
 
   (nth [this i not-found]
     (if-let [n (select tree i)]
@@ -1080,7 +1082,10 @@
 
   clojure.lang.Indexed
   (nth [this i]
-    (.nth this i nil))
+    (if-let [n (select (.-tree avl-map) i)]
+      (.getVal ^IAVLNode n)
+      (throw
+       (IndexOutOfBoundsException. "nth index out of bounds in AVL tree"))))
 
   (nth [this i not-found]
     (if-let [n (select (.-tree avl-map) i)]
