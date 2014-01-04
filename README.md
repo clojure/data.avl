@@ -1,17 +1,18 @@
-# avl.clj
+# data.avl
 
 Persistent sorted maps and sets with support for transients and
 logarithmic time rank queries (via `clojure.core/nth` and
-`avl.clj/rank-of`), using AVL trees as the underlying data structure.
+`clojure.data.avl/rank-of`), using AVL trees as the underlying data
+structure.
 
 ## Usage
 
-avl.clj supports Clojure and ClojureScript. It exports a single
+data.avl supports both Clojure and ClojureScript. It exports a single
 namespace with five public functions, four of which are drop-in
 replacements for `clojure.core` / `cljs.core` functions of the same
 names:
 
-    (require '[avl.clj :as avl])
+    (require '[clojure.data.avl :as avl])
     
     (doc avl/sorted-map)
     (doc avl/sorted-map-by)
@@ -37,7 +38,7 @@ Clojure variants, with two differences:
         ;; ^- uses transients
 
 2. they support logarithmic time rank queries via `clojure.core/nth`
-   and `avl.clj/rank-of`:
+   and `clojure.data.avl/rank-of`:
 
         (nth (avl/sorted-map 0 0 1 1 2 2) 1)
         ;= [1 1]
@@ -51,30 +52,52 @@ Clojure variants, with two differences:
 
 ## Releases and dependency information
 
-[avl.clj releases are available from Clojars.](https://clojars.org/avl.clj)
-Please follow the link to discover the current release number.
+data.avl requires Clojure >= 1.5.0. The ClojureScript version is
+regularly tested against the most recent ClojureScript release.
+
+data.avl releases are available from Maven Central. Development
+snapshots are available from the Sonatype OSS repository.
+
+ * [Released versions](http://search.maven.org/#search%7Cga%7C1%7Corg.clojure%2Fdata.avl)
+
+ * [Development snapshots](https://oss.sonatype.org/index.html#nexus-search;gav~org.clojure~data.avl~~~)
+
+Follow the first link above to discover the current release number.
 
 [Leiningen](http://leiningen.org/) dependency information:
 
-    [avl.clj "${version}"]
+    [org.clojure/data.avl "${version}"]
 
 [Maven](http://maven.apache.org/) dependency information:
 
     <dependency>
-      <groupId>avl.clj</groupId>
-      <artifactId>avl.clj</artifactId>
+      <groupId>org.clojure</groupId>
+      <artifactId>data.avl</artifactId>
       <version>${version}</version>
     </dependency>
 
+[Gradle](http://www.gradle.org/) dependency information:
+
+    compile "org.clojure:data.avl:${version}"
+
 ## Developer information
 
-Please note that patches will only be accepted from developers who
-have submitted the Clojure CA and would be happy with the code they
-submit to avl.clj becoming part of the Clojure project.
+data.avl is being developed as a Clojure Contrib project, see the
+[What is Clojure Contrib](http://dev.clojure.org/pages/viewpage.action?pageId=5767464)
+page for details. Patches will only be accepted from developers who
+have signed the Clojure Contributor Agreement.
+
+* [GitHub project](https://github.com/clojure/data.avl)
+
+* [Bug Tracker](http://dev.clojure.org/jira/browse/DAVL)
+
+* [Continuous Integration](http://build.clojure.org/job/data.avl/)
+
+* [Compatibility Test Matrix](http://build.clojure.org/job/data.avl-test-matrix/)
 
 ## Clojure(Script) code reuse
 
-avl.clj sorted maps and sets support the same basic functionality
+data.avl sorted maps and sets support the same basic functionality
 regular Clojure's sorted maps and sets do (with the additions listed
 above). Some of the code supporting various Clojure(Script) interfaces
 and protocols is adapted from the ClojureScript implementations of the
@@ -93,6 +116,6 @@ notice:
 
 ## Licence
 
-Copyright © 2013 Michał Marczyk
+Copyright © 2013 Michał Marczyk, Rich Hickey
 
 Distributed under the Eclipse Public License, the same as Clojure.
