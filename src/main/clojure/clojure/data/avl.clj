@@ -5,7 +5,7 @@
   sets (based on Red-Black Trees). Additionally, the provided map and
   set types support the transients API and logarithmic time rank
   queries via clojure.core/nth (select element by rank) and
-  avl.clj/rank-of (discover rank of element)."
+  clojure.data.avl/rank-of (discover rank of element)."
 
   {:author "Michał Marczyk"}
 
@@ -107,22 +107,22 @@
                      x))))))
 
 (gen-interface
- :name avl.clj.IAVLNode
+ :name clojure.data.avl.IAVLNode
  :methods
- [[getKey    []                 Object]
-  [setKey    [Object]           avl.clj.IAVLNode]
-  [getVal    []                 Object]
-  [setVal    [Object]           avl.clj.IAVLNode]
-  [getLeft   []                 avl.clj.IAVLNode]
-  [setLeft   [avl.clj.IAVLNode] avl.clj.IAVLNode]
-  [getRight  []                 avl.clj.IAVLNode]
-  [setRight  [avl.clj.IAVLNode] avl.clj.IAVLNode]
-  [getHeight []                 int]
-  [setHeight [int]              avl.clj.IAVLNode]
-  [getRank   []                 int]
-  [setRank   [int]              avl.clj.IAVLNode]])
+ [[getKey    []                          Object]
+  [setKey    [Object]                    clojure.data.avl.IAVLNode]
+  [getVal    []                          Object]
+  [setVal    [Object]                    clojure.data.avl.IAVLNode]
+  [getLeft   []                          clojure.data.avl.IAVLNode]
+  [setLeft   [clojure.data.avl.IAVLNode] clojure.data.avl.IAVLNode]
+  [getRight  []                          clojure.data.avl.IAVLNode]
+  [setRight  [clojure.data.avl.IAVLNode] clojure.data.avl.IAVLNode]
+  [getHeight []                          int]
+  [setHeight [int]                       clojure.data.avl.IAVLNode]
+  [getRank   []                          int]
+  [setRank   [int]                       clojure.data.avl.IAVLNode]])
 
-(import avl.clj.IAVLNode)
+(import clojure.data.avl.IAVLNode)
 
 (deftype AVLNode [^AtomicReference edit
                   ^:unsynchronized-mutable key
@@ -763,10 +763,10 @@
   (AVLMapSeq. nil (seq-push node nil ascending?) ascending? cnt -1 -1))
 
 (gen-interface
- :name avl.clj.IAVLTree
- :methods [[getTree [] avl.clj.IAVLNode]])
+ :name clojure.data.avl.IAVLTree
+ :methods [[getTree [] clojure.data.avl.IAVLNode]])
 
-(import avl.clj.IAVLTree)
+(import clojure.data.avl.IAVLTree)
 
 (declare ->AVLTransientMap)
 

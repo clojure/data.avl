@@ -5,7 +5,7 @@
   sets (based on Red-Black Trees). Additionally, the provided map and
   set types support the transients API and logarithmic time rank
   queries via clojure.core/nth (select element by rank) and
-  avl.clj/rank-of (discover rank of element)."
+  clojure.data.avl/rank-of (discover rank of element)."
 
   {:author "Michał Marczyk"}
 
