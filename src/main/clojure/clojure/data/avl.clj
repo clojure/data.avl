@@ -95,7 +95,7 @@
              (not (instance? clojure.lang.MapEquivalence y)))
       false
       (let [m ^java.util.Map y]
-        (if-not (== (.size x) (.size m))
+        (if-not (== (.size ^java.util.Map x) (.size m))
           false
           (reduce-kv (fn [t k v]
                        (if-not (.containsKey m k)
