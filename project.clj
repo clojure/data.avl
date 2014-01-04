@@ -1,4 +1,4 @@
-(defproject avl.clj "0.0.9"
+(defproject avl.clj "0.0.10-SNAPSHOT"
   :description "Persistent sorted maps and sets with log-time rank queries"
   :url "https://github.com/michalmarczyk/avl.clj"
   :license {:name "Eclipse Public License"
@@ -7,8 +7,8 @@
   :jvm-opts ^:replace []
   :source-paths ["src/clj" "src/cljs"]
   :test-paths ["test/clj"]
-  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-1889"]]
-                   :plugins [[lein-cljsbuild "0.3.3"]]
+  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2138"]]
+                   :plugins [[lein-cljsbuild "1.0.1"]]
                    :cljsbuild
                    {:builds {:test
                              {:source-paths ["src/cljs" "test/clj" "test/cljs"]
