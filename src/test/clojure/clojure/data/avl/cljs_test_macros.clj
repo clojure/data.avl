@@ -1,4 +1,4 @@
-(ns avl.clj.cljs-test-macros
+(ns clojure.data.avl.cljs-test-macros
   (:require [clojure.walk :as walk]))
 
 (def tests (atom []))

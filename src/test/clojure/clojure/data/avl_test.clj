@@ -1,6 +1,6 @@
-(ns avl.clj-test
-  (:use-macros [avl.clj.cljs-test-macros :only [deftest]])
-  (:require [avl.clj :as avl]))
+(ns clojure.data.avl-test
+  (:use clojure.test)
+  (:require [clojure.data.avl :as avl]))
 
 (defn twice [x]
   [x x])

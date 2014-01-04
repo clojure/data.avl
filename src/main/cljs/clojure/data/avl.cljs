@@ -1,4 +1,4 @@
-(ns avl.clj
+(ns clojure.data.avl
 
   "An implementation of persistent sorted maps and sets based on AVL
   trees with API mimicking that of Clojure's sorted maps and
