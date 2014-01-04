@@ -310,7 +310,10 @@
       (cond
         (zero? c) (.getRank node)
         (neg? c)  (recur comp (.getLeft node) k)
-        :else     (inc (+ (.getRank node) (rank comp (.getRight node) k)))))))
+        :else     (let [r (rank comp (.getRight node) k)]
+                    (if (== -1 r)
+                      -1
+                      (inc (+ (.getRank node) r))))))))
 
 (defn ^:private maybe-rebalance ^IAVLNode [^IAVLNode node]
   (let [l  (.getLeft node)
