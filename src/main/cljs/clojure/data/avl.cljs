@@ -684,7 +684,7 @@
                _meta nil)))
 
   (-contains-key? [this k]
-    (not (nil? (.entryAt this k))))
+    (not (nil? (lookup comp tree k))))
 
   IMap
   (-dissoc [this k]
@@ -859,7 +859,7 @@
     (-lookup this v nil))
 
   (-lookup [this v not-found]
-    (let [n (.entryAt avl-map v)]
+    (let [n (lookup (.-comp avl-map) (.-tree avl-map) v)]
       (if-not (nil? n)
         (.-key n)
         not-found)))
