@@ -21,6 +21,8 @@
 (def rb-set-by->  (apply sorted-set-by > ks))
 (def avl-set-by-> (apply avl/sorted-set-by > ks))
 
+(def even-numbers (apply avl/sorted-set (range 0 100000 2)))
+
 (deftest sanity-checks
   (testing "AVL collections look like regular sorted collections"
     (is (= rb-map avl-map))
@@ -94,4 +96,13 @@
     (is (->> (map #(nth avl-set-by-> (avl/rank-of avl-set-by-> %)) ks)
              (map = ks)
              (every? true?)))
-    (is (every? #(== % -1) (map #(avl/rank-of avl-set %) [-10 123.5 200000])))))
+    (is (every? #(== % -1) (map #(avl/rank-of avl-set %) [-10 123.5 200000]))))
+  (testing "rank-of, nth and contains? agree on sets"
+    (is (every? (fn [x]
+                  (or (and (not (contains? even-numbers x))
+                           (== -1 (avl/rank-of even-numbers x)))
+                      (and (contains? even-numbers x)
+                           (== (nth even-numbers (avl/rank-of even-numbers x))
+                               x))))
+                (range (dec (apply min (seq even-numbers)))
+                       (+ 2 (apply max (seq even-numbers))))))))
