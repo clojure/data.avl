@@ -172,7 +172,9 @@
 
   (setRank [this r]
     (set! rank r)
-    this))
+    this)
+
+  java.io.Serializable)
 
 (defn ^:private ensure-editable
   (^IAVLNode [^AtomicReference edit]
