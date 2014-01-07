@@ -305,7 +305,7 @@
         (<  node-rank rank) (recur (.getRight node) (dec (- rank node-rank)))
         :else               (recur (.getLeft node)  rank)))))
 
-(defn ^:private rank ^IAVLNode [^Comparator comp ^IAVLNode node k]
+(defn ^:private rank ^long [^Comparator comp ^IAVLNode node k]
   (if (nil? node)
     -1
     (let [c (.compare comp k (.getKey node))]
@@ -1286,5 +1286,5 @@
 
 (defn rank-of
   "Returns the rank of x in coll or -1 if not present."
-  [coll x]
+  ^long [coll x]
   (rank (.comparator ^clojure.lang.Sorted coll) (.getTree ^IAVLTree coll) x))
