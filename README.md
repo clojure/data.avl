@@ -20,7 +20,8 @@ names:
     (doc avl/sorted-set-by)
 
 The fifth function finds the rank of the given element in an AVL map
-or set (-1 if not found):
+or set (-1 if not found; will return primitive `long`s where
+possible):
 
     (doc avl/rank-of)
 
