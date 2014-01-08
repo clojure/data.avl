@@ -26,9 +26,9 @@ possible):
     (doc avl/rank-of)
 
 The maps and sets returned by these functions behave like the core
-Clojure variants, with two differences:
+Clojure variants, with the following differences:
 
-1. they have transient counterparts:
+1. They have transient counterparts:
 
         (persistent! (assoc! (transient (avl/sorted-map) 0 0)))
         ;= {0 0}
@@ -38,7 +38,7 @@ Clojure variants, with two differences:
         (apply avl/sorted-map (interleave (range 32) (range 32)))
         ;; ^- uses transients
 
-2. they support logarithmic time rank queries via `clojure.core/nth`
+2. They support logarithmic time rank queries via `clojure.core/nth`
    and `clojure.data.avl/rank-of`:
 
         (nth (avl/sorted-map 0 0 1 1 2 2) 1)
@@ -50,6 +50,17 @@ Clojure variants, with two differences:
         2
         (avl/rank-of (avl/sorted-set-by > 0 1 2) 0)
         2
+
+3. They are typically noticeably faster during lookups and somewhat
+   slower during non-transient "updates" (`assoc`, `dissoc`) than the
+   built-in sorted collections. Note that batch "updates" using
+   transients typically perform better than batch "updates" on the
+   non-transient-enabled built-ins.
+
+4. They add some memory overhead -- a reference and two `int`s per
+   key. The additional node fields are used to support transients (one
+   reference field per key), rank queries (one `int`) and the
+   rebalancing algorithm itself (the final `int`).
 
 ## Releases and dependency information
 
