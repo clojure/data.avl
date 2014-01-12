@@ -231,3 +231,21 @@
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))
           (is (validate-invariant t)))))))
+
+(deftest navigable-queries
+  (testing "lookups are 'rounded'"
+    (is (every? true? (map #(= (if (odd? %) (inc %) %) (avl/nearest even-numbers >= %)) (drop-last ks))))
+    (is (every? true? (map #(= (if (odd? %) (dec %) %) (avl/nearest even-numbers <= %)) (rest ks)))))
+  (testing "out of range keys return nil"
+    (is (nil? (avl/nearest avl-map < 0)))
+    (is (nil? (avl/nearest avl-set < 0))))
+  (testing "floor and ceil returns exact match if present"
+    (is (every? true? (map #(= % (avl/nearest avl-set >= %)) ks)))
+    (is (every? true? (map #(= % (avl/nearest avl-set <= %)) ks)))
+    (is (every? true? (map #(= % (key (avl/nearest avl-map >= %))) ks)))
+    (is (every? true? (map #(= % (key (avl/nearest avl-map <= %))) ks))))
+  (testing "lower and higher match the next item"
+    (is (every? true? (map #(= (inc %) (avl/nearest avl-set > %)) (drop-last ks))))
+    (is (every? true? (map #(= (dec %) (avl/nearest avl-set < %)) (rest ks))))
+    (is (every? true? (map #(= (inc %) (key (avl/nearest avl-map > %))) (drop-last ks))))
+    (is (every? true? (map #(= (dec %) (key (avl/nearest avl-map < %))) (rest ks))))))
