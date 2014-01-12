@@ -296,6 +296,28 @@
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
 
+(defn ^:private lookup-nearest ^IAVLNode [^Comparator comp ^IAVLNode node test k]
+  (let [below? (or (identical? < test) (identical? <= test))
+        equal? (or (identical? <= test) (identical? >= test))
+        back?  (if below? neg? pos?)
+        backward (if below?
+                   #(.getLeft ^IAVLNode %)
+                   #(.getRight ^IAVLNode %))
+        forward  (if below?
+                   #(.getRight ^IAVLNode %)
+                   #(.getLeft ^IAVLNode %))]
+    (loop [prev nil
+           node node]
+      (if (nil? node)
+        prev
+        (let [c (.compare comp k (.getKey node))]
+          (cond
+            (zero? c) (if equal?
+                        node
+                        (recur prev (backward node)))
+            (back? c) (recur prev (backward node))
+            :else     (recur node (forward node))))))))
+
 (defn ^:private select ^IAVLNode [^IAVLNode node rank]
   (if (nil? node)
     nil
@@ -770,6 +792,9 @@
 
 (import clojure.data.avl.IAVLTree)
 
+(definterface INavigableTree
+  (nearest [test k]))
+
 (declare ->AVLTransientMap)
 
 (deftype AVLMap [^Comparator comp
@@ -791,6 +816,11 @@
   IAVLTree
   (getTree [this]
     tree)
+
+  INavigableTree
+  (nearest [this test k]
+    (if-let [node (lookup-nearest comp tree test k)]
+      (MapEntry. (.getKey node) (.getVal node))))
 
   clojure.lang.IHashEq
   (hasheq [this]
@@ -1069,6 +1099,11 @@
   (getTree [this]
     (.getTree avl-map))
 
+  INavigableTree
+  (nearest [this test k]
+    (if-let [node (lookup-nearest (.comparator avl-map) (.getTree avl-map) test k)]
+      (.getKey node)))
+
   clojure.lang.IHashEq
   (hasheq [this]
     (caching-hash this hasheq-iset _hasheq))
@@ -1288,3 +1323,10 @@
   "Returns the rank of x in coll or -1 if not present."
   ^long [coll x]
   (rank (.comparator ^clojure.lang.Sorted coll) (.getTree ^IAVLTree coll) x))
+
+(defn nearest
+  "Equivalent to, but more efficient than, (first (subseq* coll test x)),
+  where subseq* is clojure.core/subseq for test in #{>, >=} and
+  clojure.core/rsubseq for test in #{<, <=}."
+  [coll test x]
+  (.nearest ^INavigableTree coll test x))
