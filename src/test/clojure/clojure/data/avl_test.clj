@@ -106,3 +106,18 @@
                                x))))
                 (range (dec (apply min (seq even-numbers)))
                        (+ 2 (apply max (seq even-numbers))))))))
+
+(def keys-for-nearest [-1 0 1 2 3 4 5 6 7 8 9])
+(def set-for-nearest  (avl/sorted-set 0 2 4 6 8))
+(def rset-for-nearest (avl/sorted-set-by > 0 2 4 6 8))
+
+(defn subseq-nearest [coll test x]
+  (let [subseq* (if (#{< <=} test) rsubseq subseq)]
+    (first (subseq* coll test x))))
+
+(deftest nearest
+  (testing "nearest should find the correct element or nil"
+    (doseq [s [set-for-nearest rset-for-nearest]
+            t [< <= >= >]]
+      (is (= (map #(avl/nearest s t %) keys-for-nearest)
+             (map #(subseq-nearest s t %) keys-for-nearest))))))
