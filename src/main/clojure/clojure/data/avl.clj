@@ -9,7 +9,8 @@
 
   {:author "Michał Marczyk"}
 
-  (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by])
+  (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by
+                            range])
   (:import (clojure.lang RT Util APersistentMap APersistentSet
                          IPersistentMap IPersistentSet IPersistentStack
                          Box MapEntry SeqIterator)
@@ -296,7 +297,8 @@
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
 
-(defn ^:private lookup-nearest ^IAVLNode [^Comparator comp ^IAVLNode node test k]
+(defn ^:private lookup-nearest ^IAVLNode
+  [^Comparator comp ^IAVLNode node test k]
   (let [below? (or (identical? < test) (identical? <= test))
         equal? (or (identical? <= test) (identical? >= test))
         back?  (if below? neg? pos?)
@@ -639,6 +641,141 @@
                           (inc (max (height new-child)
                                     (height (.getLeft node)))))
               (maybe-rebalance! edit node))))))))
+
+(defn ^:private join
+  [^Comparator comp ^long left-count ^IAVLNode left ^IAVLNode right]
+  (cond
+    (nil? left)  right
+    (nil? right) left
+    :else
+    (let [lh (.getHeight left)
+          rh (.getHeight right)]
+      (cond
+        (== lh rh)
+        (let [left-min (get-rightmost left)
+              new-left (delete comp left (.getKey left-min) (Box. false))]
+          (AVLNode. nil
+                    (.getKey left-min) (.getVal left-min)
+                    new-left
+                    right
+                    (if (nil? new-left)
+                      0
+                      (unchecked-inc-int (.getHeight new-left)))
+                    (unchecked-dec-int left-count)))
+
+        (< lh rh)
+        (letfn [(step [^IAVLNode current ^long lvl]
+                  (cond
+                    (zero? lvl)
+                    (join comp left-count left current)
+
+                    (nil? (.getLeft current))
+                    (AVLNode. nil
+                              (.getKey current) (.getVal current)
+                              left
+                              (.getRight current)
+                              2
+                              left-count)
+
+                    :else
+                    (let [new-child (step (.getLeft current) (dec lvl))
+                          current-r (.getRight current)]
+                      (AVLNode. nil
+                                (.getKey current) (.getVal current)
+                                new-child
+                                current-r
+                                (inc (max (.getHeight ^IAVLNode new-child)
+                                          (if current-r
+                                            (.getHeight current-r)
+                                            0)))
+                                (+ left-count (.getRank current))))))]
+          (step right (- rh lh)))
+
+        :else
+        (letfn [(step [^IAVLNode current ^long cnt ^long lvl]
+                  (cond
+                    (zero? lvl)
+                    (join comp cnt current right)
+
+                    (nil? (.getRight current))
+                    (AVLNode. nil
+                              (.getKey current) (.getVal current)
+                              (.getLeft current)
+                              right
+                              2
+                              (.getRank current))
+
+                    :else
+                    (let [new-child (step (.getRight current)
+                                          (dec (- cnt (.getRank current)))
+                                          (dec lvl))
+                          current-l (.getLeft current)]
+                      (AVLNode. nil
+                                (.getKey current) (.getVal current)
+                                current-l
+                                new-child
+                                (inc (max (.getHeight ^IAVLNode new-child)
+                                          (if current-l
+                                            (.getHeight current-l)
+                                            0)))
+                                (.getRank current)))))]
+          (step left left-count (- lh rh)))))))
+
+(defn ^:private split [^Comparator comp ^IAVLNode node k]
+  (letfn [(step [^IAVLNode node]
+            (if (nil? node)
+              [nil nil nil]
+              (let [c (.compare comp k (.getKey node))]
+                (cond
+                  (zero? c)
+                  [(.getLeft node)
+                   (MapEntry. (.getKey node) (.getVal node))
+                   (.getRight node)]
+
+                  (neg? c)
+                  (let [[l e r] (step (.getLeft node))]
+                    [l
+                     e
+                     (join comp
+                           (- (.getRank node)
+                              (if e
+                                (rank comp (.getLeft node) (.key ^MapEntry e))
+                                (rank comp
+                                      (.getLeft node)
+                                      (.getKey (get-rightmost node)))))
+                           r
+                           (insert comp
+                                   (.getRight node)
+                                   (.getKey node)
+                                   (.getVal node)
+                                   (Box. false)))])
+
+                  :else
+                  (let [[l e r] (step (.getRight node))]
+                    [(join comp
+                           (.getRank node)
+                           (insert comp
+                                   (.getLeft node)
+                                   (.getKey node)
+                                   (.getVal node)
+                                   (Box. false))
+                           l)
+                     e
+                     r])))))]
+    (step node)))
+
+(defn ^:private range [^Comparator comp ^IAVLNode node low high]
+  (let [[_ ^MapEntry low-e  r] (split comp node low)
+        [l ^MapEntry high-e _] (split comp r high)]
+    (cond-> l
+      low-e  (as-> node
+                   (insert comp node
+                           (.key low-e) (.val low-e)
+                           (Box. false)))
+      high-e (as-> node
+                   (insert comp node
+                           (.key high-e) (.val high-e)
+                           (Box. false))))))
 
 (defn ^:private seq-push [^IAVLNode node stack ascending?]
   (loop [node node stack stack]
@@ -1330,3 +1467,29 @@
   clojure.core/rsubseq for test in #{<, <=}."
   [coll test x]
   (.nearest ^INavigableTree coll test x))
+
+(defn subrange
+  "Returns an AVL collection comprising the entries of coll between
+  start and end (inclusive, in the sense determined by coll's
+  comparator) in logarithmic time.
+
+  In other words, equivalent to, but more efficient than,
+  (into (empty coll) (subseq coll >= start <= end)."
+  [coll start end]
+  (if (zero? (count coll))
+    coll
+    (let [comp (.comparator ^clojure.lang.Sorted coll)]
+      (if (pos? (.compare comp start end))
+        (throw (IndexOutOfBoundsException. "start greater than end in submap"))
+        (let [keyfn (if (map? coll) key identity)
+              l (nearest coll >= start)
+              h (nearest coll <= end)]
+          (if (and l h)
+            (let [tree (range comp (.getTree ^IAVLTree coll) start end)
+                  cnt  (inc (- (rank-of coll (keyfn h))
+                               (rank-of coll (keyfn l))))
+                  m    (AVLMap. comp tree cnt nil -1 -1)]
+              (if (map? coll)
+                m
+                (AVLSet. nil m -1 -1)))
+            (empty coll)))))))

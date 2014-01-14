@@ -121,3 +121,27 @@
             t [< <= >= >]]
       (is (= (map #(avl/nearest s t %) keys-for-nearest)
              (map #(subseq-nearest s t %) keys-for-nearest))))))
+
+(def midsize-ks   (range 300))
+(def midsize-ksks (doall (interleave midsize-ks midsize-ks)))
+
+(def midsize-avl-set   (apply avl/sorted-set midsize-ks))
+(def midsize-avl-map   (apply avl/sorted-map midsize-ksks))
+(def midsize-avl-set-> (apply avl/sorted-set-by > midsize-ks))
+(def midsize-avl-map-> (apply avl/sorted-map-by > midsize-ksks))
+
+(defn subseq-subrange [coll low high]
+  (into (empty coll) (subseq coll >= low <= high)))
+
+(deftest subrange
+  (testing "subrange should return the correct result"
+    (is (every? true?
+                (for [coll [midsize-avl-set midsize-avl-map]
+                      i    (range -1 301)
+                      j    (range i  301)]
+                  (= (avl/subrange coll i j) (subseq-subrange coll i j)))))
+    (is (every? true?
+                (for [coll [midsize-avl-set-> midsize-avl-map->]
+                      i    (range 300 -2 -1)
+                      j    (range i -2 -1)]
+                  (= (avl/subrange coll i j) (subseq-subrange coll i j)))))))
