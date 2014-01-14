@@ -1477,6 +1477,7 @@
   [coll x]
   (let [comp (.comparator ^clojure.lang.Sorted coll)
         [left e? right] (split comp (.getTree ^IAVLTree coll) x)
+        keyfn (if (map? coll) key identity)
         wrap (if (map? coll)
                (fn wrap-map [tree cnt]
                  (AVLMap. comp tree cnt nil -1 -1))
@@ -1484,14 +1485,14 @@
                  (AVLSet. nil (AVLMap. comp tree cnt nil -1 -1) -1 -1)))]
     [(wrap left
            (if left
-             (rank-of coll (nearest coll < x))
+             (rank-of coll (keyfn (nearest coll < x)))
              0))
      (if (and e? (set? coll))
        (.getKey ^MapEntry e?)
        e?)
      (wrap right
            (if right
-             (rank-of coll (nearest coll > x))
+             (rank-of coll (keyfn (nearest coll > x)))
              0))]))
 
 (defn subrange
