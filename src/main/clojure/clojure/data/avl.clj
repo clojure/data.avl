@@ -10,7 +10,7 @@
   {:author "Michał Marczyk"}
 
   (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by
-                            range])
+                            range split-at])
   (:import (clojure.lang RT Util APersistentMap APersistentSet
                          IPersistentMap IPersistentSet IPersistentStack
                          Box MapEntry SeqIterator)
@@ -1467,6 +1467,32 @@
   clojure.core/rsubseq for test in #{<, <=}."
   [coll test x]
   (.nearest ^INavigableTree coll test x))
+
+(defn split-at
+  "Returns [left e? right], where left and right are collections of
+  the same type as coll and containing, respectively, the keys below
+  and above x in the ordering determined by coll's comparator, while
+  e? is the entry at key x for maps, the stored copy of the key x for
+  sets, nil if coll does not contain x."
+  [coll x]
+  (let [comp (.comparator ^clojure.lang.Sorted coll)
+        [left e? right] (split comp (.getTree ^IAVLTree coll) x)
+        wrap (if (map? coll)
+               (fn wrap-map [tree cnt]
+                 (AVLMap. comp tree cnt nil -1 -1))
+               (fn wrap-set [tree cnt]
+                 (AVLSet. nil (AVLMap. comp tree cnt nil -1 -1) -1 -1)))]
+    [(wrap left
+           (if left
+             (rank-of coll (nearest coll < x))
+             0))
+     (if (and e? (set? coll))
+       (.getKey ^MapEntry e?)
+       e?)
+     (wrap right
+           (if right
+             (rank-of coll (nearest coll > x))
+             0))]))
 
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
