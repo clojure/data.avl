@@ -1484,15 +1484,15 @@
                (fn wrap-set [tree cnt]
                  (AVLSet. nil (AVLMap. comp tree cnt nil -1 -1) -1 -1)))]
     [(wrap left
-           (if left
-             (rank-of coll (keyfn (nearest coll < x)))
-             0))
+           (if (or e? right)
+             (rank-of coll (keyfn (nearest coll >= x)))
+             (count coll)))
      (if (and e? (set? coll))
        (.getKey ^MapEntry e?)
        e?)
      (wrap right
            (if right
-             (rank-of coll (keyfn (nearest coll > x)))
+             (- (count coll) (rank-of coll (keyfn (nearest coll > x))))
              0))]))
 
 (defn subrange

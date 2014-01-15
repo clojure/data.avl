@@ -135,13 +135,27 @@
 
 (deftest subrange
   (testing "subrange should return the correct result"
-    (is (every? true?
-                (for [coll [midsize-avl-set midsize-avl-map]
-                      i    (range -1 301)
-                      j    (range i  301)]
-                  (= (avl/subrange coll i j) (subseq-subrange coll i j)))))
-    (is (every? true?
-                (for [coll [midsize-avl-set-> midsize-avl-map->]
-                      i    (range 300 -2 -1)
-                      j    (range i -2 -1)]
-                  (= (avl/subrange coll i j) (subseq-subrange coll i j)))))))
+    (doseq [coll [midsize-avl-set midsize-avl-map]
+            i    (range -1 301)
+            j    (range i  301)]
+      (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))
+    (doseq [coll [midsize-avl-set-> midsize-avl-map->]
+            i    (range 300 -2 -1)
+            j    (range i -2 -1)]
+      (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))))
+
+(defn subseq-split [coll x]
+  (let [e (empty coll)]
+    [(into e (subseq coll < x))
+     (if (contains? coll x)
+       (if (map? coll)
+         (find coll x)
+         (get coll x)))
+     (into e (subseq coll > x))]))
+
+(deftest split
+  (testing "split-at should return the correct result"
+    (doseq [coll [midsize-avl-set midsize-avl-map
+                  midsize-avl-set-> midsize-avl-map->]
+            i    (range -1 301)]
+      (is (= (avl/split-at coll i) (subseq-split coll i))))))
