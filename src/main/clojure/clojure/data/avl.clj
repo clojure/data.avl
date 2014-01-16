@@ -678,15 +678,16 @@
                     :else
                     (let [new-child (step (.getLeft current) (dec lvl))
                           current-r (.getRight current)]
-                      (AVLNode. nil
-                                (.getKey current) (.getVal current)
-                                new-child
-                                current-r
-                                (inc (max (.getHeight ^IAVLNode new-child)
-                                          (if current-r
-                                            (.getHeight current-r)
-                                            0)))
-                                (+ left-count (.getRank current))))))]
+                      (maybe-rebalance
+                       (AVLNode. nil
+                                 (.getKey current) (.getVal current)
+                                 new-child
+                                 current-r
+                                 (inc (max (.getHeight ^IAVLNode new-child)
+                                           (if current-r
+                                             (.getHeight current-r)
+                                             0)))
+                                 (+ left-count (.getRank current)))))))]
           (step right (- rh lh)))
 
         :else
@@ -708,15 +709,16 @@
                                           (dec (- cnt (.getRank current)))
                                           (dec lvl))
                           current-l (.getLeft current)]
-                      (AVLNode. nil
-                                (.getKey current) (.getVal current)
-                                current-l
-                                new-child
-                                (inc (max (.getHeight ^IAVLNode new-child)
-                                          (if current-l
-                                            (.getHeight current-l)
-                                            0)))
-                                (.getRank current)))))]
+                      (maybe-rebalance
+                       (AVLNode. nil
+                                 (.getKey current) (.getVal current)
+                                 current-l
+                                 new-child
+                                 (inc (max (.getHeight ^IAVLNode new-child)
+                                           (if current-l
+                                             (.getHeight current-l)
+                                             0)))
+                                 (.getRank current))))))]
           (step left left-count (- lh rh)))))))
 
 (defn ^:private split [^Comparator comp ^IAVLNode node k]
