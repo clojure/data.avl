@@ -72,6 +72,9 @@ namespace.
   </div><div style="margin-left: 1em;" class="toc-section">
     <a href="#var-section" style="margin-top: 3px;">Vars and Functions</a>
     <div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/nearest">nearest</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.data.avl/rank-of">rank-of</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
@@ -85,6 +88,12 @@ namespace.
       
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.data.avl/sorted-set-by">sorted-set-by</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/split-at">split-at</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/subrange">subrange</a>
       
     </div>
   </div>
@@ -120,7 +129,7 @@ clojure.data.avl/rank-of (discover rank of element).</pre>
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[comp tree cnt _meta _hash _hasheq]</span><br />
     Protocols: <span id="type-protocols">clojure.core.protocols/IKVReduce</span><br />
-    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.lang.Associative, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentMap, clojure.lang.Indexed, clojure.lang.MapEquivalence, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.lang.Iterable, java.util.Map</span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Associative, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentMap, clojure.lang.Indexed, clojure.lang.MapEquivalence, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.lang.Iterable, java.util.Map</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -147,7 +156,7 @@ clojure.data.avl/rank-of (discover rank of element).</pre>
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[_meta avl-map _hash _hasheq]</span><br />
     Protocols: <span id="type-protocols"></span><br />
-    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentSet, clojure.lang.Indexed, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.util.Set</span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentSet, clojure.lang.Indexed, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.util.Set</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -174,6 +183,19 @@ clojure.data.avl/rank-of (discover rank of element).</pre>
   <div id="var-entry">
     <br />
     <hr />
+    <h2 id="clojure.data.avl/nearest">nearest</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (nearest coll test x)
+</pre>
+    <pre id="var-docstr">Equivalent to, but more efficient than, (first (subseq* coll test x)),
+where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
+clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1472" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
     <h2 id="clojure.data.avl/rank-of">rank-of</h2>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (rank-of coll x)
@@ -181,7 +203,7 @@ clojure.data.avl/rank-of (discover rank of element).</pre>
     <pre id="var-docstr">Returns the rank of x in coll or -1 if not present.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/6300845bef763247ca0bffafbd1843ac37e73d16/src/main/clojure/clojure/data/avl.clj#L1287" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1467" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -193,7 +215,7 @@ clojure.data.avl/rank-of (discover rank of element).</pre>
 Returns a new AVL map with supplied mappings.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/6300845bef763247ca0bffafbd1843ac37e73d16/src/main/clojure/clojure/data/avl.clj#L1253" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1433" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -206,7 +228,7 @@ Returns a new sorted map with supplied mappings, using the supplied
 comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/6300845bef763247ca0bffafbd1843ac37e73d16/src/main/clojure/clojure/data/avl.clj#L1262" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1442" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -217,7 +239,7 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/6300845bef763247ca0bffafbd1843ac37e73d16/src/main/clojure/clojure/data/avl.clj#L1274" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1454" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -228,7 +250,38 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys, using the supplied comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/6300845bef763247ca0bffafbd1843ac37e73d16/src/main/clojure/clojure/data/avl.clj#L1279" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1459" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/split-at">split-at</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (split-at coll x)
+</pre>
+    <pre id="var-docstr">Returns [left e? right], where left and right are collections of
+the same type as coll and containing, respectively, the keys below
+and above x in the ordering determined by coll's comparator, while
+e? is the entry at key x for maps, the stored copy of the key x for
+sets, nil if coll does not contain x.</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1479" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/subrange">subrange</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (subrange coll start end)
+</pre>
+    <pre id="var-docstr">Returns an AVL collection comprising the entries of coll between
+start and end (inclusive, in the sense determined by coll's
+comparator) in logarithmic time.
+
+In other words, equivalent to, but more efficient than,
+(into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506" id="var-source">Source</a>
   </div>
 </div>
 
