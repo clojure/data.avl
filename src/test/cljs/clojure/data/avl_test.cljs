@@ -57,7 +57,7 @@
            (persistent! (reduce disj! (transient avl-set) ks')))))
   (testing "*-by seqs look like they should"
     (is (= (seq rb-map-by->) (seq avl-map-by->)))
-    (is (= (seq (apply avl/sorted-set-by > (range 32))))))
+    (is (= (seq rb-set-by->) (seq avl-set-by->))))
   (testing "reduce-kv returns correct values"
     (is (= (reduce-kv + 0 rb-map) (reduce-kv + 0 avl-map)))
     (is (= (reduce-kv + 0 rb-map-by->) (reduce-kv + 0 avl-map-by->)))))
