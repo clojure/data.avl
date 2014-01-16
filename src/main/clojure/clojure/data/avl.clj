@@ -736,11 +736,19 @@
                      e
                      (join comp
                            (- (.getRank node)
-                              (if e
-                                (rank comp (.getLeft node) (.key ^MapEntry e))
-                                (rank comp
-                                      (.getLeft node)
-                                      (.getKey (get-rightmost node)))))
+                              (cond
+                                e
+                                (unchecked-inc-int
+                                 (rank comp
+                                       (.getLeft node)
+                                       (.key ^MapEntry e)))
+                                r
+                                (unchecked-inc-int
+                                 (rank comp
+                                       (.getLeft node)
+                                       (.getKey (get-rightmost r))))
+                                :else
+                                (.getRank node)))
                            r
                            (insert comp
                                    (.getRight node)
@@ -751,7 +759,7 @@
                   :else
                   (let [[l e r] (step (.getRight node))]
                     [(join comp
-                           (.getRank node)
+                           (unchecked-inc-int (.getRank node))
                            (insert comp
                                    (.getLeft node)
                                    (.getKey node)
