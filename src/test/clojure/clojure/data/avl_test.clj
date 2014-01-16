@@ -85,21 +85,21 @@
   (testing "reduce-kv short-circuits appropriately"
     (is (= (reduce-kv (fn [acc k v] (reduced acc)) :foo avl-map) :foo))
     (is (= (reduce-kv (fn [acc k v]
-                        (if (== 31000 k)
+                        (if (== (quot large-tree-size 3) k)
                           (reduced k)
                           acc))
                       nil
                       avl-map)
-           31000))
+           (quot large-tree-size 3)))
     (is (= (let [counter (atom 0)]
              (reduce-kv (fn [acc k v]
-                          (if (== 31000 k)
+                          (if (== (quot large-tree-size 3) k)
                             (reduced k)
                             (swap! counter inc)))
                         nil
                         avl-map)
              @counter)
-           31000))))
+           (quot large-tree-size 3)))))
 
 (deftest rank-queries
   (testing "map rank queries work as expected"
