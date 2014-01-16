@@ -2,11 +2,16 @@
   (:use clojure.test)
   (:require [clojure.data.avl :as avl]))
 
-(def large-tree-size
-  (if-let [size (System/getProperty
-                 "org.clojure.data.avl.test.large-tree-size")]
-    (Long/parseLong size)
-    100000))
+(defmacro deftreesize [name default]
+  `(def ~name
+     (if-let [size# (System/getProperty
+                     ~(str "org.clojure.data.avl.test." name))]
+       (Long/parseLong size#)
+       ~default)))
+
+(deftreesize small-tree-size  150)
+(deftreesize medium-tree-size 2500)
+(deftreesize large-tree-size  10000)
 
 (defn validate-invariant [^clojure.data.avl.IAVLTree coll]
   (let [tree (.getTree coll)
@@ -138,7 +143,7 @@
       (is (= (map #(avl/nearest s t %) keys-for-nearest)
              (map #(subseq-nearest s t %) keys-for-nearest))))))
 
-(def small-ks   (range 300))
+(def small-ks   (range small-tree-size))
 (def small-ksks (doall (interleave small-ks small-ks)))
 
 (def small-avl-set   (apply avl/sorted-set small-ks))
@@ -152,11 +157,11 @@
 (deftest subrange
   (testing "subrange should return the correct result"
     (doseq [coll [small-avl-set small-avl-map]
-            i    (range -1 301)
-            j    (range i  301)]
+            i    (range -1 (inc small-tree-size))
+            j    (range i  (inc small-tree-size))]
       (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))
     (doseq [coll [small-avl-set-> small-avl-map->]
-            i    (range 300 -2 -1)
+            i    (range small-tree-size -2 -1)
             j    (range i -2 -1)]
       (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))))
 
@@ -173,10 +178,10 @@
   (testing "split-at should return the correct result"
     (doseq [coll [small-avl-set small-avl-map
                   small-avl-set-> small-avl-map->]
-            i    (range -1 301)]
+            i    (range -1 (inc small-tree-size))]
       (is (= (avl/split-at coll i) (subseq-split coll i))))))
 
-(def midsize-ks (range 25000))
+(def midsize-ks (range medium-tree-size))
 
 (deftest avl-invariant
   (testing "AVL invariant is maintained at all times"
