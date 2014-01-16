@@ -658,9 +658,7 @@
                     (.getKey left-min) (.getVal left-min)
                     new-left
                     right
-                    (if (nil? new-left)
-                      0
-                      (unchecked-inc-int (.getHeight new-left)))
+                    (unchecked-inc-int rh)
                     (unchecked-dec-int left-count)))
 
         (< lh rh)
