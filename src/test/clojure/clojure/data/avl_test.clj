@@ -6,7 +6,7 @@
   (if-let [size (System/getProperty
                  "org.clojure.data.avl.test.large-tree-size")]
     (Long/parseLong size)
-    50000))
+    100000))
 
 (defn validate-invariant [^clojure.data.avl.IAVLTree coll]
   (let [tree (.getTree coll)
@@ -138,24 +138,24 @@
       (is (= (map #(avl/nearest s t %) keys-for-nearest)
              (map #(subseq-nearest s t %) keys-for-nearest))))))
 
-(def midsize-ks   (range 300))
-(def midsize-ksks (doall (interleave midsize-ks midsize-ks)))
+(def small-ks   (range 300))
+(def small-ksks (doall (interleave small-ks small-ks)))
 
-(def midsize-avl-set   (apply avl/sorted-set midsize-ks))
-(def midsize-avl-map   (apply avl/sorted-map midsize-ksks))
-(def midsize-avl-set-> (apply avl/sorted-set-by > midsize-ks))
-(def midsize-avl-map-> (apply avl/sorted-map-by > midsize-ksks))
+(def small-avl-set   (apply avl/sorted-set small-ks))
+(def small-avl-map   (apply avl/sorted-map small-ksks))
+(def small-avl-set-> (apply avl/sorted-set-by > small-ks))
+(def small-avl-map-> (apply avl/sorted-map-by > small-ksks))
 
 (defn subseq-subrange [coll low high]
   (into (empty coll) (subseq coll >= low <= high)))
 
 (deftest subrange
   (testing "subrange should return the correct result"
-    (doseq [coll [midsize-avl-set midsize-avl-map]
+    (doseq [coll [small-avl-set small-avl-map]
             i    (range -1 301)
             j    (range i  301)]
       (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))
-    (doseq [coll [midsize-avl-set-> midsize-avl-map->]
+    (doseq [coll [small-avl-set-> small-avl-map->]
             i    (range 300 -2 -1)
             j    (range i -2 -1)]
       (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))))
@@ -171,25 +171,27 @@
 
 (deftest split
   (testing "split-at should return the correct result"
-    (doseq [coll [midsize-avl-set midsize-avl-map
-                  midsize-avl-set-> midsize-avl-map->]
+    (doseq [coll [small-avl-set small-avl-map
+                  small-avl-set-> small-avl-map->]
             i    (range -1 301)]
       (is (= (avl/split-at coll i) (subseq-split coll i))))))
+
+(def midsize-ks (range 25000))
 
 (deftest avl-invariant
   (testing "AVL invariant is maintained at all times"
     (let [p (atom (avl/sorted-set))
           t (atom (avl/sorted-set))]
-      (doseq [k ks]
+      (doseq [k midsize-ks]
         (let [s (swap! p conj k)
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))
           (is (validate-invariant t))))
-      (doseq [k ks]
+      (doseq [k midsize-ks]
         (let [[l _ r] (avl/split-at @p k)]
           (is (validate-invariant l))
           (is (validate-invariant r))))
-      (doseq [k ks]
+      (doseq [k midsize-ks]
         (let [s (swap! p disj k)
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))
