@@ -2,6 +2,12 @@
   (:use clojure.test)
   (:require [clojure.data.avl :as avl]))
 
+(def large-tree-size
+  (if-let [size (System/getProperty
+                 "org.clojure.data.avl.test.large-tree-size")]
+    (Long/parseLong size)
+    50000))
+
 (defn validate-invariant [^clojure.data.avl.IAVLTree coll]
   (let [tree (.getTree coll)
         h (fn [^clojure.data.avl.IAVLNode node]
@@ -15,7 +21,7 @@
 (defn twice [x]
   [x x])
 
-(def ks   (range 100000))
+(def ks   (range large-tree-size))
 (def ksks (doall (interleave ks ks)))
 (def ks'  (doall (map first (partition 2 ks))))
 
@@ -31,7 +37,7 @@
 (def rb-set-by->  (apply sorted-set-by > ks))
 (def avl-set-by-> (apply avl/sorted-set-by > ks))
 
-(def even-numbers (apply avl/sorted-set (range 0 100000 2)))
+(def even-numbers (apply avl/sorted-set (range 0 large-tree-size 2)))
 
 (deftest sanity-checks
   (testing "AVL collections look like regular sorted collections"
