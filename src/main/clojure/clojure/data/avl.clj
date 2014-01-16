@@ -354,7 +354,7 @@
             rr  (.getRight r)
             rlh (height rl)
             rrh (height rr)]
-        (if (>= (- rlh rrh) 2)
+        (if (== (- rlh rrh) 1)
           ;; left-heavy
           (let [new-right (rotate-right r)]
             (rotate-left (AVLNode. nil
@@ -372,7 +372,7 @@
             llh (height ll)
             lrh (height lr)]
         ;; right-heavy
-        (if (>= (- lrh llh) 2)
+        (if (== (- lrh llh) 1)
           (let [new-left (rotate-left l)]
             (rotate-right (AVLNode. nil
                                     (.getKey node) (.getVal node)
@@ -399,7 +399,7 @@
             rr   (.getRight r)
             rlh  (height rl)
             rrh  (height rr)]
-        (if (>= (- rlh rrh) 2)
+        (if (== (- rlh rrh) 1)
           ;; left-heavy
           (let [new-right (rotate-right! edit r)]
             (.setRight  node new-right)
@@ -415,7 +415,7 @@
             llh  (height ll)
             lrh  (height lr)]
         ;; right-heavy
-        (if (>= (- lrh llh) 2)
+        (if (== (- lrh llh) 1)
           (let [new-left (rotate-left! edit l)]
             (.setLeft   node new-left)
             (.setHeight node (inc (max rh (height new-left))))

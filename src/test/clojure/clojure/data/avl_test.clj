@@ -2,6 +2,16 @@
   (:use clojure.test)
   (:require [clojure.data.avl :as avl]))
 
+(defn validate-invariant [^clojure.data.avl.IAVLTree coll]
+  (let [tree (.getTree coll)
+        h (fn [^clojure.data.avl.IAVLNode node]
+            (if node
+              (.getHeight node)
+              0))]
+    (or (nil? tree)
+        (boolean
+         (#{-1 0 1} (- (h (.getLeft tree)) (h (.getRight tree))))))))
+
 (defn twice [x]
   [x x])
 
@@ -159,3 +169,22 @@
                   midsize-avl-set-> midsize-avl-map->]
             i    (range -1 301)]
       (is (= (avl/split-at coll i) (subseq-split coll i))))))
+
+(deftest avl-invariant
+  (testing "AVL invariant is maintained at all times"
+    (let [p (atom (avl/sorted-set))
+          t (atom (avl/sorted-set))]
+      (doseq [k ks]
+        (let [s (swap! p conj k)
+              t (swap! t (comp persistent! #(conj! % k) transient))]
+          (is (validate-invariant s))
+          (is (validate-invariant t))))
+      (doseq [k ks]
+        (let [[l _ r] (avl/split-at @p k)]
+          (is (validate-invariant l))
+          (is (validate-invariant r))))
+      (doseq [k ks]
+        (let [s (swap! p disj k)
+              t (swap! t (comp persistent! #(conj! % k) transient))]
+          (is (validate-invariant s))
+          (is (validate-invariant t)))))))
