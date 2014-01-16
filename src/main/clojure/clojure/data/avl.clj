@@ -1505,7 +1505,8 @@
     coll
     (let [comp (.comparator ^clojure.lang.Sorted coll)]
       (if (pos? (.compare comp start end))
-        (throw (IndexOutOfBoundsException. "start greater than end in submap"))
+        (throw
+         (IndexOutOfBoundsException. "start greater than end in subrange"))
         (let [keyfn (if (map? coll) key identity)
               l (nearest coll >= start)
               h (nearest coll <= end)]
