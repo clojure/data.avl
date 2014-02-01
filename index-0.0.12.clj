@@ -90,33 +90,47 @@
    :var-type "function",
    :line 1459,
    :file "src/main/clojure/clojure/data/avl.clj"}
-  {:arglists ([coll x]),
+  {:arglists ([coll n]),
    :name "split-at",
-   :namespace "clojure.data.avl",
-   :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1479",
-   :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
-   :wiki-url
-   "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-at",
-   :doc
-   "Returns [left e? right], where left and right are collections of\nthe same type as coll and containing, respectively, the keys below\nand above x in the ordering determined by coll's comparator, while\ne? is the entry at key x for maps, the stored copy of the key x for\nsets, nil if coll does not contain x.",
-   :var-type "function",
-   :line 1479,
-   :file "src/main/clojure/clojure/data/avl.clj"}
-  {:arglists ([coll start end]),
-   :name "subrange",
    :namespace "clojure.data.avl",
    :source-url
    "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
-   "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/subrange",
+   "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-at",
    :doc
-   "Returns an AVL collection comprising the entries of coll between\nstart and end (inclusive, in the sense determined by coll's\ncomparator) in logarithmic time.\n\nIn other words, equivalent to, but more efficient than,\n(into (empty coll) (subseq coll >= start <= end).",
+   "Equivalent to, but more efficient than, \n[(into (empty coll) (take n coll))\n (into (empty coll) (drop n coll))].",
    :var-type "function",
    :line 1506,
+   :file "src/main/clojure/clojure/data/avl.clj"}
+  {:arglists ([coll x]),
+   :name "split-key",
+   :namespace "clojure.data.avl",
+   :source-url
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1479",
+   :raw-source-url
+   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   :wiki-url
+   "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-key",
+   :doc
+   "Returns [left e? right], where left and right are collections of\nthe same type as coll and containing, respectively, the keys below\nand above x in the ordering determined by coll's comparator, while\ne? is the entry at key x for maps, the stored copy of the key x for\nsets, nil if coll does not contain x.",
+   :var-type "function",
+   :line 1479,
+   :file "src/main/clojure/clojure/data/avl.clj"}
+  {:arglists ([coll test limit] [coll start-test start end-test end]),
+   :name "subrange",
+   :namespace "clojure.data.avl",
+   :source-url
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1518",
+   :raw-source-url
+   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   :wiki-url
+   "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/subrange",
+   :doc
+   "Returns an AVL collection comprising the entries of coll between\nstart and end (in the sense determined by coll's comparator) in\nlogarithmic time. Whether the endpoints are themselves included in\nthe returned collection depends on the provided tests; start-test\nmust be either > or >=, end-test must be either < or <=.\n\nWhen passed a single test and limit, subrange infers the other end\nof the range from the test: > / >= mean to include items up to the\nend of coll, < / <= mean to include items taken from the beginning\nof coll.\n\n(subrange >= start <= end) is equivalent to, but more efficient\nthan, (into (empty coll) (subseq coll >= start <= end).",
+   :var-type "function",
+   :line 1518,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:file nil,
    :raw-source-url nil,

@@ -93,6 +93,9 @@ namespace.
       <a class="toc-entry-anchor" href="#clojure.data.avl/split-at">split-at</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/split-key">split-key</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.data.avl/subrange">subrange</a>
       
     </div>
@@ -256,7 +259,20 @@ comparator.</pre>
     <hr />
     <h2 id="clojure.data.avl/split-at">split-at</h2>
     <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (split-at coll x)
+    <pre id="var-usage">Usage: (split-at coll n)
+</pre>
+    <pre id="var-docstr">Equivalent to, but more efficient than, 
+[(into (empty coll) (take n coll))
+ (into (empty coll) (drop n coll))].</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/split-key">split-key</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (split-key coll x)
 </pre>
     <pre id="var-docstr">Returns [left e? right], where left and right are collections of
 the same type as coll and containing, respectively, the keys below
@@ -271,17 +287,25 @@ sets, nil if coll does not contain x.</pre>
     <hr />
     <h2 id="clojure.data.avl/subrange">subrange</h2>
     <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (subrange coll start end)
+    <pre id="var-usage">Usage: (subrange coll test limit)
+       (subrange coll start-test start end-test end)
 </pre>
     <pre id="var-docstr">Returns an AVL collection comprising the entries of coll between
-start and end (inclusive, in the sense determined by coll's
-comparator) in logarithmic time.
+start and end (in the sense determined by coll's comparator) in
+logarithmic time. Whether the endpoints are themselves included in
+the returned collection depends on the provided tests; start-test
+must be either &gt; or &gt;=, end-test must be either &lt; or &lt;=.
 
-In other words, equivalent to, but more efficient than,
-(into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
+When passed a single test and limit, subrange infers the other end
+of the range from the test: &gt; / &gt;= mean to include items up to the
+end of coll, &lt; / &lt;= mean to include items taken from the beginning
+of coll.
+
+(subrange &gt;= start &lt;= end) is equivalent to, but more efficient
+than, (into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1518" id="var-source">Source</a>
   </div>
 </div>
 
