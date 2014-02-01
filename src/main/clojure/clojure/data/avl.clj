@@ -772,7 +772,7 @@
                      r])))))]
     (step node)))
 
-(defn ^:private range [^Comparator comp ^IAVLNode node low high]
+(defn ^:private range ^IAVLNode [^Comparator comp ^IAVLNode node low high]
   (let [[_ ^MapEntry low-e  r] (split comp node low)
         [l ^MapEntry high-e _] (split comp r high)]
     (cond-> l
@@ -1476,7 +1476,7 @@
   [coll test x]
   (.nearest ^INavigableTree coll test x))
 
-(defn split-at
+(defn split-key
   "Returns [left e? right], where left and right are collections of
   the same type as coll and containing, respectively, the keys below
   and above x in the ordering determined by coll's comparator, while
@@ -1503,29 +1503,65 @@
              (- (count coll) (rank-of coll (keyfn (nearest coll > x))))
              0))]))
 
+(defn split-at
+  "Equivalent to, but more efficient than, 
+  [(into (empty coll) (take n coll))
+   (into (empty coll) (drop n coll))]."
+  [coll n]
+  (if (>= n (count coll))
+    [coll (empty coll)]
+    (let [k (nth coll n)
+          k (if (map? coll) (key k) k)
+          [l e r] (split-key coll k)]
+      [(conj l e) r])))
+
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
-  start and end (inclusive, in the sense determined by coll's
-  comparator) in logarithmic time.
+  start and end (in the sense determined by coll's comparator) in
+  logarithmic time. Whether the endpoints are themselves included in
+  the returned collection depends on the provided tests; start-test
+  must be either > or >=, end-test must be either < or <=.
 
-  In other words, equivalent to, but more efficient than,
-  (into (empty coll) (subseq coll >= start <= end)."
-  [coll start end]
-  (if (zero? (count coll))
-    coll
-    (let [comp (.comparator ^clojure.lang.Sorted coll)]
-      (if (pos? (.compare comp start end))
-        (throw
-         (IndexOutOfBoundsException. "start greater than end in subrange"))
-        (let [keyfn (if (map? coll) key identity)
-              l (nearest coll >= start)
-              h (nearest coll <= end)]
-          (if (and l h)
-            (let [tree (range comp (.getTree ^IAVLTree coll) start end)
-                  cnt  (inc (- (rank-of coll (keyfn h))
-                               (rank-of coll (keyfn l))))
-                  m    (AVLMap. comp tree cnt nil -1 -1)]
-              (if (map? coll)
-                m
-                (AVLSet. nil m -1 -1)))
-            (empty coll)))))))
+  When passed a single test and limit, subrange infers the other end
+  of the range from the test: > / >= mean to include items up to the
+  end of coll, < / <= mean to include items taken from the beginning
+  of coll.
+
+  (subrange >= start <= end) is equivalent to, but more efficient
+  than, (into (empty coll) (subseq coll >= start <= end)."
+  ([coll test limit]
+     (cond
+       (zero? (count coll))
+       coll
+
+       (#{> >=} test)
+       (subrange coll
+                 test limit
+                 <= (.getKey ^IAVLNode (select (.getTree ^IAVLTree coll)
+                                               (dec (count coll)))))
+
+       :else
+       (subrange coll
+                 >= (.getKey ^IAVLNode (select (.getTree ^IAVLTree coll) 0))
+                 test limit)))
+  ([coll start-test start end-test end]
+     (if (zero? (count coll))
+       coll
+       (let [comp (.comparator ^clojure.lang.Sorted coll)]
+         (if (pos? (.compare comp start end))
+           (throw
+            (IndexOutOfBoundsException. "start greater than end in subrange"))
+           (let [keyfn (if (map? coll) key identity)
+                 l (nearest coll start-test start)
+                 h (nearest coll end-test end)]
+             (if (and l h)
+               (let [tree (range comp (.getTree ^IAVLTree coll)
+                                 (keyfn l)
+                                 (keyfn h))
+                     cnt  (inc (- (rank-of coll (keyfn h))
+                                  (rank-of coll (keyfn l))))
+                     m    (AVLMap. comp tree cnt nil -1 -1)]
+                 (if (map? coll)
+                   m
+                   (AVLSet. nil m -1 -1)))
+               (empty coll))))))))

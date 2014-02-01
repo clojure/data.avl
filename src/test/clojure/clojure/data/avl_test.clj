@@ -159,11 +159,11 @@
     (doseq [coll [small-avl-set small-avl-map]
             i    (range -1 (inc small-tree-size))
             j    (range i  (inc small-tree-size))]
-      (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))
+      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j))))
     (doseq [coll [small-avl-set-> small-avl-map->]
             i    (range small-tree-size -2 -1)
             j    (range i -2 -1)]
-      (is (= (avl/subrange coll i j) (subseq-subrange coll i j))))))
+      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j))))))
 
 (defn subseq-split [coll x]
   (let [e (empty coll)]
@@ -175,11 +175,11 @@
      (into e (subseq coll > x))]))
 
 (deftest split
-  (testing "split-at should return the correct result"
+  (testing "split-key should return the correct result"
     (doseq [coll [small-avl-set small-avl-map
                   small-avl-set-> small-avl-map->]
             i    (range -1 (inc small-tree-size))]
-      (is (= (avl/split-at coll i) (subseq-split coll i))))))
+      (is (= (avl/split-key coll i) (subseq-split coll i))))))
 
 (def midsize-ks (range medium-tree-size))
 
@@ -193,7 +193,7 @@
           (is (validate-invariant s))
           (is (validate-invariant t))))
       (doseq [k midsize-ks]
-        (let [[l _ r] (avl/split-at @p k)]
+        (let [[l _ r] (avl/split-key @p k)]
           (is (validate-invariant l))
           (is (validate-invariant r))))
       (doseq [k midsize-ks]
