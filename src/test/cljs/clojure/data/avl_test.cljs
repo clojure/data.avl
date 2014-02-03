@@ -2,6 +2,10 @@
   (:use-macros [clojure.data.avl.cljs-test-macros :only [deftest]])
   (:require [clojure.data.avl :as avl]))
 
+(def small-tree-size 150)
+(def medium-tree-size 2500)
+(def large-tree-size 10000)
+
 (defn validate-invariant [^clojure.data.avl.IAVLTree coll]
   (let [tree (.getTree coll)
         h (fn [^clojure.data.avl.IAVLNode node]
@@ -15,7 +19,7 @@
 (defn twice [x]
   [x x])
 
-(def ks   (range 100000))
+(def ks   (range large-tree-size))
 (def ksks (doall (interleave ks ks)))
 (def ks'  (doall (map first (partition 2 ks))))
 
@@ -31,7 +35,7 @@
 (def rb-set-by->  (apply sorted-set-by > ks))
 (def avl-set-by-> (apply avl/sorted-set-by > ks))
 
-(def even-numbers (apply avl/sorted-set (range 0 100000 2)))
+(def even-numbers (apply avl/sorted-set (range 0 large-tree-size 2)))
 
 (deftest sanity-checks
   (testing "AVL collections look like regular sorted collections"
@@ -74,21 +78,21 @@
   (testing "reduce-kv short-circuits appropriately"
     (is (= (reduce-kv (fn [acc k v] (reduced acc)) :foo avl-map) :foo))
     (is (= (reduce-kv (fn [acc k v]
-                        (if (== 31000 k)
+                        (if (== (quot large-tree-size 3) k)
                           (reduced k)
                           acc))
                       nil
                       avl-map)
-           31000))
+           (quot large-tree-size 3)))
     (is (= (let [counter (atom 0)]
              (reduce-kv (fn [acc k v]
-                          (if (== 31000 k)
+                          (if (== (quot large-tree-size 3) k)
                             (reduced k)
                             (swap! counter inc)))
                         nil
                         avl-map)
              @counter)
-           31000))))
+           (quot large-tree-size 3)))))
 
 (deftest rank-queries
   (testing "map rank queries work as expected"
@@ -117,21 +121,75 @@
                 (range (dec (apply min (seq even-numbers)))
                        (+ 2 (apply max (seq even-numbers))))))))
 
+(def keys-for-nearest [-1 0 1 2 3 4 5 6 7 8 9])
+(def set-for-nearest  (avl/sorted-set 0 2 4 6 8))
+(def rset-for-nearest (avl/sorted-set-by > 0 2 4 6 8))
+
+(defn subseq-nearest [coll test x]
+  (let [subseq* (if (#{< <=} test) rsubseq subseq)]
+    (first (subseq* coll test x))))
+
+(deftest nearest
+  (testing "nearest should find the correct element or nil"
+    (doseq [s [set-for-nearest rset-for-nearest]
+            t [< <= >= >]]
+      (is (= (map #(avl/nearest s t %) keys-for-nearest)
+             (map #(subseq-nearest s t %) keys-for-nearest))))))
+
+(def small-ks   (range small-tree-size))
+(def small-ksks (doall (interleave small-ks small-ks)))
+
+(def small-avl-set   (apply avl/sorted-set small-ks))
+(def small-avl-map   (apply avl/sorted-map small-ksks))
+(def small-avl-set-> (apply avl/sorted-set-by > small-ks))
+(def small-avl-map-> (apply avl/sorted-map-by > small-ksks))
+
+(defn subseq-subrange [coll low high]
+  (into (empty coll) (subseq coll >= low <= high)))
+
+(deftest subrange
+  (testing "subrange should return the correct result"
+    (doseq [coll [small-avl-set small-avl-map]
+            i    (range -1 (inc small-tree-size))
+            j    (range i  (inc small-tree-size))]
+      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j))))
+    (doseq [coll [small-avl-set-> small-avl-map->]
+            i    (range small-tree-size -2 -1)
+            j    (range i -2 -1)]
+      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j))))))
+
+(defn subseq-split [coll x]
+  (let [e (empty coll)]
+    [(into e (subseq coll < x))
+     (if (contains? coll x)
+       (if (map? coll)
+         (find coll x)
+         (get coll x)))
+     (into e (subseq coll > x))]))
+
+(deftest split
+  (testing "split-key should return the correct result"
+    (doseq [coll [small-avl-set small-avl-map
+                  small-avl-set-> small-avl-map->]
+            i    (range -1 (inc small-tree-size))]
+      (is (= (avl/split-key coll i) (subseq-split coll i))))))
+
+(def midsize-ks (range medium-tree-size))
+
 (deftest avl-invariant
   (testing "AVL invariant is maintained at all times"
     (let [p (atom (avl/sorted-set))
           t (atom (avl/sorted-set))]
-      (doseq [k ks]
+      (doseq [k midsize-ks]
         (let [s (swap! p conj k)
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))
           (is (validate-invariant t))))
-      #_
-      (doseq [k ks]
-        (let [[l _ r] (avl/split-at @p k)]
+      (doseq [k midsize-ks]
+        (let [[l _ r] (avl/split-key @p k)]
           (is (validate-invariant l))
           (is (validate-invariant r))))
-      (doseq [k ks]
+      (doseq [k midsize-ks]
         (let [s (swap! p disj k)
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))

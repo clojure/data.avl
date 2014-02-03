@@ -9,7 +9,8 @@
 
   {:author "Michał Marczyk"}
 
-  (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by]))
+  (:refer-clojure :exclude [sorted-map sorted-map-by sorted-set sorted-set-by
+                            range split-at]))
 
 (deftype AVLNode [edit
                   ^:mutable key
@@ -177,6 +178,28 @@
         (zero? c) node
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
+
+(defn ^:private lookup-nearest [comp node test k]
+  (let [below? (or (identical? < test) (identical? <= test))
+        equal? (or (identical? <= test) (identical? >= test))
+        back?  (if below? neg? pos?)
+        backward (if below?
+                   #(.getLeft %)
+                   #(.getRight %))
+        forward  (if below?
+                   #(.getRight %)
+                   #(.getLeft %))]
+    (loop [prev nil
+           node node]
+      (if (nil? node)
+        prev
+        (let [c (comp k (.getKey node))]
+          (cond
+            (zero? c) (if equal?
+                        node
+                        (recur prev (backward node)))
+            (back? c) (recur prev (backward node))
+            :else     (recur node (forward node))))))))
 
 (defn ^:private select [node rank]
   (if (nil? node)
@@ -496,6 +519,148 @@
                                     (height (.getLeft node)))))
               (maybe-rebalance! edit node))))))))
 
+(defn ^:private join [comp left-count left right]
+  (cond
+    (nil? left)  right
+    (nil? right) left
+    :else
+    (let [lh (.getHeight left)
+          rh (.getHeight right)]
+      (cond
+        (== lh rh)
+        (let [left-min (get-rightmost left)
+              new-left (delete comp left (.getKey left-min) (Box. false))]
+          (AVLNode. nil
+                    (.getKey left-min) (.getVal left-min)
+                    new-left
+                    right
+                    (inc rh)
+                    (dec left-count)))
+
+        (< lh rh)
+        (letfn [(step [current lvl]
+                  (cond
+                    (zero? lvl)
+                    (join comp left-count left current)
+
+                    (nil? (.getLeft current))
+                    (AVLNode. nil
+                              (.getKey current) (.getVal current)
+                              left
+                              (.getRight current)
+                              2
+                              left-count)
+
+                    :else
+                    (let [new-child (step (.getLeft current) (dec lvl))
+                          current-r (.getRight current)]
+                      (maybe-rebalance
+                       (AVLNode. nil
+                                 (.getKey current) (.getVal current)
+                                 new-child
+                                 current-r
+                                 (inc (max (.getHeight new-child)
+                                           (if current-r
+                                             (.getHeight current-r)
+                                             0)))
+                                 (+ left-count (.getRank current)))))))]
+          (step right (- rh lh)))
+
+        :else
+        (letfn [(step [current cnt lvl]
+                  (cond
+                    (zero? lvl)
+                    (join comp cnt current right)
+
+                    (nil? (.getRight current))
+                    (AVLNode. nil
+                              (.getKey current) (.getVal current)
+                              (.getLeft current)
+                              right
+                              2
+                              (.getRank current))
+
+                    :else
+                    (let [new-child (step (.getRight current)
+                                          (dec (- cnt (.getRank current)))
+                                          (dec lvl))
+                          current-l (.getLeft current)]
+                      (maybe-rebalance
+                       (AVLNode. nil
+                                 (.getKey current) (.getVal current)
+                                 current-l
+                                 new-child
+                                 (inc (max (.getHeight new-child)
+                                           (if current-l
+                                             (.getHeight current-l)
+                                             0)))
+                                 (.getRank current))))))]
+          (step left left-count (- lh rh)))))))
+
+(defn ^:private split [comp node k]
+  (letfn [(step [node]
+            (if (nil? node)
+              [nil nil nil]
+              (let [c (comp k (.getKey node))]
+                (cond
+                  (zero? c)
+                  [(.getLeft node)
+                   [(.getKey node) (.getVal node)]
+                   (.getRight node)]
+
+                  (neg? c)
+                  (let [[l e r] (step (.getLeft node))]
+                    [l
+                     e
+                     (join comp
+                           (- (.getRank node)
+                              (cond
+                                e
+                                (unchecked-inc-int
+                                 (rank comp
+                                       (.getLeft node)
+                                       (key e)))
+                                r
+                                (unchecked-inc-int
+                                 (rank comp
+                                       (.getLeft node)
+                                       (.getKey (get-rightmost r))))
+                                :else
+                                (.getRank node)))
+                           r
+                           (insert comp
+                                   (.getRight node)
+                                   (.getKey node)
+                                   (.getVal node)
+                                   (Box. false)))])
+
+                  :else
+                  (let [[l e r] (step (.getRight node))]
+                    [(join comp
+                           (unchecked-inc-int (.getRank node))
+                           (insert comp
+                                   (.getLeft node)
+                                   (.getKey node)
+                                   (.getVal node)
+                                   (Box. false))
+                           l)
+                     e
+                     r])))))]
+    (step node)))
+
+(defn ^:private range [comp node low high]
+  (let [[_ low-e  r] (split comp node low)
+        [l high-e _] (split comp r high)]
+    (cond-> l
+      low-e  (as-> node
+                   (insert comp node
+                           (key low-e) (val low-e)
+                           (Box. false)))
+      high-e (as-> node
+                   (insert comp node
+                           (key high-e) (val high-e)
+                           (Box. false))))))
+
 (defn ^:private seq-push [node stack ascending?]
   (loop [node node stack stack]
     (if (nil? node)
@@ -596,6 +761,10 @@
 
   (getTree [this]
     tree)
+
+  (nearest [this test k]
+    (if-let [node (lookup-nearest comp tree test k)]
+      [(.getKey node) (.getVal node)]))
 
   IHash
   (-hash [this]
@@ -791,6 +960,10 @@
   (getTree [this]
     (.-tree avl-map))
 
+  (nearest [this test k]
+    (if-let [node (lookup-nearest (.-comp avl-map) (.getTree avl-map) test k)]
+      (.getKey node)))
+
   IHash
   (-hash [this]
     (caching-hash this hash-iset _hash))
@@ -973,3 +1146,98 @@
   "Returns the rank of x in coll or -1 if not present."
   [coll x]
   (rank (-comparator coll) (.getTree coll) x))
+
+(defn nearest
+  "Equivalent to, but more efficient than, (first (subseq* coll test x)),
+  where subseq* is clojure.core/subseq for test in #{>, >=} and
+  clojure.core/rsubseq for test in #{<, <=}."
+  [coll test x]
+  (.nearest coll test x))
+
+(defn split-key
+  "Returns [left e? right], where left and right are collections of
+  the same type as coll and containing, respectively, the keys below
+  and above x in the ordering determined by coll's comparator, while
+  e? is the entry at key x for maps, the stored copy of the key x for
+  sets, nil if coll does not contain x."
+  [coll x]
+  (let [comp (-comparator coll)
+        [left e? right] (split comp (.getTree coll) x)
+        keyfn (if (map? coll) key identity)
+        wrap (if (map? coll)
+               (fn wrap-map [tree cnt]
+                 (AVLMap. comp tree cnt nil -1))
+               (fn wrap-set [tree cnt]
+                 (AVLSet. nil (AVLMap. comp tree cnt nil -1) -1)))]
+    [(wrap left
+           (if (or e? right)
+             (rank-of coll (keyfn (nearest coll >= x)))
+             (count coll)))
+     (if (and e? (set? coll))
+       (key e?)
+       e?)
+     (wrap right
+           (if right
+             (- (count coll) (rank-of coll (keyfn (nearest coll > x))))
+             0))]))
+
+(defn split-at
+  "Equivalent to, but more efficient than, 
+  [(into (empty coll) (take n coll))
+   (into (empty coll) (drop n coll))]."
+  [coll n]
+  (if (>= n (count coll))
+    [coll (empty coll)]
+    (let [k (nth coll n)
+          k (if (map? coll) (key k) k)
+          [l e r] (split-key coll k)]
+      [(conj l e) r])))
+
+(defn subrange
+  "Returns an AVL collection comprising the entries of coll between
+  start and end (in the sense determined by coll's comparator) in
+  logarithmic time. Whether the endpoints are themselves included in
+  the returned collection depends on the provided tests; start-test
+  must be either > or >=, end-test must be either < or <=.
+
+  When passed a single test and limit, subrange infers the other end
+  of the range from the test: > / >= mean to include items up to the
+  end of coll, < / <= mean to include items taken from the beginning
+  of coll.
+
+  (subrange >= start <= end) is equivalent to, but more efficient
+  than, (into (empty coll) (subseq coll >= start <= end)."
+  ([coll test limit]
+     (cond
+       (zero? (count coll))
+       coll
+
+       (#{> >=} test)
+       (subrange coll
+                 test limit
+                 <= (.getKey (select (.getTree coll) (dec (count coll)))))
+
+       :else
+       (subrange coll
+                 >= (.getKey (select (.getTree coll) 0))
+                 test limit)))
+  ([coll start-test start end-test end]
+     (if (zero? (count coll))
+       coll
+       (let [comp (-comparator coll)]
+         (if (pos? (comp start end))
+           (throw (ex-info "start greater than end in subrange" {}))
+           (let [keyfn (if (map? coll) key identity)
+                 l (nearest coll start-test start)
+                 h (nearest coll end-test end)]
+             (if (and l h)
+               (let [tree (range comp (.getTree coll)
+                                 (keyfn l)
+                                 (keyfn h))
+                     cnt  (inc (- (rank-of coll (keyfn h))
+                                  (rank-of coll (keyfn l))))
+                     m    (AVLMap. comp tree cnt nil -1)]
+                 (if (map? coll)
+                   m
+                   (AVLSet. nil m -1)))
+               (empty coll))))))))
