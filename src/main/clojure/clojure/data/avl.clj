@@ -1482,12 +1482,12 @@
 (defn split-key
   "Returns [left e? right], where left and right are collections of
   the same type as coll and containing, respectively, the keys below
-  and above x in the ordering determined by coll's comparator, while
-  e? is the entry at key x for maps, the stored copy of the key x for
-  sets, nil if coll does not contain x."
-  [coll x]
+  and above k in the ordering determined by coll's comparator, while
+  e? is the entry at key k for maps, the stored copy of the key k for
+  sets, nil if coll does not contain k."
+  [k coll]
   (let [comp (.comparator ^clojure.lang.Sorted coll)
-        [left e? right] (split comp (.getTree ^IAVLTree coll) x)
+        [left e? right] (split comp (.getTree ^IAVLTree coll) k)
         keyfn (if (map? coll) key identity)
         wrap (if (map? coll)
                (fn wrap-map [tree cnt]
@@ -1496,27 +1496,27 @@
                  (AVLSet. nil (AVLMap. comp tree cnt nil -1 -1) -1 -1)))]
     [(wrap left
            (if (or e? right)
-             (rank-of coll (keyfn (nearest coll >= x)))
+             (rank-of coll (keyfn (nearest coll >= k)))
              (count coll)))
      (if (and e? (set? coll))
        (.getKey ^MapEntry e?)
        e?)
      (wrap right
            (if right
-             (- (count coll) (rank-of coll (keyfn (nearest coll > x))))
+             (- (count coll) (rank-of coll (keyfn (nearest coll > k))))
              0))]))
 
 (defn split-at
   "Equivalent to, but more efficient than, 
   [(into (empty coll) (take n coll))
    (into (empty coll) (drop n coll))]."
-  [coll n]
+  [^long n coll]
   (if (>= n (count coll))
     [coll (empty coll)]
     (let [k (nth coll n)
           k (if (map? coll) (key k) k)
-          [l e r] (split-key coll k)]
-      [(conj l e) r])))
+          [l e r] (split-key k coll)]
+      [l (conj r e)])))
 
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
