@@ -1246,7 +1246,10 @@
 
   INavigableTree
   (nearest [this test k]
-    (if-let [node (lookup-nearest (.comparator avl-map) (.getTree avl-map) test k)]
+    (if-let [node (lookup-nearest (.comparator avl-map)
+                                  (.getTree avl-map)
+                                  test
+                                  k)]
       (.getKey node)))
 
   clojure.lang.IHashEq
