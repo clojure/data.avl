@@ -101,11 +101,11 @@ built-ins do not:
 
 3. Logarithmic time splitting by key:
 
-        (avl/split-key (avl/sorted-set 0 1 2 3 4 5) 3)
+        (avl/split-key 3 (avl/sorted-set 0 1 2 3 4 5))
         ;= [#{0 1 2} 3 #{4 5 6}]
-        (avl/split-key (avl/sorted-map 0 0 1 1 2 2) 1)
+        (avl/split-key 1 (avl/sorted-map 0 0 1 1 2 2))
         ;= [{0 0} [1 1] {2 2}]
-        (avl/split-key (avl/sorted-set 0 1 3 4) 2)
+        (avl/split-key 2 (avl/sorted-set 0 1 3 4))
         ;= [#{0 1} nil #{3 4}]
 
    The middle element of the returned vector is the entry at the given
@@ -120,8 +120,8 @@ built-ins do not:
    
 4. Logarithmic time splitting by index:
 
-        (avl/split-at (avl/sorted-set 0 1 2 3 4 5) 2)
-        ;= [#{0 1 2} #{3 4 5}]
+        (avl/split-at 2 (avl/sorted-set 0 1 2 3 4 5))
+        ;= [#{0 1} #{2 3 4 5}]
 
 5. Logarithmic time slicing:
 
