@@ -42,7 +42,7 @@ names, while the remaining five expose data.avl-specific functionality:
     ;; reminiscent of clojure.core/{subseq,rsubseq}
     (doc avl/subrange)
 
-All data.avl collection-returning public functions export first-class
+All data.avl collection-returning public functions return first-class
 collections (see below for a discussion).
 
 ## Description
