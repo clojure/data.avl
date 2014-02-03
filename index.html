@@ -259,7 +259,7 @@ comparator.</pre>
     <hr />
     <h2 id="clojure.data.avl/split-at">split-at</h2>
     <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (split-at coll n)
+    <pre id="var-usage">Usage: (split-at n coll)
 </pre>
     <pre id="var-docstr">Equivalent to, but more efficient than, 
 [(into (empty coll) (take n coll))
@@ -272,13 +272,13 @@ comparator.</pre>
     <hr />
     <h2 id="clojure.data.avl/split-key">split-key</h2>
     <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (split-key coll x)
+    <pre id="var-usage">Usage: (split-key k coll)
 </pre>
     <pre id="var-docstr">Returns [left e? right], where left and right are collections of
 the same type as coll and containing, respectively, the keys below
-and above x in the ordering determined by coll's comparator, while
-e? is the entry at key x for maps, the stored copy of the key x for
-sets, nil if coll does not contain x.</pre>
+and above k in the ordering determined by coll's comparator, while
+e? is the entry at key k for maps, the stored copy of the key k for
+sets, nil if coll does not contain k.</pre>
     
     
     <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1482" id="var-source">Source</a>

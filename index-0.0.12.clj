@@ -90,7 +90,7 @@
    :var-type "function",
    :line 1462,
    :file "src/main/clojure/clojure/data/avl.clj"}
-  {:arglists ([coll n]),
+  {:arglists ([n coll]),
    :name "split-at",
    :namespace "clojure.data.avl",
    :source-url
@@ -104,7 +104,7 @@
    :var-type "function",
    :line 1509,
    :file "src/main/clojure/clojure/data/avl.clj"}
-  {:arglists ([coll x]),
+  {:arglists ([k coll]),
    :name "split-key",
    :namespace "clojure.data.avl",
    :source-url
@@ -114,7 +114,7 @@
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-key",
    :doc
-   "Returns [left e? right], where left and right are collections of\nthe same type as coll and containing, respectively, the keys below\nand above x in the ordering determined by coll's comparator, while\ne? is the entry at key x for maps, the stored copy of the key x for\nsets, nil if coll does not contain x.",
+   "Returns [left e? right], where left and right are collections of\nthe same type as coll and containing, respectively, the keys below\nand above k in the ordering determined by coll's comparator, while\ne? is the entry at key k for maps, the stored copy of the key k for\nsets, nil if coll does not contain k.",
    :var-type "function",
    :line 1482,
    :file "src/main/clojure/clojure/data/avl.clj"}
