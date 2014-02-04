@@ -1,11 +1,16 @@
 (ns clojure.data.avl
 
   "An implementation of persistent sorted maps and sets based on AVL
-  trees with API mimicking that of Clojure's sorted maps and
-  sets (based on Red-Black Trees). Additionally, the provided map and
-  set types support the transients API and logarithmic time rank
-  queries via clojure.core/nth (select element by rank) and
-  clojure.data.avl/rank-of (discover rank of element)."
+  trees which can be used as drop-in replacements for Clojure's
+  built-in sorted maps and sets based on red-black trees. Apart from
+  the standard sorted collection API, the provided map and set types
+  support the transients API and several additional logarithmic time
+  operations: rank queries via clojure.core/nth (select element by
+  rank) and clojure.data.avl/rank-of (discover rank of element),
+  \"nearest key\" lookups via clojure.data.avl/nearest, splits by key
+  and index via clojure.data.avl/split-key and
+  clojure.data.avl/split-at, respectively, and subsets/submaps using
+  clojure.data.avl/subrange."
 
   {:author "Michał Marczyk"}
 
