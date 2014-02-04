@@ -111,11 +111,16 @@ namespace.
 <h2>Overview</h2>
 <div id="home-page">Project home page is <a href="http://github.com/clojure/data.avl/">http://github.com/clojure/data.avl/</a></div>
 <pre id="namespace-docstr">An implementation of persistent sorted maps and sets based on AVL
-trees with API mimicking that of Clojure's sorted maps and
-sets (based on Red-Black Trees). Additionally, the provided map and
-set types support the transients API and logarithmic time rank
-queries via clojure.core/nth (select element by rank) and
-clojure.data.avl/rank-of (discover rank of element).</pre>
+trees which can be used as drop-in replacements for Clojure's
+built-in sorted maps and sets based on red-black trees. Apart from
+the standard sorted collection API, the provided map and set types
+support the transients API and several additional logarithmic time
+operations: rank queries via clojure.core/nth (select element by
+rank) and clojure.data.avl/rank-of (discover rank of element),
+"nearest key" lookups via clojure.data.avl/nearest, splits by key
+and index via clojure.data.avl/split-key and
+clojure.data.avl/split-at, respectively, and subsets/submaps using
+clojure.data.avl/subrange.</pre>
 
 
 <br />
@@ -195,7 +200,7 @@ where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
 clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1475" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1480" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -206,7 +211,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-docstr">Returns the rank of x in coll or -1 if not present.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1470" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1475" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -218,7 +223,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
 Returns a new AVL map with supplied mappings.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1436" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1441" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -231,7 +236,7 @@ Returns a new sorted map with supplied mappings, using the supplied
 comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1445" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1450" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -242,7 +247,7 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1457" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1462" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -253,7 +258,7 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys, using the supplied comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1462" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1467" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -266,7 +271,7 @@ comparator.</pre>
  (into (empty coll) (drop n coll))].</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1509" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1514" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -281,7 +286,7 @@ e? is the entry at key k for maps, the stored copy of the key k for
 sets, nil if coll does not contain k.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1482" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1487" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -305,7 +310,7 @@ of coll.
 than, (into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1521" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1526" id="var-source">Source</a>
   </div>
 </div>
 
