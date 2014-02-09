@@ -44,28 +44,42 @@
 
 (def even-numbers (apply avl/sorted-set (range 0 large-tree-size 2)))
 
+(defn is-same-coll [a b]
+  (let [msg (format "(class a)=%s (class b)=%s a=%s b=%s"
+                    (.getName (class a)) (.getName (class b)) a b)]
+    (is (= (count a) (count b) (.size a) (.size b)) msg)
+    (is (= a b) msg)
+    (is (= b a) msg)
+    (is (.equals ^Object a b) msg)
+    (is (.equals ^Object b a) msg)
+    (is (= (hash a) (hash b)) msg)
+    (is (= (.hashCode ^Object a) (.hashCode ^Object b)) msg)))
+
 (deftest sanity-checks
   (testing "AVL collections look like regular sorted collections"
-    (is (= rb-map avl-map))
-    (is (= rb-set avl-set)))
+    (is-same-coll rb-map avl-map)
+    (is-same-coll rb-set avl-set)
+    ;; Check empty maps are equal, and hashes equal
+    (is-same-coll (empty rb-map) (empty avl-map))
+    (is-same-coll (empty rb-set) (empty avl-set)))
   (testing "AVL collections with custom comparators looks like regular ones"
-    (is (= rb-map-by-> avl-map-by->))
-    (is (= rb-set-by-> avl-set-by->)))
+    (is-same-coll rb-map-by-> avl-map-by->)
+    (is-same-coll rb-set-by-> avl-set-by->))
   (testing "AVL collection seqs look like regular sorted collection seqs"
     (is (= (seq rb-map) (seq avl-map)))
     (is (= (seq rb-set) (seq avl-set)))
     (is (= (subseq rb-map > 100 < 1000) (subseq avl-map > 100 < 1000)))
     (is (= (subseq rb-set > 100 < 1000) (subseq avl-set > 100 < 1000))))
   (testing "non-transient construction works as expected"
-    (is (= avl-map (reduce-kv assoc (avl/sorted-map) rb-map))))
+    (is-same-coll avl-map (reduce-kv assoc (avl/sorted-map) rb-map)))
   (testing "dissoc/dissoc! work as expected"
-    (is (= (reduce dissoc rb-map ks') (reduce dissoc avl-map ks')))
-    (is (= (reduce dissoc rb-map ks')
-           (persistent! (reduce dissoc! (transient avl-map) ks')))))
+    (is-same-coll (reduce dissoc rb-map ks') (reduce dissoc avl-map ks'))
+    (is-same-coll (reduce dissoc rb-map ks')
+                  (persistent! (reduce dissoc! (transient avl-map) ks'))))
   (testing "disj/disj! work as expected"
-    (is (= (reduce disj rb-set ks') (reduce disj avl-set ks')))
-    (is (= (reduce disj rb-set ks')
-           (persistent! (reduce disj! (transient avl-set) ks')))))
+    (is-same-coll (reduce disj rb-set ks') (reduce disj avl-set ks'))
+    (is-same-coll (reduce disj rb-set ks')
+                  (persistent! (reduce disj! (transient avl-set) ks'))))
   (testing "*-by seqs look like they should"
     (is (= (seq rb-map-by->) (seq avl-map-by->)))
     (is (= (seq rb-set-by->) (seq avl-set-by->))))

@@ -33,6 +33,11 @@
          (set! ~hash-key (int h#))
          h#))))
 
+(def clojure-16-hash
+  (>= (compare [(:major *clojure-version*) (:minor *clojure-version*)]
+               [1 6])
+      0))
+
 (defn ^:private hash-imap
   [^IPersistentMap m]
   (APersistentMap/mapHash m))
@@ -46,16 +51,22 @@
   (loop [h (int 0) s (seq s)]
     (if s
       (let [e (first s)]
-        (recur (unchecked-add-int h (hash e))
+        (recur (unchecked-add-int h (if (nil? e) 0 (.hashCode ^Object e)))
                (next s)))
       h)))
 
+(defmacro ^:private hasheq-iset* [s]
+  (if clojure-16-hash
+    `(-> (reduce unchecked-add-int 0 (map hash ~s))
+         (mix-collection-hash (count ~s)))
+    `(loop [h# (int 0) s# (seq ~s)]
+       (if s#
+         (recur (unchecked-add-int h# (Util/hasheq (first s#)))
+                (next s#))
+         h#))))
+
 (defn ^:private hasheq-iset [^IPersistentSet s]
-  (loop [h (int 0) s (seq s)]
-    (if s
-      (recur (unchecked-add-int h (Util/hasheq (first s)))
-             (next s))
-      h)))
+  (hasheq-iset* s))
 
 (defn ^:private hash-seq
   [s]
@@ -76,6 +87,12 @@
                                 (Util/hasheq (first s)))
              (next s))
       h)))
+
+(def empty-set-hashcode (.hashCode #{}))
+(def empty-set-hasheq (hash #{}))
+(def empty-map-hashcode (.hashCode {}))
+(def empty-map-hasheq (hash {}))
+
 
 (defn ^:private equiv-sequential
   "Assumes x is sequential. Returns true if x equals y, otherwise
@@ -1007,7 +1024,7 @@
       (reduce conj this entry)))
 
   (empty [this]
-    (AVLMap. comp nil 0 _meta 0 0))
+    (AVLMap. comp nil 0 _meta empty-map-hashcode empty-map-hasheq))
 
   (equiv [this that]
     (equiv-map this that))
@@ -1290,7 +1307,7 @@
     (AVLSet. _meta (assoc avl-map x x) -1 -1))
 
   (empty [this]
-    (AVLSet. _meta (empty avl-map) 0 0))
+    (AVLSet. _meta (empty avl-map) empty-set-hashcode empty-set-hasheq))
 
   (equiv [this that]
     (and
@@ -1426,9 +1443,11 @@
   (count [this]
     (.count transient-avl-map)))
 
-(def ^:private empty-map (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil 0 0))
+(def ^:private empty-map (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil
+                                  empty-map-hashcode empty-map-hasheq))
 
-(def ^:private empty-set (AVLSet. nil empty-map 0 0))
+(def ^:private empty-set (AVLSet. nil empty-map
+                                  empty-set-hashcode empty-set-hasheq))
 
 (doseq [v [#'->AVLMapSeq
            #'->AVLNode
