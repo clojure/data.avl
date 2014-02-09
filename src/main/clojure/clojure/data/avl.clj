@@ -22,6 +22,11 @@
            (java.util Comparator Collections ArrayList)
            (java.util.concurrent.atomic AtomicReference)))
 
+(defmacro ^:private compile-if-class [cname then else]
+  (if (Class/forName cname)
+    then
+    else))
+
 (defn ^:private throw-unsupported []
   (throw (UnsupportedOperationException.)))
 
@@ -39,7 +44,9 @@
 
 (defn ^:private hasheq-imap
   [^IPersistentMap m]
-  (APersistentMap/mapHasheq m))
+  (compile-if-class "clojure.lang.Murmur3"
+    (clojure.lang.Murmur3/hashUnordered m)
+    (APersistentMap/mapHasheq m)))
 
 (defn ^:private hash-iset [^IPersistentSet s]
   ;; a la clojure.lang.APersistentSet
@@ -51,11 +58,13 @@
       h)))
 
 (defn ^:private hasheq-iset [^IPersistentSet s]
-  (loop [h (int 0) s (seq s)]
-    (if s
-      (recur (unchecked-add-int h (Util/hasheq (first s)))
-             (next s))
-      h)))
+  (compile-if-class "clojure.lang.Murmur3"
+    (clojure.lang.Murmur3/hashUnordered s)
+    (loop [h (int 0) s (seq s)]
+      (if s
+        (recur (unchecked-add-int h (Util/hasheq (first s)))
+               (next s))
+        h))))
 
 (defn ^:private hash-seq
   [s]
