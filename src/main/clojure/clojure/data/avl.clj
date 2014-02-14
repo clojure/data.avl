@@ -33,13 +33,20 @@
          (set! ~hash-key (int h#))
          h#))))
 
+(defmacro ^:private compile-if [test then else]
+  (if (eval test)
+    then
+    else))
+
 (defn ^:private hash-imap
   [^IPersistentMap m]
   (APersistentMap/mapHash m))
 
 (defn ^:private hasheq-imap
   [^IPersistentMap m]
-  (APersistentMap/mapHasheq m))
+  (compile-if (resolve 'clojure.core/hash-unordered-coll)
+    (hash-unordered-coll m)
+    (APersistentMap/mapHasheq m)))
 
 (defn ^:private hash-iset [^IPersistentSet s]
   ;; a la clojure.lang.APersistentSet
@@ -51,11 +58,13 @@
       h)))
 
 (defn ^:private hasheq-iset [^IPersistentSet s]
-  (loop [h (int 0) s (seq s)]
-    (if s
-      (recur (unchecked-add-int h (Util/hasheq (first s)))
-             (next s))
-      h)))
+  (compile-if (resolve 'clojure.core/hash-unordered-coll)
+    (hash-unordered-coll s)
+    (loop [h (int 0) s (seq s)]
+      (if s
+        (recur (unchecked-add-int h (Util/hasheq (first s)))
+               (next s))
+        h))))
 
 (defn ^:private hash-seq
   [s]
@@ -70,12 +79,14 @@
 
 (defn ^:private hasheq-seq
   [s]
-  (loop [h (int 1) s (seq s)]
-    (if s
-      (recur (unchecked-add-int (unchecked-multiply-int (int 31) h)
-                                (Util/hasheq (first s)))
-             (next s))
-      h)))
+  (compile-if (resolve 'clojure.core/hash-ordered-coll)
+    (hash-ordered-coll s)
+    (loop [h (int 1) s (seq s)]
+      (if s
+        (recur (unchecked-add-int (unchecked-multiply-int (int 31) h)
+                                  (Util/hasheq (first s)))
+               (next s))
+        h))))
 
 (defn ^:private equiv-sequential
   "Assumes x is sequential. Returns true if x equals y, otherwise
@@ -1523,6 +1534,7 @@
           [l e r] (split-key k coll)]
       [l (conj r e)])))
 
+;;; TODO: probably rename to slice (remember CLJS)
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
   start and end (in the sense determined by coll's comparator) in
