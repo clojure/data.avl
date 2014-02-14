@@ -33,10 +33,15 @@
          (set! ~hash-key (int h#))
          h#))))
 
-(def clojure-16-hash
-  (>= (compare [(:major *clojure-version*) (:minor *clojure-version*)]
-               [1 6])
-      0))
+(defmacro ^:private compile-if [test then else]
+  (if (eval test)
+    then
+    else))
+
+(def ^:const empty-set-hashcode (.hashCode #{}))
+(def ^:const empty-set-hasheq (hash #{}))
+(def ^:const empty-map-hashcode (.hashCode {}))
+(def ^:const empty-map-hasheq (hash {}))
 
 (defn ^:private hash-imap
   [^IPersistentMap m]
@@ -44,7 +49,9 @@
 
 (defn ^:private hasheq-imap
   [^IPersistentMap m]
-  (APersistentMap/mapHasheq m))
+  (compile-if (resolve 'clojure.core/hash-unordered-coll)
+    (hash-unordered-coll m)
+    (APersistentMap/mapHasheq m)))
 
 (defn ^:private hash-iset [^IPersistentSet s]
   ;; a la clojure.lang.APersistentSet
@@ -55,18 +62,14 @@
                (next s)))
       h)))
 
-(defmacro ^:private hasheq-iset* [s]
-  (if clojure-16-hash
-    `(-> (reduce unchecked-add-int 0 (map hash ~s))
-         (mix-collection-hash (count ~s)))
-    `(loop [h# (int 0) s# (seq ~s)]
-       (if s#
-         (recur (unchecked-add-int h# (Util/hasheq (first s#)))
-                (next s#))
-         h#))))
-
 (defn ^:private hasheq-iset [^IPersistentSet s]
-  (hasheq-iset* s))
+  (compile-if (resolve 'clojure.core/hash-unordered-coll)
+    (hash-unordered-coll s)
+    (loop [h (int 0) s (seq s)]
+      (if s
+        (recur (unchecked-add-int h (Util/hasheq (first s)))
+               (next s))
+        h))))
 
 (defn ^:private hash-seq
   [s]
@@ -81,18 +84,14 @@
 
 (defn ^:private hasheq-seq
   [s]
-  (loop [h (int 1) s (seq s)]
-    (if s
-      (recur (unchecked-add-int (unchecked-multiply-int (int 31) h)
-                                (Util/hasheq (first s)))
-             (next s))
-      h)))
-
-(def empty-set-hashcode (.hashCode #{}))
-(def empty-set-hasheq (hash #{}))
-(def empty-map-hashcode (.hashCode {}))
-(def empty-map-hasheq (hash {}))
-
+  (compile-if (resolve 'clojure.core/hash-ordered-coll)
+    (hash-ordered-coll s)
+    (loop [h (int 1) s (seq s)]
+      (if s
+        (recur (unchecked-add-int (unchecked-multiply-int (int 31) h)
+                                  (Util/hasheq (first s)))
+               (next s))
+        h))))
 
 (defn ^:private equiv-sequential
   "Assumes x is sequential. Returns true if x equals y, otherwise
@@ -1443,11 +1442,12 @@
   (count [this]
     (.count transient-avl-map)))
 
-(def ^:private empty-map (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil
-                                  empty-map-hashcode empty-map-hasheq))
+(def ^:private empty-map
+  (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil
+           empty-map-hashcode empty-map-hasheq))
 
-(def ^:private empty-set (AVLSet. nil empty-map
-                                  empty-set-hashcode empty-set-hasheq))
+(def ^:private empty-set
+  (AVLSet. nil empty-map empty-set-hashcode empty-set-hasheq))
 
 (doseq [v [#'->AVLMapSeq
            #'->AVLNode
@@ -1542,6 +1542,7 @@
           [l e r] (split-key k coll)]
       [l (conj r e)])))
 
+;;; TODO: probably rename to slice (remember CLJS)
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
   start and end (in the sense determined by coll's comparator) in
