@@ -12,7 +12,7 @@
    :name "nearest",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1480",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1499",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -20,26 +20,26 @@
    :doc
    "Equivalent to, but more efficient than, (first (subseq* coll test x)),\nwhere subseq* is clojure.core/subseq for test in #{>, >=} and\nclojure.core/rsubseq for test in #{<, <=}.",
    :var-type "function",
-   :line 1480,
+   :line 1499,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([coll x]),
    :name "rank-of",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1475",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1494",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/rank-of",
    :doc "Returns the rank of x in coll or -1 if not present.",
    :var-type "function",
-   :line 1475,
+   :line 1494,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([& keyvals]),
    :name "sorted-map",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1441",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1460",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -47,13 +47,13 @@
    :doc
    "keyval => key val\nReturns a new AVL map with supplied mappings.",
    :var-type "function",
-   :line 1441,
+   :line 1460,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([comparator & keyvals]),
    :name "sorted-map-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1450",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1469",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -61,26 +61,26 @@
    :doc
    "keyval => key val\nReturns a new sorted map with supplied mappings, using the supplied\ncomparator.",
    :var-type "function",
-   :line 1450,
+   :line 1469,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([& keys]),
    :name "sorted-set",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1462",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1481",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-set",
    :doc "Returns a new sorted set with supplied keys.",
    :var-type "function",
-   :line 1462,
+   :line 1481,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([comparator & keys]),
    :name "sorted-set-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1467",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1486",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -88,13 +88,13 @@
    :doc
    "Returns a new sorted set with supplied keys, using the supplied comparator.",
    :var-type "function",
-   :line 1467,
+   :line 1486,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([n coll]),
    :name "split-at",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1514",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1533",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -102,13 +102,13 @@
    :doc
    "Equivalent to, but more efficient than, \n[(into (empty coll) (take n coll))\n (into (empty coll) (drop n coll))].",
    :var-type "function",
-   :line 1514,
+   :line 1533,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([k coll]),
    :name "split-key",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1487",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -116,13 +116,13 @@
    :doc
    "Returns [left e? right], where left and right are collections of\nthe same type as coll and containing, respectively, the keys below\nand above k in the ordering determined by coll's comparator, while\ne? is the entry at key k for maps, the stored copy of the key k for\nsets, nil if coll does not contain k.",
    :var-type "function",
-   :line 1487,
+   :line 1506,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:arglists ([coll test limit] [coll start-test start end-test end]),
    :name "subrange",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1526",
+   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1546",
    :raw-source-url
    "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
@@ -130,7 +130,7 @@
    :doc
    "Returns an AVL collection comprising the entries of coll between\nstart and end (in the sense determined by coll's comparator) in\nlogarithmic time. Whether the endpoints are themselves included in\nthe returned collection depends on the provided tests; start-test\nmust be either > or >=, end-test must be either < or <=.\n\nWhen passed a single test and limit, subrange infers the other end\nof the range from the test: > / >= mean to include items up to the\nend of coll, < / <= mean to include items taken from the beginning\nof coll.\n\n(subrange >= start <= end) is equivalent to, but more efficient\nthan, (into (empty coll) (subseq coll >= start <= end).",
    :var-type "function",
-   :line 1526,
+   :line 1546,
    :file "src/main/clojure/clojure/data/avl.clj"}
   {:file nil,
    :raw-source-url nil,
