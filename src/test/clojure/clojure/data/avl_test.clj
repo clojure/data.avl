@@ -45,9 +45,13 @@
 (def even-numbers (apply avl/sorted-set (range 0 large-tree-size 2)))
 
 (defn is-same-coll [a b]
-  (let [msg (format "(class a)=%s (class b)=%s a=%s b=%s"
-                    (.getName (class a)) (.getName (class b)) a b)]
-    (is (= (count a) (count b) (.size a) (.size b)) msg)
+  (let [msg  (format "(class a)=%s (class b)=%s a=%s b=%s"
+                     (.getName (class a)) (.getName (class b)) a b)
+        size (fn [x]
+               (if (map? x)
+                 (.size ^java.util.Map x)
+                 (.size ^java.util.Set x)))]
+    (is (= (count a) (count b) (size a) (size b)) msg)
     (is (= a b) msg)
     (is (= b a) msg)
     (is (.equals ^Object a b) msg)
