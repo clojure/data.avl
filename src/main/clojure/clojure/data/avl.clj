@@ -1542,7 +1542,6 @@
           [l e r] (split-key k coll)]
       [l (conj r e)])))
 
-;;; TODO: probably rename to slice (remember CLJS)
 (defn subrange
   "Returns an AVL collection comprising the entries of coll between
   start and end (in the sense determined by coll's comparator) in
