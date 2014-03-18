@@ -206,3 +206,28 @@
               t (swap! t (comp persistent! #(conj! % k) transient))]
           (is (validate-invariant s))
           (is (validate-invariant t)))))))
+
+(deftest navigable-queries
+  (testing "nearest lookups are \"rounded\""
+    (doseq [k (drop-last ks)]
+      (is (= (avl/nearest even-numbers >= k) (if (odd? k) (inc k) k))))
+    (doseq [k (next ks)]
+      (is (= (avl/nearest even-numbers <= k) (if (odd? k) (dec k) k)))))
+  (testing "out of range keys return nil"
+    (is (nil? (avl/nearest avl-map < 0)))
+    (is (nil? (avl/nearest avl-set < 0)))
+    (is (nil? (avl/nearest avl-map > (key (first (rseq avl-map))))))
+    (is (nil? (avl/nearest avl-set > (first (rseq avl-set))))))
+  (testing "floor and ceil returns exact match if present"
+    (doseq [k ks]
+      (is (= (avl/nearest avl-set >= k) k))
+      (is (= (avl/nearest avl-set <= k) k))
+      (is (= (key (avl/nearest avl-map >= k)) k))
+      (is (= (key (avl/nearest avl-map <= k)) k))))
+  (testing "lower and higher match the next item"
+    (doseq [k (drop-last ks)]
+      (is (= (avl/nearest avl-set > k) (inc k)))
+      (is (= (key (avl/nearest avl-map > k)) (inc k))))
+    (doseq [k (next ks)]
+      (is (= (avl/nearest avl-set < k) (dec k)))
+      (is (= (key (avl/nearest avl-map < k)) (dec k))))))
