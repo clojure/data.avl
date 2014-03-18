@@ -1153,14 +1153,18 @@
   (rank (-comparator coll) (.getTree coll) x))
 
 (defn nearest
-  "Equivalent to, but more efficient than, (first (subseq* coll test x)),
+  "(alpha)
+
+  Equivalent to, but more efficient than, (first (subseq* coll test x)),
   where subseq* is clojure.core/subseq for test in #{>, >=} and
   clojure.core/rsubseq for test in #{<, <=}."
   [coll test x]
   (.nearest coll test x))
 
 (defn split-key
-  "Returns [left e? right], where left and right are collections of
+  "(alpha)
+
+  Returns [left e? right], where left and right are collections of
   the same type as coll and containing, respectively, the keys below
   and above k in the ordering determined by coll's comparator, while
   e? is the entry at key k for maps, the stored copy of the key k for
@@ -1187,7 +1191,9 @@
              0))]))
 
 (defn split-at
-  "Equivalent to, but more efficient than, 
+  "(alpha)
+
+  Equivalent to, but more efficient than,
   [(into (empty coll) (take n coll))
    (into (empty coll) (drop n coll))]."
   [n coll]
@@ -1199,7 +1205,9 @@
       [l (conj r e)])))
 
 (defn subrange
-  "Returns an AVL collection comprising the entries of coll between
+  "(alpha)
+
+  Returns an AVL collection comprising the entries of coll between
   start and end (in the sense determined by coll's comparator) in
   logarithmic time. Whether the endpoints are themselves included in
   the returned collection depends on the provided tests; start-test
