@@ -22,6 +22,6 @@
                               :compiler {:output-to "out/test.js"
                                          :optimizations :advanced
                                          :pretty-print false}}}}}
-             :1.6 {:dependencies [[org.clojure/clojure "1.6.0-beta2"]
+             :1.6 {:dependencies [[org.clojure/clojure "1.6.0-RC1"]
                                   [collection-check "0.1.1"]]
                    :test-paths ["src/test_local/clojure"]}})
