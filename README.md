@@ -205,6 +205,6 @@ notice:
 
 ## Licence
 
-Copyright © 2013-2014 Michał Marczyk, Rich Hickey
+Copyright © 2013-2014 Michał Marczyk, Rich Hickey and contributors
 
 Distributed under the Eclipse Public License, the same as Clojure.
