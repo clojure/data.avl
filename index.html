@@ -195,7 +195,9 @@ clojure.data.avl/subrange.</pre>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (nearest coll test x)
 </pre>
-    <pre id="var-docstr">Equivalent to, but more efficient than, (first (subseq* coll test x)),
+    <pre id="var-docstr">(alpha)
+
+Equivalent to, but more efficient than, (first (subseq* coll test x)),
 where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
 clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     
@@ -266,12 +268,14 @@ comparator.</pre>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (split-at n coll)
 </pre>
-    <pre id="var-docstr">Equivalent to, but more efficient than, 
+    <pre id="var-docstr">(alpha)
+
+Equivalent to, but more efficient than,
 [(into (empty coll) (take n coll))
  (into (empty coll) (drop n coll))].</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1533" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1537" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -279,14 +283,16 @@ comparator.</pre>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (split-key k coll)
 </pre>
-    <pre id="var-docstr">Returns [left e? right], where left and right are collections of
+    <pre id="var-docstr">(alpha)
+
+Returns [left e? right], where left and right are collections of
 the same type as coll and containing, respectively, the keys below
 and above k in the ordering determined by coll's comparator, while
 e? is the entry at key k for maps, the stored copy of the key k for
 sets, nil if coll does not contain k.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1506" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1508" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -295,7 +301,9 @@ sets, nil if coll does not contain k.</pre>
     <pre id="var-usage">Usage: (subrange coll test limit)
        (subrange coll start-test start end-test end)
 </pre>
-    <pre id="var-docstr">Returns an AVL collection comprising the entries of coll between
+    <pre id="var-docstr">(alpha)
+
+Returns an AVL collection comprising the entries of coll between
 start and end (in the sense determined by coll's comparator) in
 logarithmic time. Whether the endpoints are themselves included in
 the returned collection depends on the provided tests; start-test
@@ -310,7 +318,7 @@ of coll.
 than, (into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1545" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1551" id="var-source">Source</a>
   </div>
 </div>
 
