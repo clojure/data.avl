@@ -1,6 +1,6 @@
 {:namespaces
  ({:source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl/clojure.data.avl-api.html",
    :name "clojure.data.avl",
@@ -12,9 +12,9 @@
    :name "nearest",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1499",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1499",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/nearest",
    :doc
@@ -26,9 +26,9 @@
    :name "rank-of",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1494",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1494",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/rank-of",
    :doc "Returns the rank of x in coll or -1 if not present.",
@@ -39,9 +39,9 @@
    :name "sorted-map",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1460",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1460",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-map",
    :doc
@@ -53,9 +53,9 @@
    :name "sorted-map-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1469",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1469",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-map-by",
    :doc
@@ -67,9 +67,9 @@
    :name "sorted-set",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1481",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1481",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-set",
    :doc "Returns a new sorted set with supplied keys.",
@@ -80,9 +80,9 @@
    :name "sorted-set-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1486",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1486",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-set-by",
    :doc
@@ -94,9 +94,9 @@
    :name "split-at",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1537",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1537",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-at",
    :doc
@@ -108,9 +108,9 @@
    :name "split-key",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1508",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1508",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-key",
    :doc
@@ -122,9 +122,9 @@
    :name "subrange",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj#L1551",
+   "https://github.com/clojure/data.avl/blob/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj#L1551",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/51a8bb23fe248fab2d2b3c1d8b85cc4d715accb7/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/f1bec787cbca60bc69cdc7a8f025e1d6b424d7d2/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/subrange",
    :doc
