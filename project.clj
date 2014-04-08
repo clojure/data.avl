@@ -12,8 +12,8 @@
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
   :global-vars {*warn-on-reflection* true}
-  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2197"]]
-                   :plugins [[lein-cljsbuild "1.0.1"]]
+  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2202"]]
+                   :plugins [[lein-cljsbuild "1.0.3"]]
                    :cljsbuild
                    {:builds {:test
                              {:source-paths ["src/main/cljs"
