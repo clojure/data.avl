@@ -38,10 +38,10 @@
     then
     else))
 
-(def ^:const empty-set-hashcode (.hashCode #{}))
-(def ^:const empty-set-hasheq (hash #{}))
-(def ^:const empty-map-hashcode (.hashCode {}))
-(def ^:const empty-map-hasheq (hash {}))
+(def ^:private ^:const empty-set-hashcode (.hashCode #{}))
+(def ^:private ^:const empty-set-hasheq   (hash #{}))
+(def ^:private ^:const empty-map-hashcode (.hashCode {}))
+(def ^:private ^:const empty-map-hasheq   (hash {}))
 
 (defn ^:private hash-imap
   [^IPersistentMap m]
