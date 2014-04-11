@@ -35,8 +35,6 @@
   </scm>
 
   <properties>
-    <!-- core.rrb-vector depends on implementation details of vectors
-         which were made public in Clojure 1.5.0 -->
     <clojure.version>1.5.1</clojure.version>
     <clojure.warnOnReflection>true</clojure.warnOnReflection>
   </properties>
