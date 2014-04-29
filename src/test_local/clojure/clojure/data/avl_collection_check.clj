@@ -1,4 +1,4 @@
-(ns clojure.data.avl-check
+(ns clojure.data.avl-collection-check
   (:require [clojure.data.avl :as avl]
             [collection-check :refer [assert-map-like assert-set-like]])
   (:use clojure.test))
