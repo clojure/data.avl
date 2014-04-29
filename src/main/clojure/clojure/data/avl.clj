@@ -1135,6 +1135,8 @@
   clojure.lang.Sequential
   clojure.lang.ISeq
   (first [this]
+    (peek stack)
+    #_
     (let [node ^IAVLNode (peek stack)]
       (MapEntry. (.getKey node) (.getVal node))))
 
