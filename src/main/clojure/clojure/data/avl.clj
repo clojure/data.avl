@@ -144,7 +144,14 @@
   [getRank   []                          int]
   [setRank   [int]                       clojure.data.avl.IAVLNode]])
 
-(import clojure.data.avl.IAVLNode)
+(gen-interface
+ :name clojure.data.avl.IAVLTree
+ :methods [[getTree [] clojure.data.avl.IAVLNode]])
+
+(import (clojure.data.avl IAVLNode IAVLTree))
+
+(definterface INavigableTree
+  (nearest [test k]))
 
 (deftype AVLNode [^AtomicReference edit
                   ^:unsynchronized-mutable key
@@ -951,15 +958,6 @@
 
 (defn ^:private create-seq [node ascending? cnt]
   (AVLMapSeq. nil (seq-push node nil ascending?) ascending? cnt -1 -1))
-
-(gen-interface
- :name clojure.data.avl.IAVLTree
- :methods [[getTree [] clojure.data.avl.IAVLNode]])
-
-(import clojure.data.avl.IAVLTree)
-
-(definterface INavigableTree
-  (nearest [test k]))
 
 (declare ->AVLTransientMap)
 
