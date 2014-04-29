@@ -203,7 +203,282 @@
     (set! rank r)
     this)
 
-  java.io.Serializable)
+  Object
+  (equals [this that]
+    (cond
+      (identical? this that) true
+
+      (or (instance? clojure.lang.IPersistentVector that)
+          (instance? java.util.RandomAccess that))
+      (and (== 2 (count that))
+           (.equals key (nth that 0))
+           (.equals val (nth that 1)))
+
+      (or (instance? clojure.lang.Sequential that)
+          (instance? java.util.List that))
+      (and (== 2 (count that))
+           (.equals key (first that))
+           (.equals val (second that)))
+
+      :else false))
+
+  (hashCode [this]
+    (-> (int 31)
+        (unchecked-add-int (Util/hash key))
+        (unchecked-multiply-int (int 31))
+        (unchecked-add-int (Util/hash val))))
+
+  (toString [this]
+    (pr-str this))
+
+  clojure.lang.IHashEq
+  (hasheq [this]
+    (compile-if (resolve 'clojure.core/hash-ordered-coll)
+      (hash-ordered-coll this)
+      (-> (int 31)
+          (unchecked-add-int (Util/hasheq key))
+          (unchecked-multiply-int (int 31))
+          (unchecked-add-int (Util/hasheq val)))))
+
+  clojure.lang.Indexed
+  (nth [this n]
+    (case n
+      0 key
+      1 val
+      (throw
+       (IndexOutOfBoundsException. "nth index out of bounds in AVLNode"))))
+
+  (nth [this n not-found]
+    (case n
+      0 key
+      1 val
+      not-found))
+
+  clojure.lang.Counted
+  (count [this]
+    2)
+
+  clojure.lang.IMeta
+  (meta [this]
+    nil)
+
+  clojure.lang.IObj
+  (withMeta [this m]
+    (with-meta [key val] m))
+
+  clojure.lang.IPersistentCollection
+  (cons [this x]
+    [key val x])
+
+  (empty [this]
+    [])
+
+  (equiv [this that]
+    (cond
+      (or (instance? clojure.lang.IPersistentVector that)
+          (instance? java.util.RandomAccess that))
+      (and (== 2 (count that))
+           (= key (nth that 0))
+           (= val (nth that 1)))
+
+      (or (instance? clojure.lang.Sequential that)
+          (instance? java.util.List that))
+      (and (== 2 (count that))
+           (= key (first that))
+           (= val (second that)))
+
+      :else false))
+
+  clojure.lang.IPersistentStack
+  (peek [this]
+    val)
+
+  (pop [this]
+    [key])
+
+  clojure.lang.IPersistentVector
+  (assocN [this i x]
+    (case i
+      0 [x val]
+      1 [key x]
+      (throw
+       (IndexOutOfBoundsException. "assocN index out of bounds in AVLNode"))))
+
+  (length [this]
+    2)
+
+  clojure.lang.Reversible
+  (rseq [this]
+    (list val key))
+
+  clojure.lang.Associative
+  (assoc [this k v]
+    (if (Util/isInteger k)
+      (.assocN this k v)
+      (throw (IllegalArgumentException. "key must be integer"))))
+
+  (containsKey [this k]
+    (if (Util/isInteger k)
+      (case (int k)
+        0 true
+        1 true
+        false)
+      false))
+
+  (entryAt [this k]
+    (if (Util/isInteger k)
+      (case (int k)
+        0 (MapEntry. 0 key)
+        1 (MapEntry. 1 val)
+        nil)))
+
+  clojure.lang.ILookup
+  (valAt [this k not-found]
+    (if (Util/isInteger k)
+      (case (int k)
+        0 key
+        1 val
+        not-found)
+      not-found))
+
+  (valAt [this k]
+    (.valAt this k nil))
+
+  clojure.lang.IFn
+  (invoke [this k]
+    (if (Util/isInteger k)
+      (case (int k)
+        0 key
+        1 val
+        (throw
+         (IndexOutOfBoundsException.
+          "invoke index out of bounds in AVLNode")))
+      (throw (IllegalArgumentException. "key must be integer"))))
+
+  (applyTo [this args]
+    (let [n (RT/boundedLength args 1)]
+      (case n
+        0 (throw (clojure.lang.ArityException.
+                  n (.. this (getClass) (getSimpleName))))
+        1 (.invoke this (first args))
+        2 (throw (clojure.lang.ArityException.
+                  n (.. this (getClass) (getSimpleName)))))))
+
+  clojure.lang.Seqable
+  (seq [this]
+    (list key val))
+
+  clojure.lang.Sequential
+
+  clojure.lang.IEditableCollection
+  (asTransient [this]
+    (transient [key val]))
+
+  clojure.lang.IMapEntry
+  (key [this]
+    key)
+
+  (val [this]
+    val)
+
+  java.util.Map$Entry
+  (getValue [this]
+    val)
+
+  (setValue [this x]
+    (throw-unsupported))
+
+  java.io.Serializable
+
+  java.lang.Comparable
+  (compareTo [this that]
+    (if (identical? this that)
+      0
+      (let [^clojure.lang.IPersistentVector v
+            (cast clojure.lang.IPersistentVector that)
+            vcnt (.count v)]
+        (cond
+          (< 2 vcnt) -1
+          (> 2 vcnt) 1
+          :else
+          (let [comp (Util/compare key (.nth v 0))]
+            (if (zero? comp)
+              (Util/compare val (.nth v 1))
+              comp))))))
+
+  java.lang.Iterable
+  (iterator [this]
+    (.iterator ^java.lang.Iterable (list key val)))
+
+  java.util.RandomAccess
+  java.util.List
+  (get [this i]
+    (.nth this i))
+
+  (indexOf [this x]
+    (condp = x
+      key 0
+      val 1
+      -1))
+
+  (lastIndexOf [this x]
+    (condp = x
+      val 1
+      key 0
+      -1))
+
+  (listIterator [this]
+    (.listIterator this 0))
+
+  (listIterator [this i]
+    (.listIterator (doto (java.util.ArrayList.)
+                     (.add key)
+                     (.add val))
+                   i))
+
+  (subList [this a z]
+    (if (<= 0 a z 2)
+      (cond
+        (== a z) []
+        (and (== a 0) (== z 2)) this
+        :else (case a
+                0 [key]
+                1 [val]))
+      (throw
+       (IndexOutOfBoundsException. "subList index out of bounds in AVLNode"))))
+
+  java.util.Collection
+  (contains [this x]
+    (or (= key x) (= val x)))
+
+  (containsAll [this c]
+    (every? #(.contains this %) c))
+
+  (isEmpty [this]
+    false)
+
+  (toArray [this]
+    (into-array Object this))
+
+  (toArray [this arr]
+    (if (>= (count arr) 2)
+      (doto arr
+        (aset 0 key)
+        (aset 1 val))
+      (into-array Object this)))
+
+  (size [this]
+    2)
+
+  (add             [this x]      (throw-unsupported))
+  (^boolean remove [this x]      (throw-unsupported))
+  (addAll          [this c]      (throw-unsupported))
+  (clear           [this]        (throw-unsupported))
+  (retainAll       [this c]      (throw-unsupported))
+  (removeAll       [this c]      (throw-unsupported))
+  (set             [this i e]    (throw-unsupported))
+  (remove          [this ^int i] (throw-unsupported))
+  (add             [this i e]    (throw-unsupported)))
 
 (defn ^:private ensure-editable
   (^IAVLNode [^AtomicReference edit]
