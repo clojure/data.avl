@@ -1,6 +1,6 @@
 {:namespaces
  ({:source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl/clojure.data.avl-api.html",
    :name "clojure.data.avl",
@@ -12,9 +12,9 @@
    :name "merge",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2079",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2079",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/merge",
    :doc
@@ -26,9 +26,9 @@
    :name "merge-with",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2107",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2107",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/merge-with",
    :doc
@@ -40,9 +40,9 @@
    :name "nearest",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1946",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1946",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/nearest",
    :doc
@@ -54,9 +54,9 @@
    :name "rank-of",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1941",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1941",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/rank-of",
    :doc "Returns the rank of x in coll or -1 if not present.",
@@ -67,9 +67,9 @@
    :name "sorted-map",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1907",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1907",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-map",
    :doc
@@ -81,9 +81,9 @@
    :name "sorted-map-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1916",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1916",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-map-by",
    :doc
@@ -95,9 +95,9 @@
    :name "sorted-set",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1928",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1928",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-set",
    :doc "Returns a new sorted set with supplied keys.",
@@ -108,9 +108,9 @@
    :name "sorted-set-by",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1933",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1933",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/sorted-set-by",
    :doc
@@ -122,9 +122,9 @@
    :name "split-at",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1984",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1984",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-at",
    :doc
@@ -136,9 +136,9 @@
    :name "split-key",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1955",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1955",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/split-key",
    :doc
@@ -150,9 +150,9 @@
    :name "subrange",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1998",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1998",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/subrange",
    :doc
@@ -164,9 +164,9 @@
    :name "union",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2135",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2135",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/union",
    :doc
@@ -178,9 +178,9 @@
    :name "unsafe-join",
    :namespace "clojure.data.avl",
    :source-url
-   "https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2051",
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2051",
    :raw-source-url
-   "https://github.com/clojure/data.avl/raw/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj",
+   "https://github.com/clojure/data.avl/raw/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj",
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/unsafe-join",
    :doc
