@@ -1104,10 +1104,9 @@
       (let [init (f init (.getKey node) (.getVal node))]
         (if (reduced? init)
           init
-          (let [init (if (nil? (.getRight node))
-                       init
-                       (avl-map-kv-reduce (.getRight node) f init))]
-            init))))))
+          (if (nil? (.getRight node))
+            init
+            (recur (.getRight node) f init)))))))
 
 (deftype AVLMapSeq [^IPersistentMap _meta
                     ^IPersistentStack stack
