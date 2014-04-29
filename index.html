@@ -72,6 +72,12 @@ namespace.
   </div><div style="margin-left: 1em;" class="toc-section">
     <a href="#var-section" style="margin-top: 3px;">Vars and Functions</a>
     <div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/merge">merge</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/merge-with">merge-with</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.data.avl/nearest">nearest</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
@@ -97,6 +103,12 @@ namespace.
       
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.data.avl/subrange">subrange</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/union">union</a>
+      
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a class="toc-entry-anchor" href="#clojure.data.avl/unsafe-join">unsafe-join</a>
       
     </div>
   </div>
@@ -155,7 +167,7 @@ clojure.data.avl/subrange.</pre>
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[edit key val left right height rank]</span><br />
     Protocols: <span id="type-protocols"></span><br />
-    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLNode, java.io.Serializable</span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLNode, clojure.lang.Associative, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMapEntry, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentStack, clojure.lang.IPersistentVector, clojure.lang.Indexed, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sequential, java.io.Serializable, java.lang.Comparable, java.lang.Iterable, java.util.Collection, java.util.List, java.util.Map$Entry, java.util.RandomAccess</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -191,6 +203,49 @@ clojure.data.avl/subrange.</pre>
   <div id="var-entry">
     <br />
     <hr />
+    <h2 id="clojure.data.avl/merge">merge</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (merge)
+       (merge m)
+       (merge m1 m2)
+       (merge m1 m2 m3 &amp; more)
+</pre>
+    <pre id="var-docstr">(alpha)
+
+Merges the given AVL maps which should all use the same comparator.
+nil is accepted and converted into an empty AVL map. The value
+returned is itself an AVL map, except in the nullary case in which
+nil is returned.
+
+In case of key collisions, mappings from maps further to the right
+in the argument list take precedence.</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2079" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/merge-with">merge-with</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (merge-with f)
+       (merge-with f m)
+       (merge-with f m1 m2)
+       (merge-with f m1 m2 m3 &amp; more)
+</pre>
+    <pre id="var-docstr">(alpha)
+
+Merges the given AVL maps which should all use the same comparator.
+nil is accepted and converted into an empty AVL map. The value
+returned is itself an AVL map, except in the nullary case in which
+nil is returned.
+
+Use f to combine values in case of key collisions.</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2107" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
     <h2 id="clojure.data.avl/nearest">nearest</h2>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (nearest coll test x)
@@ -202,7 +257,7 @@ where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
 clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1499" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1946" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -213,7 +268,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-docstr">Returns the rank of x in coll or -1 if not present.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1494" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1941" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -225,7 +280,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
 Returns a new AVL map with supplied mappings.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1460" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1907" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -238,7 +293,7 @@ Returns a new sorted map with supplied mappings, using the supplied
 comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1469" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1916" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -249,7 +304,7 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1481" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1928" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -260,7 +315,7 @@ comparator.</pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys, using the supplied comparator.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1486" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1933" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -275,7 +330,7 @@ Equivalent to, but more efficient than,
  (into (empty coll) (drop n coll))].</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1537" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1984" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -292,7 +347,7 @@ e? is the entry at key k for maps, the stored copy of the key k for
 sets, nil if coll does not contain k.</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1508" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1955" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -318,7 +373,49 @@ of coll.
 than, (into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
     
     
-    <a href="https://github.com/clojure/data.avl/blob/ad6cebadab07fae3c8265edca6aedb0f156f21f1/src/main/clojure/clojure/data/avl.clj#L1551" id="var-source">Source</a>
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L1998" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/union">union</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (union)
+       (union s)
+       (union s1 s2)
+       (union s1 s2 s3 &amp; more)
+</pre>
+    <pre id="var-docstr">(alpha)
+
+Computes the union of the given AVL sets which should all use the
+same comparator. nil is accepted and converted into an empty AVL
+set. The value returned is itself an AVL set, except in the nullary
+case in which nil is returned.</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2135" id="var-source">Source</a>
+  </div><div id="var-entry">
+    <br />
+    <hr />
+    <h2 id="clojure.data.avl/unsafe-join">unsafe-join</h2>
+    <span id="var-type">function</span><br />
+    <pre id="var-usage">Usage: (unsafe-join)
+       (unsafe-join coll)
+       (unsafe-join coll1 coll2)
+       (unsafe-join coll1 coll2 coll3 &amp; more)
+</pre>
+    <pre id="var-docstr">(alpha)
+
+ATTN: This function DOES NOT validate its inputs and WILL return
+malformed results if the inputs do not satisfy the contract.
+
+Merges or computes the union of colls. All colls must be AVL
+collections of the same type using the same comparator. If collx
+occurs earlier than colly among the arguments to unsafe-join,
+collx's greatest element must be strictly smaller than the smallest
+element of colly (in the sense determined by the comparator).</pre>
+    
+    
+    <a href="https://github.com/clojure/data.avl/blob/0a6a0f34433ad36cb13dee79b4be4cf878568758/src/main/clojure/clojure/data/avl.clj#L2051" id="var-source">Source</a>
   </div>
 </div>
 
