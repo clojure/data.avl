@@ -600,8 +600,8 @@
         (neg? c)  (recur comp (.getLeft node)  k)
         :else     (recur comp (.getRight node) k)))))
 
-(defn ^:private lookup-nearest ^IAVLNode
-  [^Comparator comp ^IAVLNode node test k]
+(defn ^:private lookup-nearest
+  ^IAVLNode [^Comparator comp ^IAVLNode node test k]
   (let [below? (or (identical? < test) (identical? <= test))
         equal? (or (identical? <= test) (identical? >= test))
         back?  (if below? neg? pos?)
