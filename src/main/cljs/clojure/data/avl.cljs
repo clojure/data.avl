@@ -773,7 +773,7 @@
 
   IHash
   (-hash [this]
-    (caching-hash this hash-imap _hash))
+    (caching-hash this hash-unordered-coll _hash))
 
   IMeta
   (meta [this]
@@ -971,7 +971,7 @@
 
   IHash
   (-hash [this]
-    (caching-hash this hash-iset _hash))
+    (caching-hash this hash-unordered-coll _hash))
 
   IMeta
   (meta [this]
