@@ -974,7 +974,7 @@
     (caching-hash this hash-unordered-coll _hash))
 
   IMeta
-  (meta [this]
+  (-meta [this]
     _meta)
 
   IWithMeta
