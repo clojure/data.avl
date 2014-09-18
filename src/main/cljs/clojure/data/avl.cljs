@@ -776,7 +776,7 @@
     (caching-hash this hash-unordered-coll _hash))
 
   IMeta
-  (meta [this]
+  (-meta [this]
     _meta)
 
   IWithMeta
@@ -1047,10 +1047,10 @@
     (AVLSet. _meta (dissoc avl-map v) nil))
 
   IFn
-  (invoke [this k]
+  (-invoke [this k]
     (-lookup this k))
 
-  (invoke [this k not-found]
+  (-invoke [this k not-found]
     (-lookup this k not-found))
 
   IEditableCollection
@@ -1091,7 +1091,7 @@
   (-invoke [this k]
     (-lookup transient-avl-map k))
 
-  (invoke [this k not-found]
+  (-invoke [this k not-found]
     (-lookup transient-avl-map k not-found)))
 
 (def ^:private empty-map (AVLMap. compare nil 0 nil 0))
