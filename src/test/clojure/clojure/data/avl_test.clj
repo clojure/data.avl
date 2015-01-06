@@ -256,3 +256,10 @@
     (doseq [k (next ks)]
       (is (= (avl/nearest avl-set < k) (dec k)))
       (is (= (key (avl/nearest avl-map < k)) (dec k))))))
+
+(deftest bad-args
+  (testing "sorted-map and sorted-map-by expect val for every key"
+    (is (thrown? IllegalArgumentException
+                 (avl/sorted-map [:a 1 :b])))
+    (is (thrown? IllegalArgumentException
+                 (avl/sorted-map-by < [:a 1 :b])))))
