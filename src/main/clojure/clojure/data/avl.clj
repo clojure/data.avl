@@ -1737,10 +1737,12 @@
   [& keyvals]
   (loop [in (seq keyvals) out (transient empty-map)]
     (if in
-      (if (next in)
-        (recur (nnext in) (assoc! out (first in) (second in)))
+      (if-let [nin (next in)]
+        (recur (next nin) (assoc! out (first in) (first nin)))
         (throw (IllegalArgumentException.
-                "sorted-map expects even number of arguments, found odd number.")))
+                 (format
+                   "sorted-map: no value supplied for key: %s"
+                   (first in)))))
       (persistent! out))))
 
 (defn sorted-map-by
@@ -1752,10 +1754,12 @@
          out (AVLTransientMap.
               (AtomicReference. (Thread/currentThread)) comparator nil 0)]
     (if in
-      (if (next in)
-        (recur (nnext in) (assoc! out (first in) (second in)))
+      (if-let [nin (next in)]
+        (recur (next nin) (assoc! out (first in) (first nin)))
         (throw (IllegalArgumentException.
-                "sorted-map-by expects even number of arguments after comparator, found odd number.")))
+                 (format
+                   "sorted-map-by: no value supplied for key: %s"
+                   (first in)))))
       (persistent! out))))
 
 (defn sorted-set

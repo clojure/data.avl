@@ -231,3 +231,14 @@
     (doseq [k (next ks)]
       (is (= (avl/nearest avl-set < k) (dec k)))
       (is (= (key (avl/nearest avl-map < k)) (dec k))))))
+
+(deftest bad-args
+  (testing "sorted-map and sorted-map-by expect val for every key"
+    (is (= "sorted-map: no value supplied for key: :b"
+           (try (avl/sorted-map :a 1 :b)
+                (catch :default e
+                  (ex-message e)))))
+    (is (= "sorted-map-by: no value supplied for key: :b"
+           (try (avl/sorted-map-by < :a 1 :b)
+                (catch :default e
+                  (ex-message e)))))))

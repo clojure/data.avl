@@ -1119,7 +1119,11 @@
   [& keyvals]
   (loop [in (seq keyvals) out (transient empty-map)]
     (if in
-      (recur (nnext in) (assoc! out (first in) (second in)))
+      (if-let [nin (next in)]
+        (recur (next nin) (assoc! out (first in) (first nin)))
+        (throw (ex-info
+                 (str "sorted-map: no value supplied for key: " (first in))
+                 {})))
       (persistent! out))))
 
 (defn sorted-map-by
@@ -1130,7 +1134,11 @@
   (loop [in  (seq keyvals)
          out (AVLTransientMap. (js-obj) (fn->comparator comparator) nil 0)]
     (if in
-      (recur (nnext in) (assoc! out (first in) (second in)))
+      (if-let [nin (next in)]
+        (recur (next nin) (assoc! out (first in) (first nin)))
+        (throw (ex-info
+                 (str "sorted-map-by: no value supplied for key: " (first in))
+                 {})))
       (persistent! out))))
 
 (defn sorted-set
