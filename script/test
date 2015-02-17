@@ -17,5 +17,5 @@ fi
 
 if [ "${SPIDERMONKEY_HOME}" != "" ]; then
     echo "Testing with SpiderMonkey:"
-    "${SPIDERMONKEY_HOME}/js24" -m -a -f out/test.js
+    "${SPIDERMONKEY_HOME}/js" -f out/test.js
 fi
