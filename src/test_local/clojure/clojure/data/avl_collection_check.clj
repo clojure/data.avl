@@ -1,9 +1,10 @@
 (ns clojure.data.avl-collection-check
   (:require [clojure.data.avl :as avl]
-            [collection-check :refer [assert-map-like assert-set-like]])
+            [collection-check :refer [assert-map-like assert-set-like]]
+            [clojure.test.check.generators :as gen])
   (:use clojure.test))
 
-(def igen simple-check.generators/int)
+(def igen gen/int)
 
 (deftest collection-check
   (are [x] (assert-map-like x igen igen)
