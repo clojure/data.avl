@@ -22,6 +22,9 @@
            (java.util Comparator Collections ArrayList)
            (java.util.concurrent.atomic AtomicReference)))
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* :warn-on-boxed)
+
 (defn ^:private throw-unsupported []
   (throw (UnsupportedOperationException.)))
 
@@ -623,7 +626,7 @@
             (back? c) (recur prev (backward node))
             :else     (recur node (forward node))))))))
 
-(defn ^:private select ^IAVLNode [^IAVLNode node rank]
+(defn ^:private select ^IAVLNode [^IAVLNode node ^long rank]
   (if (nil? node)
     nil
     (let [node-rank (.getRank node)]
@@ -987,6 +990,8 @@
                                  new-child
                                  current-r
                                  (inc (max (.getHeight ^IAVLNode new-child)
+                                           (height current-r)
+                                           #_
                                            (if current-r
                                              (.getHeight current-r)
                                              0)))
@@ -1018,6 +1023,8 @@
                                  current-l
                                  new-child
                                  (inc (max (.getHeight ^IAVLNode new-child)
+                                           (height current-l)
+                                           #_
                                            (if current-l
                                              (.getHeight current-l)
                                              0)))
@@ -1036,22 +1043,43 @@
                    (.getRight node)]
 
                   (neg? c)
-                  (let [[l e r] (step (.getLeft node))]
+                  (let [[l e r] (step (.getLeft node))
+                        r'      (insert comp
+                                        (.getRight node)
+                                        (.getKey node)
+                                        (.getVal node)
+                                        (Box. false))]
                     [l
                      e
+                     (cond
+                       e (join comp
+                               (- (.getRank node)
+                                  (inc (rank comp
+                                             (.getLeft node)
+                                             (.key ^MapEntry e))))
+                               r
+                               r')
+
+                       r (join comp
+                               (- (.getRank node)
+                                  (inc (rank comp
+                                             (.getLeft node)
+                                             (.getKey (get-rightmost r)))))
+                               r
+                               r')
+                       :else (join comp 0 r r'))
+                     #_
                      (join comp
                            (- (.getRank node)
                               (cond
                                 e
-                                (unchecked-inc-int
-                                 (rank comp
-                                       (.getLeft node)
-                                       (.key ^MapEntry e)))
+                                (inc (rank comp
+                                           (.getLeft node)
+                                           (.key ^MapEntry e)))
                                 r
-                                (unchecked-inc-int
-                                 (rank comp
-                                       (.getLeft node)
-                                       (.getKey (get-rightmost r))))
+                                (inc (rank comp
+                                           (.getLeft node)
+                                           (.getKey (get-rightmost r))))
                                 :else
                                 (.getRank node)))
                            r
@@ -1854,15 +1882,17 @@
        coll
 
        (#{> >=} test)
-       (subrange coll
-                 test limit
-                 <= (.getKey ^IAVLNode (select (.getTree ^IAVLTree coll)
-                                               (dec (count coll)))))
+       (let [n (select (.getTree ^IAVLTree coll)
+                       (dec (count coll)))]
+         (subrange coll
+                   test limit
+                   <= (.getKey ^IAVLNode n)))
 
        :else
-       (subrange coll
-                 >= (.getKey ^IAVLNode (select (.getTree ^IAVLTree coll) 0))
-                 test limit)))
+       (let [n (select (.getTree ^IAVLTree coll) 0)]
+         (subrange coll
+                   >= (.getKey ^IAVLNode n)
+                   test limit))))
   ([coll start-test start end-test end]
      (if (zero? (count coll))
        coll

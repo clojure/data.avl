@@ -11,7 +11,6 @@
                        "-Dorg.clojure.data.avl.test.small-tree-size=300"]
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
-  :global-vars {*warn-on-reflection* true}
   :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2913"]]
                    :plugins [[lein-cljsbuild "1.0.3"]]
                    :cljsbuild
