@@ -626,7 +626,7 @@
             (back? c) (recur prev (backward node))
             :else     (recur node (forward node))))))))
 
-(defn ^:private select ^IAVLNode [^IAVLNode node ^long rank]
+(defn ^:private select [^IAVLNode node ^long rank]
   (if (nil? node)
     nil
     (let [node-rank (.getRank node)]
