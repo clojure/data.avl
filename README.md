@@ -1,8 +1,9 @@
 # data.avl
 
-Persistent sorted maps and sets with support for transients and
-additional logarithmic time operations: rank queries (via
-`clojure.core/nth` and `clojure.data.avl/rank-of`), "nearest key"
+Persistent sorted maps and sets with support for the full clojure.core
+sorted collections API (in particular `clojure.core/(r)?(sub)?seq`),
+transients and additional logarithmic time operations: rank queries
+(via `clojure.core/nth` and `clojure.data.avl/rank-of`), "nearest key"
 lookups, splits by index or key and subsets/submaps.
 
 Persistent AVL trees are used as the underlying data structure.
@@ -10,9 +11,10 @@ Persistent AVL trees are used as the underlying data structure.
 ## Synopsis
 
 data.avl supports both Clojure and ClojureScript. It exports a single
-namespace with nine public functions, four of which are drop-in
-replacements for `clojure.core` / `cljs.core` functions of the same
-names, while the remaining five expose data.avl-specific functionality:
+namespace with nine public functions, four of which are constructor
+functions which can be used as drop-in replacements for `clojure.core`
+/ `cljs.core` functions of the same names, while the remaining five
+expose data.avl-specific functionality:
 
     (require '[clojure.data.avl :as avl])
 
