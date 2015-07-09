@@ -54,7 +54,7 @@ following differences:
 
 1. They have transient counterparts:
 
-        (persistent! (assoc! (transient (avl/sorted-map) 0 0)))
+        (persistent! (assoc! (transient (avl/sorted-map)) 0 0))
         ;= {0 0}
 
    and use transients during construction:
