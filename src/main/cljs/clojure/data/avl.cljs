@@ -86,11 +86,6 @@
                  (.getHeight node)
                  (.getRank node)))))
 
-(defn ^:private height [node]
-  (if (nil? node)
-    0
-    (.getHeight node)))
-
 (defn ^:private rotate-left [node]
   (let [l    (.getLeft  node)
         r    (.getRight node)
