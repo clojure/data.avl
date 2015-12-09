@@ -11,19 +11,20 @@
                        "-Dorg.clojure.data.avl.test.small-tree-size=300"]
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
-  :profiles {:dev {:dependencies [[org.clojure/clojurescript "0.0-2913"]]
-                   :plugins [[lein-cljsbuild "1.0.3"]]
-                   :cljsbuild
-                   {:builds {:test
-                             {:source-paths ["src/main/cljs"
-                                             "src/test/clojure"
-                                             "src/test/cljs"]
-                              :compiler {:output-to "out/test.js"
-                                         :optimizations :advanced
-                                         :pretty-print false}}}}}
-             :1.6 {:dependencies [[org.clojure/clojure "1.6.0"]
-                                  [collection-check "0.1.4"]]
-                   :test-paths ["src/test_local/clojure"]}
-             :1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha5"]
-                                  [collection-check "0.1.4"]]
-                   :test-paths ["src/test_local/clojure"]}})
+  :profiles {:cljs {:dependencies [[org.clojure/clojure "1.7.0"]
+                                   [org.clojure/clojurescript "1.7.189"]]
+                    :plugins [[lein-cljsbuild "1.1.1"]]
+                    :cljsbuild
+                    {:builds {:test
+                              {:source-paths ["src/main/cljs"
+                                              "src/test/clojure"
+                                              "src/test/cljs"]
+                               :compiler {:output-to "out/test.js"
+                                          :optimizations :advanced
+                                          :pretty-print false}}}}}
+             :1.6  {:dependencies [[org.clojure/clojure "1.6.0"]
+                                   [collection-check "0.1.6"]]
+                    :test-paths ["src/test_local/clojure"]}
+             :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]
+                                   [collection-check "0.1.6"]]
+                    :test-paths ["src/test_local/clojure"]}})
