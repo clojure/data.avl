@@ -191,6 +191,7 @@
   {:name "AVLMap",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLMap",
    :source-url nil,
@@ -199,6 +200,7 @@
   {:name "AVLMapSeq",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLMapSeq",
    :source-url nil,
@@ -207,6 +209,7 @@
   {:name "AVLNode",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLNode",
    :source-url nil,
@@ -215,6 +218,7 @@
   {:name "AVLSet",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLSet",
    :source-url nil,
@@ -223,6 +227,7 @@
   {:name "AVLTransientMap",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLTransientMap",
    :source-url nil,
@@ -231,6 +236,7 @@
   {:name "AVLTransientSet",
    :var-type "type",
    :namespace "clojure.data.avl",
+   :arglists nil,
    :wiki-url
    "http://clojure.github.com/data.avl//clojure.data.avl-api.html#clojure.data.avl/AVLTransientSet",
    :source-url nil,
