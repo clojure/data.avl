@@ -12,7 +12,7 @@
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
   :profiles {:cljs {:dependencies [[org.clojure/clojure "1.7.0"]
-                                   [org.clojure/clojurescript "1.7.189"]]
+                                   [org.clojure/clojurescript "1.7.228"]]
                     :plugins [[lein-cljsbuild "1.1.1"]]
                     :cljsbuild
                     {:builds {:test
