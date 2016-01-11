@@ -1762,6 +1762,7 @@
 (defn sorted-map
   "keyval => key val
   Returns a new AVL map with supplied mappings."
+  {:added "0.0.1"}
   [& keyvals]
   (loop [in (seq keyvals) out (transient empty-map)]
     (if in
@@ -1777,6 +1778,7 @@
   "keyval => key val
   Returns a new sorted map with supplied mappings, using the supplied
   comparator."
+  {:added "0.0.1"}
   [^Comparator comparator & keyvals]
   (loop [in  (seq keyvals)
          out (AVLTransientMap.
@@ -1792,11 +1794,13 @@
 
 (defn sorted-set
   "Returns a new sorted set with supplied keys."
+  {:added "0.0.1"}
   [& keys]
   (persistent! (reduce conj! (transient empty-set) keys)))
 
 (defn sorted-set-by
   "Returns a new sorted set with supplied keys, using the supplied comparator."
+  {:added "0.0.1"}
   [^Comparator comparator & keys]
   (persistent!
    (reduce conj!
@@ -1805,6 +1809,7 @@
 
 (defn rank-of
   "Returns the rank of x in coll or -1 if not present."
+  {:added "0.0.6"}
   ^long [coll x]
   (rank (.comparator ^clojure.lang.Sorted coll) (.getTree ^IAVLTree coll) x))
 
@@ -1814,6 +1819,7 @@
   Equivalent to, but more efficient than, (first (subseq* coll test x)),
   where subseq* is clojure.core/subseq for test in #{>, >=} and
   clojure.core/rsubseq for test in #{<, <=}."
+  {:added "0.0.12"}
   [coll test x]
   (.nearest ^INavigableTree coll test x))
 
@@ -1825,6 +1831,7 @@
   and above k in the ordering determined by coll's comparator, while
   e? is the entry at key k for maps, the stored copy of the key k for
   sets, nil if coll does not contain k."
+  {:added "0.0.12"}
   [k coll]
   (let [comp (.comparator ^clojure.lang.Sorted coll)
         [left e? right] (split comp (.getTree ^IAVLTree coll) k)
@@ -1852,6 +1859,7 @@
   Equivalent to, but more efficient than,
   [(into (empty coll) (take n coll))
    (into (empty coll) (drop n coll))]."
+  {:added "0.0.12"}
   [^long n coll]
   (if (>= n (count coll))
     [coll (empty coll)]
@@ -1876,6 +1884,7 @@
 
   (subrange >= start <= end) is equivalent to, but more efficient
   than, (into (empty coll) (subseq coll >= start <= end)."
+  {:added "0.0.12"}
   ([coll test limit]
      (cond
        (zero? (count coll))
