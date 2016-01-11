@@ -27,4 +27,7 @@
                     :test-paths ["src/test_local/clojure"]}
              :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]
                                    [collection-check "0.1.6"]]
+                    :test-paths ["src/test_local/clojure"]}
+             :1.8  {:dependencies [[org.clojure/clojure "1.8.0-RC4"]
+                                   [collection-check "0.1.6"]]
                     :test-paths ["src/test_local/clojure"]}})
