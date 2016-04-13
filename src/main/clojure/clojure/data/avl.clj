@@ -101,7 +101,7 @@
   returns false."
   [x y]
   (boolean
-   (when (sequential? y)
+   (when (or (sequential? y) (instance? java.util.List y))
      (loop [xs (seq x) ys (seq y)]
        (cond (nil? xs) (nil? ys)
              (nil? ys) false
