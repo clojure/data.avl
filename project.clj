@@ -12,8 +12,8 @@
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
   :profiles {:cljs {:dependencies [[org.clojure/clojure "1.7.0"]
-                                   [org.clojure/clojurescript "1.7.228"]]
-                    :plugins [[lein-cljsbuild "1.1.1"]]
+                                   [org.clojure/clojurescript "1.8.40"]]
+                    :plugins [[lein-cljsbuild "1.1.2"]]
                     :cljsbuild
                     {:builds {:test
                               {:source-paths ["src/main/cljs"
@@ -28,6 +28,6 @@
              :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]
                                    [collection-check "0.1.6"]]
                     :test-paths ["src/test_local/clojure"]}
-             :1.8  {:dependencies [[org.clojure/clojure "1.8.0-RC4"]
+             :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]
                                    [collection-check "0.1.6"]]
                     :test-paths ["src/test_local/clojure"]}})
