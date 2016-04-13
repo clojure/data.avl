@@ -1751,6 +1751,32 @@
 (def ^:private empty-set
   (AVLSet. nil empty-map empty-set-hashcode empty-set-hasheq))
 
+(defmethod print-dup AVLMap [m ^java.io.Writer w]
+  (if-let [[[k v] & more] (seq m)]
+    (do
+      (.write w "#=(clojure.data.avl/sorted-map ")
+      (print-dup k w)
+      (.write w " ")
+      (print-dup v w)
+      (doseq [[k v] more]
+        (.write w ", ")
+        (print-dup k w)
+        (.write w " ")
+        (print-dup v w))
+      (.write w ")"))
+    (.write w "#=(clojure.data.avl/sorted-map)")))
+
+(defmethod print-dup AVLSet [s ^java.io.Writer w]
+  (if-let [[x & xs] (seq s)]
+    (do
+      (.write w "#=(clojure.data.avl/sorted-set ")
+      (print-dup x w)
+      (doseq [x xs]
+        (.write w " ")
+        (print-dup x w))
+      (.write w ")"))
+    (.write w "#=(clojure.data.avl/sorted-set)")))
+
 (doseq [v [#'->AVLMapSeq
            #'->AVLNode
            #'->AVLMap

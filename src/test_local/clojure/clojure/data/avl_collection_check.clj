@@ -1,7 +1,11 @@
 (ns clojure.data.avl-collection-check
   (:require [clojure.data.avl :as avl]
-            [collection-check :refer [assert-map-like assert-set-like]]
-            [clojure.test.check.generators :as gen])
+            [collection-check
+             :refer [assert-map-like assert-set-like
+                     assert-equivalent-maps assert-equivalent-sets]]
+            [clojure.test.check.clojure-test :refer [defspec]]
+            [clojure.test.check.generators :as gen]
+            [clojure.test.check.properties :as prop])
   (:use clojure.test))
 
 (def igen gen/int)
@@ -49,3 +53,17 @@
       (let [ks (shuffle (range 500))]
         (validate-tree (apply avl/sorted-set ks))
         (validate-tree (apply avl/sorted-set-by > ks))))))
+
+(defspec print-dup-map-round-trip 100
+  (prop/for-all [xs (gen/vector gen/int)]
+    (let [m1 (into (avl/sorted-map) (map #(vector % %) xs))
+          m2 (read-string (with-out-str (print-dup m1 *out*)))]
+      (assert-equivalent-maps m1 m2)
+      true)))
+
+(defspec print-dup-set-round-trip 100
+  (prop/for-all [xs (gen/vector gen/int)]
+    (let [s1 (into (avl/sorted-set) xs)
+          s2 (read-string (with-out-str (print-dup s1 *out*)))]
+      (assert-equivalent-sets s1 s2)
+      true)))
