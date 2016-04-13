@@ -990,11 +990,7 @@
                                  new-child
                                  current-r
                                  (inc (max (.getHeight ^IAVLNode new-child)
-                                           (height current-r)
-                                           #_
-                                           (if current-r
-                                             (.getHeight current-r)
-                                             0)))
+                                           (height current-r)))
                                  (+ left-count (.getRank current)))))))]
           (step right (- rh lh)))
 
@@ -1023,11 +1019,7 @@
                                  current-l
                                  new-child
                                  (inc (max (.getHeight ^IAVLNode new-child)
-                                           (height current-l)
-                                           #_
-                                           (if current-l
-                                             (.getHeight current-l)
-                                             0)))
+                                           (height current-l)))
                                  (.getRank current))))))]
           (step left left-count (- lh rh)))))))
 
@@ -1067,27 +1059,7 @@
                                              (.getKey (get-rightmost r)))))
                                r
                                r')
-                       :else (join comp 0 r r'))
-                     #_
-                     (join comp
-                           (- (.getRank node)
-                              (cond
-                                e
-                                (inc (rank comp
-                                           (.getLeft node)
-                                           (.key ^MapEntry e)))
-                                r
-                                (inc (rank comp
-                                           (.getLeft node)
-                                           (.getKey (get-rightmost r))))
-                                :else
-                                (.getRank node)))
-                           r
-                           (insert comp
-                                   (.getRight node)
-                                   (.getKey node)
-                                   (.getVal node)
-                                   (Box. false)))])
+                       :else (join comp 0 r r'))])
 
                   :else
                   (let [[l e r] (step (.getRight node))]
@@ -1162,10 +1134,7 @@
   clojure.lang.Sequential
   clojure.lang.ISeq
   (first [this]
-    (peek stack)
-    #_
-    (let [node ^IAVLNode (peek stack)]
-      (MapEntry. (.getKey node) (.getVal node))))
+    (peek stack))
 
   (more [this]
     (let [node ^IAVLNode (first stack)
