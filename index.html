@@ -111,6 +111,9 @@ namespace.
       <a href="#clojure.data.avl/unsafe-join" class="toc-entry-anchor">unsafe-join</a>
       
     </div>
+  </div><div class="toc-section" style="margin-left: 1em;">
+    <a style="margin-top: 3px;" href="#"></a>
+    
   </div>
 </div>
 </div>
@@ -219,6 +222,7 @@ nil is returned.
 
 In case of key collisions, mappings from maps further to the right
 in the argument list take precedence.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2123">Source</a>
@@ -240,6 +244,7 @@ returned is itself an AVL map, except in the nullary case in which
 nil is returned.
 
 Use f to combine values in case of key collisions.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2151">Source</a>
@@ -255,6 +260,7 @@ Use f to combine values in case of key collisions.</pre>
 Equivalent to, but more efficient than, (first (subseq* coll test x)),
 where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
 clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1984">Source</a>
@@ -266,6 +272,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-usage">Usage: (rank-of coll x)
 </pre>
     <pre id="var-docstr">Returns the rank of x in coll or -1 if not present.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.6</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1978">Source</a>
@@ -278,6 +285,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
 </pre>
     <pre id="var-docstr">keyval =&gt; key val
 Returns a new AVL map with supplied mappings.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1930">Source</a>
@@ -291,6 +299,7 @@ Returns a new AVL map with supplied mappings.</pre>
     <pre id="var-docstr">keyval =&gt; key val
 Returns a new sorted map with supplied mappings, using the supplied
 comparator.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1945">Source</a>
@@ -302,6 +311,7 @@ comparator.</pre>
     <pre id="var-usage">Usage: (sorted-set &amp; keys)
 </pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1963">Source</a>
@@ -313,6 +323,7 @@ comparator.</pre>
     <pre id="var-usage">Usage: (sorted-set-by comparator &amp; keys)
 </pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys, using the supplied comparator.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1969">Source</a>
@@ -328,6 +339,7 @@ comparator.</pre>
 Equivalent to, but more efficient than,
 [(into (empty coll) (take n coll))
  (into (empty coll) (drop n coll))].</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2024">Source</a>
@@ -345,6 +357,7 @@ the same type as coll and containing, respectively, the keys below
 and above k in the ordering determined by coll's comparator, while
 e? is the entry at key k for maps, the stored copy of the key k for
 sets, nil if coll does not contain k.</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1994">Source</a>
@@ -371,6 +384,7 @@ of coll.
 
 (subrange &gt;= start &lt;= end) is equivalent to, but more efficient
 than, (into (empty coll) (subseq coll &gt;= start &lt;= end).</pre>
+    <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2039">Source</a>
@@ -390,6 +404,7 @@ Computes the union of the given AVL sets which should all use the
 same comparator. nil is accepted and converted into an empty AVL
 set. The value returned is itself an AVL set, except in the nullary
 case in which nil is returned.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2179">Source</a>
@@ -413,6 +428,7 @@ collections of the same type using the same comparator. If collx
 occurs earlier than colly among the arguments to unsafe-join,
 collx's greatest element must be strictly smaller than the smallest
 element of colly (in the sense determined by the comparator).</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2095">Source</a>
