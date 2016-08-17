@@ -1108,6 +1108,66 @@
             init
             (recur (.getRight node) f init)))))))
 
+(defn ^:private avl-map-reduce [^IAVLNode node f init]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-map-reduce (.getLeft node) f init))]
+    (if (reduced? init)
+      init
+      (let [init (f init (MapEntry. (.getKey node) (.getVal node)))]
+        (if (reduced? init)
+          init
+          (if (nil? (.getRight node))
+            init
+            (recur (.getRight node) f init)))))))
+
+(defn ^:private avl-map-reduce-skip [^IAVLNode node f init skip-node]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-map-reduce-skip (.getLeft node) f init skip-node))]
+    (if (reduced? init)
+      init
+      (if (identical? skip-node node)
+        (if (nil? (.getRight node))
+          init
+          (avl-map-reduce (.getRight node) f init))
+        (let [init (f init (MapEntry. (.getKey node) (.getVal node)))]
+          (if (reduced? init)
+            init
+            (if (nil? (.getRight node))
+              init
+              (recur (.getRight node) f init skip-node))))))))
+
+(defn ^:private avl-set-reduce [^IAVLNode node f init]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-set-reduce (.getLeft node) f init))]
+    (if (reduced? init)
+      init
+      (let [init (f init (.getKey node))]
+        (if (reduced? init)
+          init
+          (if (nil? (.getRight node))
+            init
+            (recur (.getRight node) f init)))))))
+
+(defn ^:private avl-set-reduce-skip [^IAVLNode node f init skip-node]
+  (let [init (if (nil? (.getLeft node))
+               init
+               (avl-set-reduce-skip (.getLeft node) f init skip-node))]
+    (if (reduced? init)
+      init
+      (if (identical? skip-node node)
+        (if (nil? (.getRight node))
+          init
+          (avl-set-reduce (.getRight node) f init))
+        (let [init (f init (.getKey node))]
+          (if (reduced? init)
+            init
+            (if (nil? (.getRight node))
+              init
+              (avl-set-reduce (.getRight node) f init))))))))
+
 (deftype AVLMapSeq [^IPersistentMap _meta
                     ^IPersistentStack stack
                     ^boolean ascending?
@@ -1415,6 +1475,25 @@
           @init
           init))))
 
+  clojure.core.protocols/CollReduce
+  (coll-reduce [this f]
+    (case cnt
+      0 (f)
+      1 (MapEntry. (.getKey tree) (.getVal tree))
+      (let [^IAVLNode n0 (select tree 0)
+            init         (avl-map-reduce-skip tree f (MapEntry. (.getKey n0) (.getVal n0)) n0)]
+        (if (reduced? init)
+          @init
+          init))))
+
+  (coll-reduce [this f init]
+    (if (nil? tree)
+      init
+      (let [init (avl-map-reduce tree f init)]
+        (if (reduced? init)
+          @init
+          init))))
+
   java.io.Serializable
 
   Iterable
@@ -1625,6 +1704,27 @@
 
   (get [this k]
     (.valAt this k nil))
+
+  clojure.core.protocols/CollReduce
+  (coll-reduce [this f]
+    (case (count avl-map)
+      0 (f)
+      1 (.getKey (.getTree avl-map))
+      (let [tree         (.getTree avl-map)
+            ^IAVLNode n0 (select tree 0)
+            init         (avl-set-reduce-skip tree f (.getKey n0) n0)]
+        (if (reduced? init)
+          @init
+          init))))
+
+  (coll-reduce [this f init]
+    (let [tree (.getTree avl-map)]
+      (if (nil? tree)
+        init
+        (let [init (avl-set-reduce tree f init)]
+          (if (reduced? init)
+            @init
+            init)))))
 
   clojure.lang.IFn
   (invoke [this k]

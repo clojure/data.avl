@@ -261,3 +261,28 @@
   (testing "sorted-map and sorted-map-by expect val for every key"
     (is (thrown? IllegalArgumentException (avl/sorted-map :a 1 :b)))
     (is (thrown? IllegalArgumentException (avl/sorted-map-by < :a 1 :b)))))
+
+(deftest coll-reduce
+  (testing "No-init sorted-map reduction works as expected"
+    (is (= (reduce (fn [] :none) (avl/sorted-map)) :none)
+      "0-Arity of reduction fn called for empty sorted-map")
+    (is (= (reduce (fn []) (avl/sorted-map 1 2)) [1 2])
+      "Reduction function not called for 1-element sorted-map, item returned")
+    (is (= (reduce into (avl/sorted-map 1 2 3 4 5 6)) [1 2 3 4 5 6])
+      "Reduction is in correct order with correct contents."))
+  (testing "Init-ed sorted-map reduction works as expected"
+    (is (= (reduce conj [] (avl/sorted-map))) [])
+    (is (= (reduce conj [] (avl/sorted-map 1 2)) [[1 2]]))
+    (is (= (reduce conj [] (avl/sorted-map 1 2 3 4 5 6)) [[1 2] [3 4] [5 6]])))
+  (testing "No-init sorted-set reduction works as expected"
+    (is (= (reduce (fn [] :none) (avl/sorted-set)) :none)
+      "0-Arity of reduction fn called for empty sorted-set")
+    (is (= (reduce (fn []) (avl/sorted-set 1)) 1)
+      "Reduction function not called for 1-element sorted-set, item returned")
+    (is (= (reduce (fn [a v] (conj (if (number? a) [a] a) v))
+             (avl/sorted-set 1 2 3 4 5 6)) [1 2 3 4 5 6])
+      "Reduction is in correct order with correct contents."))
+  (testing "Init-ed sorted-set reduction works as expected"
+    (is (= (reduce conj [] (avl/sorted-set)) []))
+    (is (= (reduce conj [] (avl/sorted-set 1)) [1]))
+    (is (= (reduce conj [] (avl/sorted-set 1 2 3 4 5 6)) [1 2 3 4 5 6]))))
