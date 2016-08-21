@@ -12,8 +12,8 @@
    :name "merge",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2123",
-   :line 2123,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2223",
+   :line 2223,
    :var-type "function",
    :arglists ([] [m] [m1 m2] [m1 m2 m3 & more]),
    :doc
@@ -26,8 +26,8 @@
    :name "merge-with",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2151",
-   :line 2151,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2251",
+   :line 2251,
    :var-type "function",
    :arglists ([f] [f m] [f m1 m2] [f m1 m2 m3 & more]),
    :doc
@@ -41,8 +41,8 @@
    :name "nearest",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1984",
-   :line 1984,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2084",
+   :line 2084,
    :var-type "function",
    :arglists ([coll test x]),
    :doc
@@ -56,8 +56,8 @@
    :name "rank-of",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1978",
-   :line 1978,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2078",
+   :line 2078,
    :var-type "function",
    :arglists ([coll x]),
    :doc "Returns the rank of x in coll or -1 if not present.",
@@ -70,8 +70,8 @@
    :name "sorted-map",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1930",
-   :line 1930,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2030",
+   :line 2030,
    :var-type "function",
    :arglists ([& keyvals]),
    :doc
@@ -85,8 +85,8 @@
    :name "sorted-map-by",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1945",
-   :line 1945,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2045",
+   :line 2045,
    :var-type "function",
    :arglists ([comparator & keyvals]),
    :doc
@@ -100,8 +100,8 @@
    :name "sorted-set",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1963",
-   :line 1963,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2063",
+   :line 2063,
    :var-type "function",
    :arglists ([& keys]),
    :doc "Returns a new sorted set with supplied keys.",
@@ -114,8 +114,8 @@
    :name "sorted-set-by",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1969",
-   :line 1969,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2069",
+   :line 2069,
    :var-type "function",
    :arglists ([comparator & keys]),
    :doc
@@ -129,8 +129,8 @@
    :name "split-at",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2024",
-   :line 2024,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2124",
+   :line 2124,
    :var-type "function",
    :arglists ([n coll]),
    :doc
@@ -144,8 +144,8 @@
    :name "split-key",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L1994",
-   :line 1994,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2094",
+   :line 2094,
    :var-type "function",
    :arglists ([k coll]),
    :doc
@@ -159,8 +159,8 @@
    :name "subrange",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2039",
-   :line 2039,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2139",
+   :line 2139,
    :var-type "function",
    :arglists ([coll test limit] [coll start-test start end-test end]),
    :doc
@@ -173,8 +173,8 @@
    :name "union",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2179",
-   :line 2179,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2279",
+   :line 2279,
    :var-type "function",
    :arglists ([] [s] [s1 s2] [s1 s2 s3 & more]),
    :doc
@@ -187,8 +187,8 @@
    :name "unsafe-join",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2095",
-   :line 2095,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2195",
+   :line 2195,
    :var-type "function",
    :arglists ([] [coll] [coll1 coll2] [coll1 coll2 coll3 & more]),
    :doc
