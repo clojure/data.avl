@@ -67,3 +67,21 @@
           s2 (read-string (with-out-str (print-dup s1 *out*)))]
       (assert-equivalent-sets s1 s2)
       true)))
+
+(defspec reduce-set 100
+  (prop/for-all [xs (gen/vector gen/int)]
+    (let [s (into (avl/sorted-set) xs)]
+      (= (reduce + s)
+         (reduce + 0 s)
+         (reduce + 0 (distinct xs))))))
+
+(defspec reduce-map 100
+  (prop/for-all [xs (gen/vector gen/int)]
+    (let [m (reduce (fn [out x] (assoc out x x)) (avl/sorted-map) xs)
+          f (fn
+              ([] [])
+              ([out] out)
+              ([out [k v]] (conj out k v)))]
+      (= (reduce f m)
+         (reduce f [] m)
+         (reduce f [] (map #(vector % %) (sort (distinct xs))))))))
