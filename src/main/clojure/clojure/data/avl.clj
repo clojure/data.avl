@@ -810,6 +810,11 @@
     (recur r)
     node))
 
+(defn ^:private get-leftmost ^IAVLNode [^IAVLNode node]
+  (if-let [l (.getLeft node)]
+    (recur l)
+    node))
+
 (defn ^:private delete-rightmost ^IAVLNode [^IAVLNode node]
   (if-let [r (.getRight node)]
     (let [l         (.getLeft node)
@@ -1054,22 +1059,24 @@
 
                        r (join comp
                                (- (.getRank node)
-                                  (inc (rank comp
-                                             (.getLeft node)
-                                             (.getKey (get-rightmost r)))))
+                                  (rank comp
+                                        (.getLeft node)
+                                        (.getKey (get-leftmost r))))
                                r
                                r')
+
                        :else (join comp 0 r r'))])
 
                   :else
-                  (let [[l e r] (step (.getRight node))]
+                  (let [[l e r] (step (.getRight node))
+                        l'      (insert comp
+                                        (.getLeft node)
+                                        (.getKey node)
+                                        (.getVal node)
+                                        (Box. false))]
                     [(join comp
                            (unchecked-inc-int (.getRank node))
-                           (insert comp
-                                   (.getLeft node)
-                                   (.getKey node)
-                                   (.getVal node)
-                                   (Box. false))
+                           l'
                            l)
                      e
                      r])))))]
