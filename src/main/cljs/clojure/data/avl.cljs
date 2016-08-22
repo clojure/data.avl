@@ -383,6 +383,11 @@
     (recur r)
     node))
 
+(defn ^:private get-leftmost [node]
+  (if-let [l (.getLeft node)]
+    (recur l)
+    node))
+
 (defn ^:private delete-rightmost [node]
   (if-let [r (.getRight node)]
     (let [l         (.getLeft node)
@@ -621,10 +626,9 @@
                                        (.getLeft node)
                                        (key e)))
                                 r
-                                (unchecked-inc-int
-                                 (rank comp
-                                       (.getLeft node)
-                                       (.getKey (get-rightmost r))))
+                                (rank comp
+                                      (.getLeft node)
+                                      (.getKey (get-leftmost r)))
                                 :else
                                 (.getRank node)))
                            r
