@@ -1065,7 +1065,7 @@
                                r
                                r')
 
-                       :else (join comp 0 r r'))])
+                       :else r')])
 
                   :else
                   (let [[l e r] (step (.getRight node))
