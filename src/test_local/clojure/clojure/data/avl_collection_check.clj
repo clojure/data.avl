@@ -58,15 +58,21 @@
   (prop/for-all [xs (gen/vector gen/int)]
     (let [m1 (into (avl/sorted-map) (map #(vector % %) xs))
           m2 (read-string (with-out-str (print-dup m1 *out*)))]
-      (assert-equivalent-maps m1 m2)
-      true)))
+      (try
+        (assert-equivalent-maps m1 m2)
+        true
+        (catch AssertionError _
+          false)))))
 
 (defspec print-dup-set-round-trip 100
   (prop/for-all [xs (gen/vector gen/int)]
     (let [s1 (into (avl/sorted-set) xs)
           s2 (read-string (with-out-str (print-dup s1 *out*)))]
-      (assert-equivalent-sets s1 s2)
-      true)))
+      (try
+        (assert-equivalent-sets s1 s2)
+        true
+        (catch AssertionError _
+          false)))))
 
 (defspec reduce-set 100
   (prop/for-all [xs (gen/vector gen/int)]
@@ -85,3 +91,69 @@
       (= (reduce f m)
          (reduce f [] m)
          (reduce f [] (map #(vector % %) (sort (distinct xs))))))))
+
+(defspec subrange-subseq 100
+  (prop/for-all [xs (gen/vector gen/int)
+                 i  gen/int
+                 j  gen/int]
+    (let [low  (min i j)
+          high (max i j)
+          s1 (into (avl/sorted-set) xs)
+          s2 (into (sorted-set) xs)]
+      (= (seq (avl/subrange s1 >= low <= high))
+         (seq (subseq s1 >= low <= high))
+         (seq (subseq s2 >= low <= high))))))
+
+(defspec subrange-low-reduce 100
+  (prop/for-all [xs  (gen/vector gen/int)
+                 low gen/int]
+    (let [s1 (into (avl/sorted-set) xs)
+          s2 (into (sorted-set) xs)
+          sub1 (into #{}
+                 (map inc)
+                 (avl/subrange s1 >= low))
+          sub2 (into #{}
+                 (map inc)
+                 (subseq s2 >= low))]
+      (try
+        (assert-equivalent-sets sub1 sub2)
+        true
+        (catch AssertionError _
+          false)))))
+
+(defspec subrange-high-reduce 100
+  (prop/for-all [xs   (gen/vector gen/int)
+                 high gen/int]
+    (let [s1 (into (avl/sorted-set) xs)
+          s2 (into (sorted-set) xs)
+          sub1 (into #{}
+                 (map inc)
+                 (avl/subrange s1 <= high))
+          sub2 (into #{}
+                 (map inc)
+                 (subseq s2 <= high))]
+      (try
+        (assert-equivalent-sets sub1 sub2)
+        true
+        (catch AssertionError _
+          false)))))
+
+(defspec subrange-low-high-reduce 100
+  (prop/for-all [xs (gen/vector gen/int)
+                 i  gen/int
+                 j  gen/int]
+    (let [low  (min i j)
+          high (max i j)
+          s1 (into (avl/sorted-set) xs)
+          s2 (into (sorted-set) xs)
+          sub1 (into #{}
+                 (map inc)
+                 (avl/subrange s1 >= low <= high))
+          sub2 (into #{}
+                 (map inc)
+                 (subseq s2 >= low <= high))]
+      (try
+        (assert-equivalent-sets sub1 sub2)
+        true
+        (catch AssertionError _
+          false)))))
