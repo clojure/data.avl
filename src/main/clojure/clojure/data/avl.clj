@@ -1994,16 +1994,24 @@
 
        (#{> >=} test)
        (let [n (select (.getTree ^IAVLTree coll)
-                       (dec (count coll)))]
-         (subrange coll
-                   test limit
-                   <= (.getKey ^IAVLNode n)))
+                       (dec (count coll)))
+             k (.getKey ^IAVLNode n)]
+         (if (pos? (.compare (.comparator ^clojure.lang.Sorted coll)
+                             limit k))
+           ()
+           (subrange coll
+                     test limit
+                     <= k)))
 
        :else
-       (let [n (select (.getTree ^IAVLTree coll) 0)]
-         (subrange coll
-                   >= (.getKey ^IAVLNode n)
-                   test limit))))
+       (let [n (select (.getTree ^IAVLTree coll) 0)
+             k (.getKey ^IAVLNode n)]
+         (if (neg? (.compare (.comparator ^clojure.lang.Sorted coll)
+                             limit k))
+           ()
+           (subrange coll
+                     >= k
+                     test limit)))))
   ([coll start-test start end-test end]
      (if (zero? (count coll))
        coll
@@ -2011,17 +2019,19 @@
          (if (pos? (.compare comp start end))
            (throw
             (IndexOutOfBoundsException. "start greater than end in subrange"))
-           (let [keyfn (if (map? coll) key identity)
-                 l (nearest coll start-test start)
-                 h (nearest coll end-test end)]
+           (let [input-tree (.getTree ^IAVLTree coll)
+                 l (lookup-nearest comp input-tree start-test start)
+                 h (lookup-nearest comp input-tree end-test end)]
              (if (and l h)
-               (let [tree (range comp (.getTree ^IAVLTree coll)
-                                 (keyfn l)
-                                 (keyfn h))
-                     cnt  (inc (- (rank-of coll (keyfn h))
-                                  (rank-of coll (keyfn l))))
-                     m    (AVLMap. comp tree cnt nil -1 -1)]
-                 (if (map? coll)
-                   m
-                   (AVLSet. nil m -1 -1)))
+               (let [lk (.getKey l)
+                     hk (.getKey h)]
+                 (if (neg? (.compare comp hk lk))
+                   (empty coll)
+                   (let [tree (range comp (.getTree ^IAVLTree coll) lk hk)
+                         cnt  (inc (- (rank-of coll hk)
+                                      (rank-of coll lk)))
+                         m    (AVLMap. comp tree cnt nil -1 -1)]
+                     (if (map? coll)
+                       m
+                       (AVLSet. nil m -1 -1)))))
                (empty coll))))))))

@@ -1326,36 +1326,43 @@
   (subrange >= start <= end) is equivalent to, but more efficient
   than, (into (empty coll) (subseq coll >= start <= end)."
   ([coll test limit]
-     (cond
-       (zero? (count coll))
+     (if (zero? (count coll))
        coll
-
-       (#{> >=} test)
-       (subrange coll
-                 test limit
-                 <= (.getKey (select (.getTree coll) (dec (count coll)))))
-
-       :else
-       (subrange coll
-                 >= (.getKey (select (.getTree coll) 0))
-                 test limit)))
+       (let [comp (-comparator coll)]
+         (if (#{> >=} test)
+           (let [n (select (.getTree coll) (dec (count coll)))
+                 k (.getKey n)]
+             (if (pos? (comp limit k))
+               ()
+               (subrange coll
+                         test limit
+                         <= k)))
+           (let [n (select (.getTree coll) 0)
+                 k (.getKey n)]
+             (if (neg? (comp limit k))
+               ()
+               (subrange coll
+                         >= k
+                         test limit)))))))
   ([coll start-test start end-test end]
      (if (zero? (count coll))
        coll
        (let [comp (-comparator coll)]
          (if (pos? (comp start end))
            (throw (ex-info "start greater than end in subrange" {}))
-           (let [keyfn (if (map? coll) key identity)
-                 l (nearest coll start-test start)
-                 h (nearest coll end-test end)]
+           (let [input-tree (.getTree coll)
+                 l (lookup-nearest comp input-tree start-test start)
+                 h (lookup-nearest comp input-tree end-test end)]
              (if (and l h)
-               (let [tree (range comp (.getTree coll)
-                                 (keyfn l)
-                                 (keyfn h))
-                     cnt  (inc (- (rank-of coll (keyfn h))
-                                  (rank-of coll (keyfn l))))
-                     m    (AVLMap. comp tree cnt nil -1)]
-                 (if (map? coll)
-                   m
-                   (AVLSet. nil m -1)))
+               (let [lk (.getKey l)
+                     hk (.getKey h)]
+                 (if (neg? (comp hk lk))
+                   (empty coll)
+                   (let [tree (range comp (.getTree coll) lk hk)
+                         cnt  (inc (- (rank-of coll hk)
+                                      (rank-of coll lk)))
+                         m    (AVLMap. comp tree cnt nil -1)]
+                     (if (map? coll)
+                       m
+                       (AVLSet. nil m -1)))))
                (empty coll))))))))
