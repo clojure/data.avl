@@ -1482,8 +1482,8 @@
           @init
           init))))
 
-  clojure.core.protocols/CollReduce
-  (coll-reduce [this f]
+  clojure.lang.IReduce
+  (reduce [this f]
     (case cnt
       0 (f)
       1 (MapEntry. (.getKey tree) (.getVal tree))
@@ -1493,7 +1493,7 @@
           @init
           init))))
 
-  (coll-reduce [this f init]
+  (reduce [this f init]
     (if (nil? tree)
       init
       (let [init (avl-map-reduce tree f init)]
@@ -1712,8 +1712,8 @@
   (get [this k]
     (.valAt this k nil))
 
-  clojure.core.protocols/CollReduce
-  (coll-reduce [this f]
+  clojure.lang.IReduce
+  (reduce [this f]
     (case (count avl-map)
       0 (f)
       1 (.getKey (.getTree avl-map))
@@ -1724,7 +1724,7 @@
           @init
           init))))
 
-  (coll-reduce [this f init]
+  (reduce [this f init]
     (let [tree (.getTree avl-map)]
       (if (nil? tree)
         init
