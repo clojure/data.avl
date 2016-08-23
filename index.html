@@ -151,8 +151,8 @@ clojure.data.avl/subrange.</pre>
     <span id="type-type">type</span><br />
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[comp tree cnt _meta _hash _hasheq]</span><br />
-    Protocols: <span id="type-protocols">clojure.core.protocols/CollReduce, clojure.core.protocols/IKVReduce</span><br />
-    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Associative, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentMap, clojure.lang.Indexed, clojure.lang.MapEquivalence, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.lang.Iterable, java.util.Map</span><br />
+    Protocols: <span id="type-protocols">clojure.core.protocols/IKVReduce</span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Associative, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentMap, clojure.lang.IReduce, clojure.lang.Indexed, clojure.lang.MapEquivalence, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.lang.Iterable, java.util.Map</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -178,8 +178,8 @@ clojure.data.avl/subrange.</pre>
     <span id="type-type">type</span><br />
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[_meta avl-map _hash _hasheq]</span><br />
-    Protocols: <span id="type-protocols">clojure.core.protocols/CollReduce</span><br />
-    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentSet, clojure.lang.Indexed, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.util.Set</span><br />
+    Protocols: <span id="type-protocols"></span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.IAVLTree, clojure.data.avl.INavigableTree, clojure.lang.Counted, clojure.lang.IEditableCollection, clojure.lang.IFn, clojure.lang.IHashEq, clojure.lang.ILookup, clojure.lang.IMeta, clojure.lang.IObj, clojure.lang.IPersistentCollection, clojure.lang.IPersistentSet, clojure.lang.IReduce, clojure.lang.Indexed, clojure.lang.Reversible, clojure.lang.Seqable, clojure.lang.Sorted, java.io.Serializable, java.util.Set</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -225,7 +225,7 @@ in the argument list take precedence.</pre>
     <pre id="var-specs"></pre>
     
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2230">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2240">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -247,7 +247,7 @@ Use f to combine values in case of key collisions.</pre>
     <pre id="var-specs"></pre>
     
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2258">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2268">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -407,7 +407,7 @@ case in which nil is returned.</pre>
     <pre id="var-specs"></pre>
     
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2286">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2296">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -431,7 +431,7 @@ element of colly (in the sense determined by the comparator).</pre>
     <pre id="var-specs"></pre>
     
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2202">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2212">Source</a>
   </div>
 </div>
 

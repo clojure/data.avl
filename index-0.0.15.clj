@@ -12,8 +12,8 @@
    :name "merge",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2230",
-   :line 2230,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2240",
+   :line 2240,
    :var-type "function",
    :arglists ([] [m] [m1 m2] [m1 m2 m3 & more]),
    :doc
@@ -26,8 +26,8 @@
    :name "merge-with",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2258",
-   :line 2258,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2268",
+   :line 2268,
    :var-type "function",
    :arglists ([f] [f m] [f m1 m2] [f m1 m2 m3 & more]),
    :doc
@@ -173,8 +173,8 @@
    :name "union",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2286",
-   :line 2286,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2296",
+   :line 2296,
    :var-type "function",
    :arglists ([] [s] [s1 s2] [s1 s2 s3 & more]),
    :doc
@@ -187,8 +187,8 @@
    :name "unsafe-join",
    :file "src/main/clojure/clojure/data/avl.clj",
    :source-url
-   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2202",
-   :line 2202,
+   "https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2212",
+   :line 2212,
    :var-type "function",
    :arglists ([] [coll] [coll1 coll2] [coll1 coll2 coll3 & more]),
    :doc
