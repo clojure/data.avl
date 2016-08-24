@@ -156,7 +156,16 @@
     (doseq [coll [small-avl-set-> small-avl-map->]
             i    (range small-tree-size -2 -1)
             j    (range i -2 -1)]
-      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j))))))
+      (is (= (avl/subrange coll >= i <= j) (subseq-subrange coll i j)))))
+  (testing "subrange with single small (<) / large (>) limit should be empty"
+    (is (= #{} (avl/subrange small-avl-set <= -1)))
+    (is (= #{} (avl/subrange small-avl-set < -1)))
+    (is (= #{} (avl/subrange small-avl-set >= small-tree-size)))
+    (is (= #{} (avl/subrange small-avl-set > small-tree-size)))
+    (is (= {} (avl/subrange small-avl-map <= -1)))
+    (is (= {} (avl/subrange small-avl-map < -1)))
+    (is (= {} (avl/subrange small-avl-map >= small-tree-size)))
+    (is (= {} (avl/subrange small-avl-map > small-tree-size)))))
 
 (defn subseq-split-key [x coll]
   (let [e (empty coll)]

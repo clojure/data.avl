@@ -1998,7 +1998,7 @@
              k (.getKey ^IAVLNode n)]
          (if (pos? (.compare (.comparator ^clojure.lang.Sorted coll)
                              limit k))
-           ()
+           (empty coll)
            (subrange coll
                      test limit
                      <= k)))
@@ -2008,7 +2008,7 @@
              k (.getKey ^IAVLNode n)]
          (if (neg? (.compare (.comparator ^clojure.lang.Sorted coll)
                              limit k))
-           ()
+           (empty coll)
            (subrange coll
                      >= k
                      test limit)))))

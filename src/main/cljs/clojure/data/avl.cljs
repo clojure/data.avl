@@ -1333,14 +1333,14 @@
            (let [n (select (.getTree coll) (dec (count coll)))
                  k (.getKey n)]
              (if (pos? (comp limit k))
-               ()
+               (empty coll)
                (subrange coll
                          test limit
                          <= k)))
            (let [n (select (.getTree coll) 0)
                  k (.getKey n)]
              (if (neg? (comp limit k))
-               ()
+               (empty coll)
                (subrange coll
                          >= k
                          test limit)))))))
