@@ -2,10 +2,11 @@
   (:use clojure.test)
   (:require [clojure.data.avl :as avl]))
 
+
 (defmacro deftreesize [name default]
   `(def ~name
      (if-let [size# (System/getProperty
-                     ~(str "org.clojure.data.avl.test." name))]
+                      ~(str "org.clojure.data.avl.test." name))]
        (Long/parseLong size#)
        ~default)))
 

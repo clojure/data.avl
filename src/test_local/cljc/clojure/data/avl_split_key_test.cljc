@@ -1,4 +1,4 @@
-(ns clojure.data.split-key-test
+(ns clojure.data.avl-split-key-test
   (:require [clojure.data.avl :as avl]
             [clojure.test :refer [is]]
             [clojure.test.check.clojure-test :refer [defspec]]
@@ -43,4 +43,3 @@
            (let [ks (vec (keys m))]
              (is (= (seq (filter #(<= from % to) (keys m)))
                     (seq (keys (range-high-low from to m))))))))
-

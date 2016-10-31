@@ -1,14 +1,15 @@
 (ns clojure.data.avl-test
-  (:use-macros [clojure.data.avl.cljs-test-macros :only [deftest]])
-  (:require [clojure.data.avl :as avl]))
+  (:require [cljs.test :refer-macros [deftest testing is]]
+            [clojure.data.avl :as avl]))
+
 
 (def small-tree-size 150)
 (def medium-tree-size 2500)
 (def large-tree-size 10000)
 
-(defn validate-invariant [^clojure.data.avl.IAVLTree coll]
+(defn validate-invariant [coll]
   (let [tree (.getTree coll)
-        h (fn [^clojure.data.avl.IAVLNode node]
+        h (fn [node]
             (if node
               (.getHeight node)
               0))]
