@@ -579,7 +579,7 @@
 (defn ^:private rotate-right! ^IAVLNode [edit ^IAVLNode node]
   (let [node (ensure-editable edit node)
         r    (.getRight node)
-        l    (ensure-editable edit (.getLeft  node))
+        l    (ensure-editable edit (.getLeft node))
         lr   (.getRight l)
         ll   (.getLeft  l)
         rh   (height r)
@@ -819,12 +819,13 @@
   (if-let [r (.getRight node)]
     (let [l         (.getLeft node)
           new-right (delete-rightmost r)]
-      (AVLNode. nil
-                (.getKey node) (.getVal node)
-                l
-                new-right
-                (inc (max (height l) (height new-right)))
-                (.getRank node)))
+      (maybe-rebalance
+       (AVLNode. nil
+                 (.getKey node) (.getVal node)
+                 l
+                 new-right
+                 (inc (max (height l) (height new-right)))
+                 (.getRank node))))
     (.getLeft node)))
 
 (defn ^:private delete-rightmost! ^IAVLNode [edit ^IAVLNode node]
@@ -842,7 +843,7 @@
           (.setHeight node
                       (inc (max (height (.getLeft node))
                                 (height (.getLeft r)))))
-          node)
+          (maybe-rebalance! edit node))
 
         :else
         (let [new-right (delete-rightmost! edit r)]
@@ -850,7 +851,7 @@
           (.setHeight node
                       (inc (max (height (.getLeft node))
                                 (height new-right))))
-          node)))))
+          (maybe-rebalance! edit node))))))
 
 (defn ^:private delete
   ^IAVLNode [^Comparator comp ^IAVLNode node k ^Box found?]
@@ -866,12 +867,13 @@
           (if (and l r)
             (let [p  (get-rightmost l)
                   l' (delete-rightmost l)]
-              (AVLNode. nil
-                        (.getKey p) (.getVal p)
-                        l'
-                        r
-                        (inc (max (height l') (height r)))
-                        (unchecked-dec-int (.getRank node))))
+              (maybe-rebalance
+               (AVLNode. nil
+                         (.getKey p) (.getVal p)
+                         l'
+                         r
+                         (inc (max (height l') (height r)))
+                         (unchecked-dec-int (.getRank node)))))
             (or l r)))
 
         (neg? c)
@@ -923,7 +925,7 @@
               (.setLeft   node l')
               (.setHeight node (inc (max (height l') (height r))))
               (.setRank   node (unchecked-dec-int (.getRank node)))
-              node)
+              (maybe-rebalance! edit node))
 
             l l
             r r
@@ -931,27 +933,26 @@
 
         (neg? c)
         (let [new-child (delete! edit comp (.getLeft node) k found?)]
-          (if (identical? new-child (.getLeft node))
-            node
+          (if (.-val found?)
             (let [node (ensure-editable edit node)]
               (.setLeft node new-child)
               (.setHeight node
                           (inc (max (height new-child)
                                     (height (.getRight node)))))
-              (if (.-val found?)
-                (.setRank node (unchecked-dec-int (.getRank node))))
-              (maybe-rebalance! edit node))))
+              (.setRank node (unchecked-dec-int (.getRank node)))
+              (maybe-rebalance! edit node))
+            node))
 
         :else
         (let [new-child (delete! edit comp (.getRight node) k found?)]
-          (if (identical? new-child (.getRight node))
-            node
+          (if (.-val found?)
             (let [node (ensure-editable edit node)]
               (.setRight node new-child)
               (.setHeight node
                           (inc (max (height new-child)
                                     (height (.getLeft node)))))
-              (maybe-rebalance! edit node))))))))
+              (maybe-rebalance! edit node))
+            node))))))
 
 (defn ^:private join
   [^Comparator comp ^long left-count ^IAVLNode left ^IAVLNode right]
@@ -1984,8 +1985,8 @@
   end of coll, < / <= mean to include items taken from the beginning
   of coll.
 
-  (subrange >= start <= end) is equivalent to, but more efficient
-  than, (into (empty coll) (subseq coll >= start <= end)."
+  (subrange coll >= start <= end) is equivalent to, but more efficient
+  than, (into (empty coll) (subseq coll >= start <= end))."
   {:added "0.0.12"}
   ([coll test limit]
      (cond

@@ -155,7 +155,7 @@
 (defn ^:private rotate-right! [edit node]
   (let [node (ensure-editable edit node)
         r    (.getRight node)
-        l    (ensure-editable edit (.getLeft  node))
+        l    (ensure-editable edit (.getLeft node))
         lr   (.getRight l)
         ll   (.getLeft  l)
         rh   (height r)
@@ -280,7 +280,7 @@
             rr   (.getRight r)
             rlh  (height rl)
             rrh  (height rr)]
-        (if (>= (- rlh rrh) 2)
+        (if (== (- rlh rrh) 1)
           ;; left-heavy
           (let [new-right (rotate-right! edit r)]
             (.setRight  node new-right)
@@ -296,7 +296,7 @@
             llh  (height ll)
             lrh  (height lr)]
         ;; right-heavy
-        (if (>= (- lrh llh) 2)
+        (if (== (- lrh llh) 1)
           (let [new-left (rotate-left! edit l)]
             (.setLeft   node new-left)
             (.setHeight node (inc (max rh (height new-left))))
@@ -392,12 +392,13 @@
   (if-let [r (.getRight node)]
     (let [l         (.getLeft node)
           new-right (delete-rightmost r)]
-      (AVLNode. nil
-                (.getKey node) (.getVal node)
-                l
-                new-right
-                (inc (max (height l) (height new-right)))
-                (.getRank node)))
+      (maybe-rebalance
+       (AVLNode. nil
+                 (.getKey node) (.getVal node)
+                 l
+                 new-right
+                 (inc (max (height l) (height new-right)))
+                 (.getRank node))))
     (.getLeft node)))
 
 (defn ^:private delete-rightmost! [edit node]
@@ -415,7 +416,7 @@
           (.setHeight node
                       (inc (max (height (.getLeft node))
                                 (height (.getLeft r)))))
-          node)
+          (maybe-rebalance! edit node))
 
         :else
         (let [new-right (delete-rightmost! edit r)]
@@ -423,7 +424,7 @@
           (.setHeight node
                       (inc (max (height (.getLeft node))
                                 (height new-right))))
-          node)))))
+          (maybe-rebalance! edit node))))))
 
 (defn ^:private delete [comp node k found?]
   (if (nil? node)
@@ -438,12 +439,13 @@
           (if (and l r)
             (let [p  (get-rightmost l)
                   l' (delete-rightmost l)]
-              (AVLNode. nil
-                        (.getKey p) (.getVal p)
-                        l'
-                        r
-                        (inc (max (height l') (height r)))
-                        (unchecked-dec-int (.getRank node))))
+              (maybe-rebalance
+               (AVLNode. nil
+                         (.getKey p) (.getVal p)
+                         l'
+                         r
+                         (inc (max (height l') (height r)))
+                         (unchecked-dec-int (.getRank node)))))
             (or l r)))
 
         (neg? c)
@@ -494,7 +496,7 @@
               (.setLeft   node l')
               (.setHeight node (inc (max (height l') (height r))))
               (.setRank   node (unchecked-dec-int (.getRank node)))
-              node)
+              (maybe-rebalance! edit node))
 
             l l
             r r
@@ -502,27 +504,26 @@
 
         (neg? c)
         (let [new-child (delete! edit comp (.getLeft node) k found?)]
-          (if (identical? new-child (.getLeft node))
-            node
+          (if (.-val found?)
             (let [node (ensure-editable edit node)]
               (.setLeft node new-child)
               (.setHeight node
                           (inc (max (height new-child)
                                     (height (.getRight node)))))
-              (if (.-val found?)
-                (.setRank node (unchecked-dec-int (.getRank node))))
-              (maybe-rebalance! edit node))))
+              (.setRank node (unchecked-dec-int (.getRank node)))
+              (maybe-rebalance! edit node))
+            node))
 
         :else
         (let [new-child (delete! edit comp (.getRight node) k found?)]
-          (if (identical? new-child (.getRight node))
-            node
+          (if (.-val found?)
             (let [node (ensure-editable edit node)]
               (.setRight node new-child)
               (.setHeight node
                           (inc (max (height new-child)
                                     (height (.getLeft node)))))
-              (maybe-rebalance! edit node))))))))
+              (maybe-rebalance! edit node))
+            node))))))
 
 (defn ^:private join [comp left-count left right]
   (cond
@@ -1323,7 +1324,7 @@
   end of coll, < / <= mean to include items taken from the beginning
   of coll.
 
-  (subrange >= start <= end) is equivalent to, but more efficient
+  (subrange coll >= start <= end) is equivalent to, but more efficient
   than, (into (empty coll) (subseq coll >= start <= end)."
   ([coll test limit]
      (if (zero? (count coll))
