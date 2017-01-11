@@ -72,12 +72,6 @@ namespace.
   </div><div class="toc-section" style="margin-left: 1em;">
     <a style="margin-top: 3px;" href="#var-section">Vars and Functions</a>
     <div class="toc-entry" style="margin-left: 1em;">
-      <a href="#clojure.data.avl/merge" class="toc-entry-anchor">merge</a>
-      
-    </div><div class="toc-entry" style="margin-left: 1em;">
-      <a href="#clojure.data.avl/merge-with" class="toc-entry-anchor">merge-with</a>
-      
-    </div><div class="toc-entry" style="margin-left: 1em;">
       <a href="#clojure.data.avl/nearest" class="toc-entry-anchor">nearest</a>
       
     </div><div class="toc-entry" style="margin-left: 1em;">
@@ -103,12 +97,6 @@ namespace.
       
     </div><div class="toc-entry" style="margin-left: 1em;">
       <a href="#clojure.data.avl/subrange" class="toc-entry-anchor">subrange</a>
-      
-    </div><div class="toc-entry" style="margin-left: 1em;">
-      <a href="#clojure.data.avl/union" class="toc-entry-anchor">union</a>
-      
-    </div><div class="toc-entry" style="margin-left: 1em;">
-      <a href="#clojure.data.avl/unsafe-join" class="toc-entry-anchor">unsafe-join</a>
       
     </div>
   </div><div class="toc-section" style="margin-left: 1em;">
@@ -206,51 +194,6 @@ clojure.data.avl/subrange.</pre>
   <div id="var-entry">
     <br />
     <hr />
-    <h2 id="clojure.data.avl/merge">merge</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (merge)
-       (merge m)
-       (merge m1 m2)
-       (merge m1 m2 m3 &amp; more)
-</pre>
-    <pre id="var-docstr">(alpha)
-
-Merges the given AVL maps which should all use the same comparator.
-nil is accepted and converted into an empty AVL map. The value
-returned is itself an AVL map, except in the nullary case in which
-nil is returned.
-
-In case of key collisions, mappings from maps further to the right
-in the argument list take precedence.</pre>
-    <pre id="var-specs"></pre>
-    
-    
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2241">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
-    <h2 id="clojure.data.avl/merge-with">merge-with</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (merge-with f)
-       (merge-with f m)
-       (merge-with f m1 m2)
-       (merge-with f m1 m2 m3 &amp; more)
-</pre>
-    <pre id="var-docstr">(alpha)
-
-Merges the given AVL maps which should all use the same comparator.
-nil is accepted and converted into an empty AVL map. The value
-returned is itself an AVL map, except in the nullary case in which
-nil is returned.
-
-Use f to combine values in case of key collisions.</pre>
-    <pre id="var-specs"></pre>
-    
-    
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2269">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
     <h2 id="clojure.data.avl/nearest">nearest</h2>
     <span id="var-type">function</span><br />
     <pre id="var-usage">Usage: (nearest coll test x)
@@ -263,7 +206,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2092">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1919">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -275,7 +218,7 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.6</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2086">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1913">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -288,7 +231,7 @@ Returns a new AVL map with supplied mappings.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2038">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1865">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -302,7 +245,7 @@ comparator.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2053">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1880">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -314,7 +257,7 @@ comparator.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2071">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1898">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -326,7 +269,7 @@ comparator.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2077">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1904">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -342,7 +285,7 @@ Equivalent to, but more efficient than,
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2132">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1959">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -360,7 +303,7 @@ sets, nil if coll does not contain k.</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2102">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1929">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -387,51 +330,7 @@ than, (into (empty coll) (subseq coll &gt;= start &lt;= end)).</pre>
     <pre id="var-specs"></pre>
     <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2147">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
-    <h2 id="clojure.data.avl/union">union</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (union)
-       (union s)
-       (union s1 s2)
-       (union s1 s2 s3 &amp; more)
-</pre>
-    <pre id="var-docstr">(alpha)
-
-Computes the union of the given AVL sets which should all use the
-same comparator. nil is accepted and converted into an empty AVL
-set. The value returned is itself an AVL set, except in the nullary
-case in which nil is returned.</pre>
-    <pre id="var-specs"></pre>
-    
-    
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2297">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
-    <h2 id="clojure.data.avl/unsafe-join">unsafe-join</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (unsafe-join)
-       (unsafe-join coll)
-       (unsafe-join coll1 coll2)
-       (unsafe-join coll1 coll2 coll3 &amp; more)
-</pre>
-    <pre id="var-docstr">(alpha)
-
-ATTN: This function DOES NOT validate its inputs and WILL return
-malformed results if the inputs do not satisfy the contract.
-
-Merges or computes the union of colls. All colls must be AVL
-collections of the same type using the same comparator. If collx
-occurs earlier than colly among the arguments to unsafe-join,
-collx's greatest element must be strictly smaller than the smallest
-element of colly (in the sense determined by the comparator).</pre>
-    <pre id="var-specs"></pre>
-    
-    
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/7dc39e8b4e5ff331dc4624a8b21256c776f81385/src/main/clojure/clojure/data/avl.clj#L2213">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1974">Source</a>
   </div>
 </div>
 
