@@ -1601,7 +1601,50 @@
       (when (.-val found?)
         (set! tree new-tree)
         (set! cnt  (unchecked-dec-int cnt)))
-      this)))
+      this))
+
+  clojure.lang.Sorted
+  (seq [this ascending?]
+    (if (pos? cnt)
+      (create-seq tree ascending? cnt)))
+
+  (seqFrom [this k ascending?]
+    (if (pos? cnt)
+      (loop [stack nil t tree]
+        (if-not (nil? t)
+          (let [c (.compare comp k (.getKey t))]
+            (cond
+              (zero? c)  (AVLMapSeq. nil (conj stack t) ascending? -1 -1 -1)
+              ascending? (if (neg? c)
+                           (recur (conj stack t) (.getLeft t))
+                           (recur stack          (.getRight t)))
+              :else      (if (pos? c)
+                           (recur (conj stack t) (.getRight t))
+                           (recur stack          (.getLeft t)))))
+          (if-not (nil? stack)
+            (AVLMapSeq. nil stack ascending? -1 -1 -1))))))
+
+  (entryKey [this entry]
+    (key entry))
+
+  (comparator [this]
+    comp)
+
+  IAVLTree
+  (getTree [this]
+    tree)
+
+  clojure.lang.IPersistentCollection
+  (cons [this entry]
+    (if (vector? entry)
+      (assoc this (nth entry 0) (nth entry 1))
+      (reduce conj this entry)))
+
+  (empty [this]
+    (AVLMap. comp nil 0 nil -1 -1))
+
+  (equiv [this that]
+    (equiv-map this that)))
 
 (declare ->AVLTransientSet)
 
@@ -1819,7 +1862,37 @@
 
   clojure.lang.Counted
   (count [this]
-    (.count transient-avl-map)))
+    (.count transient-avl-map))
+
+  clojure.lang.Sorted
+  (seq [this ascending?]
+     (RT/keys (.seq transient-avl-map ascending?)))
+
+  (seqFrom [this k ascending?]
+    (RT/keys (.seqFrom transient-avl-map k ascending?)))
+
+  (entryKey [this entry]
+    entry)
+
+  (comparator [this]
+    (.comparator transient-avl-map))
+
+  IAVLTree
+  (getTree [this]
+    (.getTree transient-avl-map))
+
+  clojure.lang.IPersistentCollection
+  (cons [this x]
+    (AVLSet. nil (assoc transient-avl-map x x) -1 -1))
+
+  (empty [this]
+    (AVLSet. nil (empty transient-avl-map) empty-set-hashcode empty-set-hasheq))
+
+  (equiv [this that]
+    (and
+     (set? that)
+     (== (count this) (count that))
+     (every? #(contains? this %) that))))
 
 (def ^:private empty-map
   (AVLMap. RT/DEFAULT_COMPARATOR nil 0 nil
@@ -2032,7 +2105,8 @@
                          cnt  (inc (- (rank-of coll hk)
                                       (rank-of coll lk)))
                          m    (AVLMap. comp tree cnt nil -1 -1)]
-                     (if (map? coll)
+                     (if (or (instance? clojure.lang.IPersistentMap coll)
+                             (instance? clojure.lang.ITransientMap coll))
                        m
                        (AVLSet. nil m -1 -1)))))
                (empty coll))))))))

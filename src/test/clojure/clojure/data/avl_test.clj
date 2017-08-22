@@ -191,7 +191,13 @@
     (is (= {} (avl/subrange small-avl-map <= -1)))
     (is (= {} (avl/subrange small-avl-map < -1)))
     (is (= {} (avl/subrange small-avl-map >= small-tree-size)))
-    (is (= {} (avl/subrange small-avl-map > small-tree-size)))))
+    (is (= {} (avl/subrange small-avl-map > small-tree-size))))
+  (testing "subrange should return correct result for transients"
+    (doseq [coll [small-avl-set small-avl-map]
+            i    (range -1 (inc small-tree-size))
+            j    (range i  (inc small-tree-size))]
+      (is (= (avl/subrange (transient coll) >= i <= j)
+             (subseq-subrange coll i j))))))
 
 (defn subseq-split-key [x coll]
   (let [e (empty coll)]
