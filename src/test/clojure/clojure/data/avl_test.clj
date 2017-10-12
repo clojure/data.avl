@@ -281,7 +281,7 @@
     (is (= (reduce into (avl/sorted-map 1 2 3 4 5 6)) [1 2 3 4 5 6])
       "Reduction is in correct order with correct contents."))
   (testing "Init-ed sorted-map reduction works as expected"
-    (is (= (reduce conj [] (avl/sorted-map))) [])
+    (is (= (reduce conj [] (avl/sorted-map)) []))
     (is (= (reduce conj [] (avl/sorted-map 1 2)) [[1 2]]))
     (is (= (reduce conj [] (avl/sorted-map 1 2 3 4 5 6)) [[1 2] [3 4] [5 6]])))
   (testing "No-init sorted-set reduction works as expected"
