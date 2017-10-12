@@ -1,6 +1,6 @@
 (ns clojure.data.avl-check
   (:require [clojure.data.avl :as avl]
-            #?(:clj [collection-check
+            #?(:clj [collection-check.core
                      :refer [assert-map-like assert-set-like
                              assert-equivalent-maps assert-equivalent-sets]])
             #?(:cljs clojure.test.check)
@@ -10,17 +10,18 @@
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop
              #?@(:cljs [:include-macros true])])
-  (:use #?(:clj clojure.test
-           :cljs [cljs.test :only [deftest testing are]])))
+  (:use #?@(:clj [[clojure.template :only [do-template]]
+                  clojure.test]
+            :cljs [[cljs.test :only [deftest testing are]]])))
 
 (def igen gen/int)
 
 #?(:clj
    (deftest collection-check
-     (are [x] (assert-map-like x igen igen)
+     (do-template [x] (assert-map-like x igen igen)
        (avl/sorted-map)
        (avl/sorted-map-by >))
-     (are [x] (assert-set-like x igen)
+     (do-template [x] (assert-set-like x igen)
        (avl/sorted-set)
        (avl/sorted-set-by >))))
 

@@ -11,12 +11,12 @@
                        "-Dorg.clojure.data.avl.test.small-tree-size=300"]
   :source-paths ["src/main/clojure" "src/main/cljs"]
   :test-paths ["src/test/clojure"]
-  :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.7:dev,1.8"]}
+  :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.7:dev,1.8:dev,1.9"]}
   :profiles {:dbg  {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
-             :cljs {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]
-                                   [org.clojure/clojurescript "1.9.293"]
+             :cljs {:dependencies [[org.clojure/clojure "1.9.0-beta2"]
+                                   [org.clojure/clojurescript "1.9.946"]
                                    [org.clojure/test.check "0.9.0"]
-                                   [collection-check "0.1.6"]]
+                                   [collection-check "0.1.7"]]
                     :hooks [leiningen.cljsbuild]
                     :plugins [[lein-cljsbuild "1.1.4"]]
                     :cljsbuild
@@ -34,13 +34,13 @@
              :1.6  {:dependencies [[org.clojure/clojure "1.6.0"]]}
              :1.7  {:dependencies [[org.clojure/clojure "1.7.0"]
                                    [org.clojure/test.check "0.9.0"]
-                                   [collection-check "0.1.6"]]
+                                   [collection-check "0.1.7"]]
                     :test-paths ["src/test_local/cljc"]}
              :1.8  {:dependencies [[org.clojure/clojure "1.8.0"]
                                    [org.clojure/test.check "0.9.0"]
-                                   [collection-check "0.1.6"]]
+                                   [collection-check "0.1.7"]]
                     :test-paths ["src/test_local/cljc"]}
-             :1.9  {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]
+             :1.9  {:dependencies [[org.clojure/clojure "1.9.0-beta2"]
                                    [org.clojure/test.check "0.9.0"]
-                                   [collection-check "0.1.6"]]
+                                   [collection-check "0.1.7"]]
                     :test-paths ["src/test_local/cljc"]}})
