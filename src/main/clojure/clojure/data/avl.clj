@@ -151,7 +151,23 @@
  :name clojure.data.avl.IAVLTree
  :methods [[getTree [] clojure.data.avl.IAVLNode]])
 
-(import (clojure.data.avl IAVLNode IAVLTree))
+(defmacro ^:private define-i-transient-associative-2-impl []
+  (let [ita2-exists?
+        (try (Class/forName "clojure.lang.ITransientAssociative2")
+             true
+             (catch ClassNotFoundException _
+               false))]
+    `(gen-interface
+      :name ~'clojure.data.avl.ITransientAssociative2Impl
+      ~@(if ita2-exists?
+          '[:extends [clojure.lang.ITransientAssociative2]])
+      :methods
+      ~'[[containsKey [Object] boolean]
+         [entryAt     [Object] clojure.lang.IMapEntry]])))
+
+(define-i-transient-associative-2-impl)
+
+(import (clojure.data.avl IAVLNode IAVLTree ITransientAssociative2Impl))
 
 (definterface INavigableTree
   (nearest [test k]))
@@ -1592,6 +1608,14 @@
       (if-not (.-val found?)
         (set! cnt (unchecked-inc-int cnt)))
       this))
+
+  ITransientAssociative2Impl
+  (containsKey [this k]
+    (not (nil? (.entryAt this k))))
+
+  (entryAt [this k]
+    (if-let [node (lookup comp tree k)]
+      (MapEntry. (.getKey node) (.getVal node))))
 
   clojure.lang.ITransientMap
   (without [this k]
