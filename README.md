@@ -8,6 +8,12 @@ lookups, splits by index or key and subsets/submaps.
 
 Persistent AVL trees are used as the underlying data structure.
 
+## API Documentation
+
+API docs are available as:
+ - the project API reference:  https://clojure.github.io/data.avl/
+ - codox on GitHub pages:      http://cloojure.github.io/doc/data.avl/
+
 ## Synopsis
 
 data.avl supports both Clojure and ClojureScript. It exports a single
