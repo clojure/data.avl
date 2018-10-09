@@ -479,7 +479,7 @@
   (toArray [this]
     (into-array Object this))
 
-  (toArray [this arr]
+  (^objects toArray [this ^objects arr]
     (if (>= (count arr) 2)
       (doto arr
         (aset 0 key)
@@ -1262,7 +1262,7 @@
   (toArray [this]
     (RT/seqToArray (seq this)))
 
-  (toArray [this arr]
+  (^objects toArray [this ^objects arr]
     (RT/seqToPassedArray (seq this) arr))
 
   (containsAll [this c]
@@ -1800,7 +1800,7 @@
   (toArray [this]
     (RT/seqToArray (seq this)))
 
-  (toArray [this a]
+  (^objects toArray [this ^objects a]
     (RT/seqToPassedArray (seq this) a)))
 
 (deftype AVLTransientSet
