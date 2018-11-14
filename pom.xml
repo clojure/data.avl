@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+	<groupId>com.github.kaosko</groupId>
   <artifactId>data.avl</artifactId>
   <version>0.0.19-SNAPSHOT</version>
   <name>data.avl</name>
@@ -35,7 +36,7 @@
   </scm>
 
   <properties>
-    <clojure.version>1.5.1</clojure.version>
+    <clojure.version>1.9.0</clojure.version>
     <clojure.warnOnReflection>true</clojure.warnOnReflection>
   </properties>
 

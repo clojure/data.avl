@@ -611,7 +611,7 @@
                 (cond
                   (zero? c)
                   [(.getLeft node)
-                   [(.getKey node) (.getVal node)]
+                   (MapEntry. (.getKey node) (.getVal node) nil)
                    (.getRight node)]
 
                   (neg? c)
@@ -697,7 +697,7 @@
                (avl-map-reduce (.getLeft node) f init))]
     (if (reduced? init)
       init
-      (let [init (f init [(.getKey node) (.getVal node)])]
+      (let [init (f init (MapEntry. (.getKey node) (.getVal node) nil))]
         (if (reduced? init)
           init
           (if (nil? (.getRight node))
@@ -714,7 +714,7 @@
         (if (nil? (.getRight node))
           init
           (avl-map-reduce (.getRight node) f init))
-        (let [init (f init [(.getKey node) (.getVal node)])]
+        (let [init (f init (MapEntry. (.getKey node) (.getVal node) nil))]
           (if (reduced? init)
             init
             (if (nil? (.getRight node))
@@ -768,7 +768,7 @@
   ISeq
   (-first [this]
     (let [node (peek stack)]
-      [(.-key node) (.-val node)]))
+      (MapEntry. (.-key node) (.-val node) nil)))
 
   (-rest [this]
     (let [node (first stack)
@@ -828,7 +828,7 @@
 
   (nearest [this test k]
     (if-let [node (lookup-nearest comp tree test k)]
-      [(.getKey node) (.getVal node)]))
+      (MapEntry. (.getKey node) (.getVal node) nil)))
 
   IHash
   (-hash [this]
@@ -849,12 +849,12 @@
   IIndexed
   (-nth [this i]
     (if-let [n (select tree i)]
-      [(.getKey n) (.getVal n)]
+      (MapEntry. (.getKey n) (.getVal n) nil)
       (throw (ex-info "nth index out of bounds in AVL tree" {}))))
 
   (-nth [this i not-found]
     (if-let [n (select tree i)]
-      [(.getKey n) (.getVal n)]
+      (MapEntry. (.getKey n) (.getVal n) nil)
       not-found))
 
   ICollection
@@ -884,9 +884,9 @@
   (-reduce [this f]
     (case cnt
       0 (f)
-      1 [(.getKey tree) (.getVal tree)]
+      1 (MapEntry. (.getKey tree) (.getVal tree) nil)
       (let [n0 (select tree 0)
-            init (avl-map-reduce-skip tree f [(.getKey n0) (.getVal n0)] n0)]
+            init (avl-map-reduce-skip tree f (MapEntry. (.getKey n0) (.getVal n0) nil) n0)]
         (if (reduced? init)
           (-deref init)
           init))))
@@ -1210,7 +1210,7 @@
   AVLSet
   (-pr-writer [this writer opts]
     (pr-sequential-writer writer pr-writer "#{" " " "}" opts this)))
-
+    
 (defn sorted-map
   "keyval => key val
   Returns a new AVL map with supplied mappings."
