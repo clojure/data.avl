@@ -13,8 +13,8 @@
   :test-paths ["src/test/clojure"]
   :aliases {"all" ["with-profile" "dev:dev,1.6:dev,1.7:dev,1.8:dev,1.9"]}
   :profiles {:dbg  {:jvm-opts ["-XX:-OmitStackTraceInFastThrow"]}
-             :cljs {:dependencies [[org.clojure/clojure "1.9.0"]
-                                   [org.clojure/clojurescript "1.9.946"]
+             :cljs {:dependencies [[org.clojure/clojure "1.10.0"]
+                                   [org.clojure/clojurescript "1.10.520"]
                                    [org.clojure/test.check "0.9.0"]
                                    [collection-check "0.1.7"]]
                     :hooks [leiningen.cljsbuild]
