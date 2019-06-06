@@ -20,7 +20,7 @@
                     :hooks [leiningen.cljsbuild]
                     :plugins [[lein-cljsbuild "1.1.4"]]
                     :cljsbuild
-                    {:test-commands {"phantom" ["phantomjs" "out.test.js"]}
+                    {:test-commands {"phantom" ["phantomjs" "out/test.js"]}
                      :builds {:test
                               {:source-paths ["src/main/cljs"
                                               "src/test/clojure"
