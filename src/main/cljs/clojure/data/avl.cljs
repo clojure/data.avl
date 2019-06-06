@@ -697,7 +697,7 @@
                (avl-map-reduce (.getLeft node) f init))]
     (if (reduced? init)
       init
-      (let [init (f init (MapEntry. (.getKey node) (.getVal node) nil)]
+      (let [init (f init (MapEntry. (.getKey node) (.getVal node) nil))]
         (if (reduced? init)
           init
           (if (nil? (.getRight node))
