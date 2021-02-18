@@ -153,7 +153,7 @@ regularly tested against the most recent ClojureScript release.
 data.avl releases are available from Maven Central. Development
 snapshots are available from the Sonatype OSS repository.
 
- * [Released versions](http://search.maven.org/#search%7Cga%7C1%7Corg.clojure%2Fdata.avl)
+ * [Released versions](https://search.maven.org/#search%7Cga%7C1%7Corg.clojure%2Fdata.avl)
 
  * [Development snapshots](https://oss.sonatype.org/index.html#nexus-search;gav~org.clojure~data.avl~~~)
 
@@ -164,11 +164,11 @@ Follow the first link above to discover the current release number.
 org.clojure/data.avl {:mvn/version "${version}"}
 ```
 
-[Leiningen](http://leiningen.org/) dependency information:
+[Leiningen](https://leiningen.org/) dependency information:
 
     [org.clojure/data.avl "${version}"]
 
-[Maven](http://maven.apache.org/) dependency information:
+[Maven](https://maven.apache.org/) dependency information:
 
     <dependency>
       <groupId>org.clojure</groupId>
@@ -176,24 +176,21 @@ org.clojure/data.avl {:mvn/version "${version}"}
       <version>${version}</version>
     </dependency>
 
-[Gradle](http://www.gradle.org/) dependency information:
+[Gradle](https://www.gradle.org/) dependency information:
 
     compile "org.clojure:data.avl:${version}"
 
 ## Developer information
 
 data.avl is being developed as a Clojure Contrib project, see the
-[What is Clojure Contrib](http://dev.clojure.org/pages/viewpage.action?pageId=5767464)
+[What is Clojure Contrib](https://clojure.org/dev/contrib_libs)
 page for details. Patches will only be accepted from developers who
 have signed the Clojure Contributor Agreement.
 
 * [GitHub project](https://github.com/clojure/data.avl)
-
-* [Bug Tracker](http://dev.clojure.org/jira/browse/DAVL)
-
-* [Continuous Integration](http://build.clojure.org/job/data.avl/)
-
-* [Compatibility Test Matrix](http://build.clojure.org/job/data.avl-test-matrix/)
+* [Bug Tracker](https://clojure.atlassian.net/browse/DAVL)
+* [Continuous Integration](https://build.clojure.org/job/data.avl/)
+* [Compatibility Test Matrix](https://build.clojure.org/job/data.avl-test-matrix/)
 
 ## Clojure(Script) code reuse
 
@@ -208,7 +205,7 @@ notice:
 
     Copyright (c) Rich Hickey. All rights reserved.
     The use and distribution terms for this software are covered by the
-    Eclipse Public License 1.0 (http://opensource.org/licenses/eclipse-1.0.php)
+    Eclipse Public License 1.0 (https://opensource.org/licenses/eclipse-1.0.php)
     which can be found in the file epl-v10.html at the root of this distribution.
     By using this software in any fashion, you are agreeing to be bound by
       the terms of this license.
