@@ -189,8 +189,7 @@ have signed the Clojure Contributor Agreement.
 
 * [GitHub project](https://github.com/clojure/data.avl)
 * [Bug Tracker](https://clojure.atlassian.net/browse/DAVL)
-* [Continuous Integration](https://build.clojure.org/job/data.avl/)
-* [Compatibility Test Matrix](https://build.clojure.org/job/data.avl-test-matrix/)
+* [Continuous Integration](https://github.com/clojure/data.avl/actions/workflows/test.yml)
 
 ## Clojure(Script) code reuse
 
@@ -213,6 +212,6 @@ notice:
 
 ## Licence
 
-Copyright © 2013-2016 Michał Marczyk, Rich Hickey and contributors
+Copyright © 2013-2023 Michał Marczyk, Rich Hickey and contributors
 
 Distributed under the Eclipse Public License, the same as Clojure.
