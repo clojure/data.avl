@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>clojure.data.avl - AVL trees 0.0.18 API documentation</title>
+    <title>clojure.data.avl - data.avl 0.2.0-SNAPSHOT API documentation</title>
     <link rel="icon" href="static/favicon.png" />
     <link rel="shortcut icon" href="static/favicon.png" />
     <link rel="stylesheet" href="static/clojure.css" type="text/css" media="all" />
@@ -25,14 +25,14 @@ namespace.
       <div id="leftcolumn"><div style="text-align: center;"></div>
 <div class="menu">
   <div class="WikiCustomNav WikiElement wiki">
-    <span class="toc-header"><span id="project-name">AVL trees</span> <span id="version">0.0.18</span> API</span><br />
+    <span class="toc-header"><span id="project-name">data.avl</span> <span id="version">0.2.0-SNAPSHOT</span> API</span><br />
     <ul>
       <li><a href="index.html" class="wiki_link">Overview</a></li>
       <li><a href="api-index.html" class="wiki_link">API Index</a></li>
     </ul>
     
     
-    <a class="wiki_link" href="http://clojure.org">Clojure Home</a>
+    <a class="wiki_link" href="https://clojure.org">Clojure Home</a>
   </div>
 </div>
 </div>
@@ -106,13 +106,13 @@ namespace.
 </div>
 </div>
                 <div id="content-tag"><h1 id="overview">API for <span id="clojure.data.avl">clojure.data.avl</span>
-  - <span id="header-project">AVL trees</span> <span id="header-version">0.0.18</span><span id="header-status-block"> (<span id="header-status">in development</span>)</span>
+  - <span id="header-project">data.avl</span> <span id="header-version">0.2.0-SNAPSHOT</span><span id="header-status-block"> (<span id="header-status">in development</span>)</span>
   </h1>
 <span id="author-line">by <span id="author-name">Michał Marczyk</span><br /></span>
 <br />Full namespace name: <span id="long-name">clojure.data.avl</span>
 <p></p>
 <h2>Overview</h2>
-<div id="home-page">Project home page is <a href="http://github.com/clojure/data.avl/">http://github.com/clojure/data.avl/</a></div>
+<div id="home-page">Project home page is <a href="https://github.com/clojure/data.avl/">https://github.com/clojure/data.avl/</a></div>
 <pre id="namespace-docstr">An implementation of persistent sorted maps and sets based on AVL
 trees which can be used as drop-in replacements for Clojure's
 built-in sorted maps and sets based on red-black trees. Apart from
@@ -176,7 +176,7 @@ clojure.data.avl/subrange.</pre>
     <pre id="type-docstr"></pre>
     Fields: <span id="type-fields">[edit comp tree cnt]</span><br />
     Protocols: <span id="type-protocols"></span><br />
-    Interfaces: <span id="type-interfaces">clojure.lang.Counted, clojure.lang.IFn, clojure.lang.ILookup, clojure.lang.ITransientAssociative, clojure.lang.ITransientCollection, clojure.lang.ITransientMap</span><br />
+    Interfaces: <span id="type-interfaces">clojure.data.avl.ITransientAssociative2Impl, clojure.lang.Counted, clojure.lang.IFn, clojure.lang.ILookup, clojure.lang.ITransientAssociative, clojure.lang.ITransientCollection, clojure.lang.ITransientMap</span><br />
   </div><div id="type-entry">
     <br />
     <hr />
@@ -204,9 +204,9 @@ Equivalent to, but more efficient than, (first (subseq* coll test x)),
 where subseq* is clojure.core/subseq for test in #{&gt;, &gt;=} and
 clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1919">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1951">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -216,9 +216,9 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
 </pre>
     <pre id="var-docstr">Returns the rank of x in coll or -1 if not present.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.6</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.6</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1913">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1945">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -229,9 +229,9 @@ clojure.core/rsubseq for test in #{&lt;, &lt;=}.</pre>
     <pre id="var-docstr">keyval =&gt; key val
 Returns a new AVL map with supplied mappings.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1865">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1897">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -243,9 +243,9 @@ Returns a new AVL map with supplied mappings.</pre>
 Returns a new sorted map with supplied mappings, using the supplied
 comparator.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1880">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1912">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -255,9 +255,9 @@ comparator.</pre>
 </pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1898">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1930">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -267,9 +267,9 @@ comparator.</pre>
 </pre>
     <pre id="var-docstr">Returns a new sorted set with supplied keys, using the supplied comparator.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.1</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.1</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1904">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1936">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -283,9 +283,9 @@ Equivalent to, but more efficient than,
 [(into (empty coll) (take n coll))
  (into (empty coll) (drop n coll))].</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1959">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1991">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -301,9 +301,9 @@ and above k in the ordering determined by coll's comparator, while
 e? is the entry at key k for maps, the stored copy of the key k for
 sets, nil if coll does not contain k.</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1929">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L1961">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -328,9 +328,9 @@ of coll.
 (subrange coll &gt;= start &lt;= end) is equivalent to, but more efficient
 than, (into (empty coll) (subseq coll &gt;= start &lt;= end)).</pre>
     <pre id="var-specs"></pre>
-    <span class="var-added"><span id="content">Added in AVL trees version 0.0.12</span><br /></span>
+    <span class="var-added"><span id="content">Added in data.avl version 0.0.12</span><br /></span>
     
-    <a id="var-source" href="https://github.com/clojure/data.avl/blob/579118e7572234ab619b4e9105761f90d4453730/src/main/clojure/clojure/data/avl.clj#L1974">Source</a>
+    <a id="var-source" href="https://github.com/clojure/data.avl/blob/0ac87796e6639e2f1da0406095d59656462d3e93/src/main/clojure/clojure/data/avl.clj#L2006">Source</a>
   </div>
 </div>
 
@@ -341,7 +341,7 @@ than, (into (empty coll) (subseq coll &gt;= start &lt;= end)).</pre>
           </div>
 	</div>
 	<div id="foot">
-	  <div id="copyright" style="text-align: center;">Copyright 2007-2017 by Rich Hickey and the various contributors</div>
+	  <div id="copyright" style="text-align: center;">Copyright 2007-2023 by Rich Hickey and the various contributors</div>
 	</div>
       </div>
       <div id="DesignedBy">Logo &amp; site design by <a href="http://www.tomhickey.com" title="Visit Tom Hickey's website.">Tom Hickey</a>.<br />
