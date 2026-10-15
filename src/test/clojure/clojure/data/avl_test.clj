@@ -296,3 +296,9 @@
     (is (= (reduce conj [] (avl/sorted-set)) []))
     (is (= (reduce conj [] (avl/sorted-set 1)) [1]))
     (is (= (reduce conj [] (avl/sorted-set 1 2 3 4 5 6)) [1 2 3 4 5 6]))))
+
+(deftest DAVL-13
+  (testing "Implements java.util.Map/.isEmpty"
+    (is (.isEmpty (avl/sorted-map)))
+    (is (not (.isEmpty (avl/sorted-map :first 1))))
+    (is (.isEmpty (dissoc (avl/sorted-map :first 1) :first)))))

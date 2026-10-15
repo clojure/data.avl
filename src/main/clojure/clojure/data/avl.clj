@@ -1557,6 +1557,9 @@
   (size [this]
     cnt)
 
+  (isEmpty [this]
+    (zero? cnt))
+
   (values [this]
     (vals this)))
 
